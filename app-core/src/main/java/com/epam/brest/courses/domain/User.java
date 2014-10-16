@@ -1,6 +1,6 @@
 package com.epam.brest.courses.domain;
 
-
+//smth new from Idea
 public class User{
 
 	private Long userId;
