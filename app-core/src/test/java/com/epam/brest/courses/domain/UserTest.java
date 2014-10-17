@@ -18,4 +18,11 @@ public class UserTest {
         assertEquals(user.getUserName(), str);
 
     }
+    @Test
+    public void testGetLogin() throws Exception {
+        final String str="Ivan";
+        user.setLogin(str);
+        assertEquals(user.getLogin(), str);
+
+    }
 }
