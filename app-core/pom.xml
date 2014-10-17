@@ -18,6 +18,8 @@
                             <groupId>junit</groupId>
                             <artifactId>junit</artifactId>
                         </dependency>
-        </dependencies>
-
+    </dependencies>
+    <build>
+       <testSourceDirectory>src/test/</testSourceDirectory>
+    </build>
 </project>
