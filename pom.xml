@@ -1,17 +1,22 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.epam.brest.courses</groupId>
+	<groupId>${management.groupid}</groupId>
 	<artifactId>sampleusermanagement</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>${management.version}</version>
 	<packaging>pom</packaging>
 
 	<modules>
 		<module>app-core</module>	
-	</modules>	
-	
+	</modules>
+
+
+    <!-- Project properties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <management.groupid>com.epam.brest.courses</management.groupid>
+        <management.version>1.0.0-SNAPSHOT</management.version>
+    <!--  <management.finalname>${artifactId}-${management.version}</management.finalname> -->
 	</properties>
 
 	<dependencyManagement>
@@ -59,5 +64,7 @@
             </plugin>
         </plugins>
     </reporting>
+
+
 
 </project>
