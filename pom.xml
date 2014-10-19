@@ -11,7 +11,7 @@
 	</modules>
 
 
-    <!-- Project properties (for optimization) ok-->
+    <!-- Project properties (for optimization) ok ok-->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <management.groupid>com.epam.brest.courses</management.groupid>
