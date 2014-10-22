@@ -1,3 +1,3 @@
 ==============
-SampleUserManagement by Ivan-Volynchuk nooooo
+SampleUserManagement by Ivan-Volynchuk
 ==============
