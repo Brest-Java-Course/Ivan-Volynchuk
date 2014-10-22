@@ -5,7 +5,6 @@ import com.epam.brest.courses.domain.User;
 
 import javax.sql.DataSource;
 
-import javax.swing.tree.TreePath;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
