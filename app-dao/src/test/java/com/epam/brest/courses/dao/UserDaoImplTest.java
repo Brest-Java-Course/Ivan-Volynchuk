@@ -37,6 +37,7 @@ public class UserDaoImplTest {
         userDao.addUser(user);
 
         users = userDao.getUsers();
+        System.out.println("Before ="+sizeBefore+" After="+users.size());
         assertEquals(sizeBefore,users.size()-1);
 
     }
