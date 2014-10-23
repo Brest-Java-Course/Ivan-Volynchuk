@@ -29,12 +29,13 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public List<User> getUsers() {
-    return jdbcTemplate.query("SELECT userid, login, name from USER",new UserMapper());
+
+        return jdbcTemplate.query("SELECT userid, login, name from USER",new UserMapper());
     }
 
     @Override
-    public void removeUser(Long userId) {
-
+    public void removeUserById(Long userId) {
+        jdbcTemplate.update("DELETE FROM USER WHERE userid=?",userId);
     }
 
     public class UserMapper implements RowMapper<User>{

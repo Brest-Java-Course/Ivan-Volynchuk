@@ -15,6 +15,13 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = { "classpath:/testApplicationContextSpring.xml" })
 public class UserDaoImplTest {
 
+    public void showUsers(List<User> usr,String msg){
+        System.out.println(msg+":");
+        for(User us:usr){
+            System.out.println(us.getLogin()+" "+us.getUserName()+" "+us.getUserId());
+        }
+        System.out.println("");
+    }
     @Autowired
     private UserDao userDao;
 
@@ -27,7 +34,9 @@ public class UserDaoImplTest {
 
     @Test
     public void addUser() {
+
         List<User> users = userDao.getUsers();
+        //showUsers(users,"addUser(Before)");
         int sizeBefore=users.size();
 
         User user=new User();
@@ -37,9 +46,20 @@ public class UserDaoImplTest {
         userDao.addUser(user);
 
         users = userDao.getUsers();
-        System.out.println("Before ="+sizeBefore+" After="+users.size());
+        //showUsers(users,"addUser(After)");
         assertEquals(sizeBefore,users.size()-1);
 
+    }
+    @Test
+    public void removeUserById(){
+        List<User> users = userDao.getUsers();
+        //showUsers(users,"removeUserById(Before)");
+        int sizeBefore=users.size();
+
+        userDao.removeUserById(2L);
+        users = userDao.getUsers();
+        //showUsers(users,"removeUserById(After)");
+        assertEquals(sizeBefore,users.size()+1);
     }
 
 }
