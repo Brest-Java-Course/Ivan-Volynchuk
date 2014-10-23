@@ -34,8 +34,18 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public void removeUserById(Long userId) {
+    public void removeUser(Long userId) {
         jdbcTemplate.update("DELETE FROM USER WHERE userid=?",userId);
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return jdbcTemplate.queryForObject("SELECT userid, login, name from USER WHERE userid=?",new Object[] {userId},new UserMapper());
+    }
+
+    @Override
+    public User getUserByLogin(String name) {
+        return jdbcTemplate.queryForObject("SELECT userid, login, name from USER WHERE login=?",new Object[] {name},new UserMapper());
     }
 
     public class UserMapper implements RowMapper<User>{
@@ -48,4 +58,5 @@ public class UserDaoImpl implements UserDao{
             return user;
         }
     }
+
 }
