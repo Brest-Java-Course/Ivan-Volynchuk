@@ -18,34 +18,43 @@ public class UserDaoImpl implements UserDao{
     private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(DataSource dataSource){
+
         jdbcTemplate=new JdbcTemplate(dataSource);
     }
 
     @Override
     public void addUser(User user) {
-        jdbcTemplate.update("INSERT INTO USER (userid,login,name) VALUES (?,?,?)",user.getUserId(),user.getLogin(),user.getUserName());
+        String sql="INSERT INTO USER (userid,login,name) VALUES (?,?,?)";
+        Object args[]={user.getUserId(),user.getLogin(),user.getUserName()};
+        jdbcTemplate.update(sql,args);
 
     }
 
     @Override
     public List<User> getUsers() {
-
-        return jdbcTemplate.query("SELECT userid, login, name from USER",new UserMapper());
+        String sql="SELECT userid, login, name from USER";
+        return jdbcTemplate.query(sql,new UserMapper());
     }
 
     @Override
     public void removeUser(Long userId) {
-        jdbcTemplate.update("DELETE FROM USER WHERE userid=?",userId);
+        String sql="DELETE FROM USER WHERE userid=?";
+        Object args[]={userId};
+        jdbcTemplate.update(sql,args);
     }
 
     @Override
     public User getUserById(Long userId) {
-        return jdbcTemplate.queryForObject("SELECT userid, login, name from USER WHERE userid=?",new Object[] {userId},new UserMapper());
+        String sql="SELECT userid, login, name from USER WHERE userid=?";
+        Object args[]={userId};
+        return jdbcTemplate.queryForObject(sql,args,new UserMapper());
     }
 
     @Override
     public User getUserByLogin(String name) {
-        return jdbcTemplate.queryForObject("SELECT userid, login, name from USER WHERE login=?",new Object[] {name},new UserMapper());
+        String sql="SELECT userid, login, name from USER WHERE login=?";
+        Object args[]={name};
+        return jdbcTemplate.queryForObject(sql,args,new UserMapper());
     }
 
     public class UserMapper implements RowMapper<User>{
