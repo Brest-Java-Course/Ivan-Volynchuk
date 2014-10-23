@@ -9,5 +9,5 @@ public interface UserDao {
     public List<User> getUsers();
     public void removeUser (Long userId);
     public User getUserById(Long userId);
-    public User getUserByLogin(String name);
+    public User getUserByLogin(String login);
 }
