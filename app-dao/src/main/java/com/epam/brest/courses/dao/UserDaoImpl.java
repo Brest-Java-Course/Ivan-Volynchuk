@@ -8,12 +8,16 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.jdbc.core.*;
 
 /**
  * Created by fieldistor on 20.10.14.
  */
 public class UserDaoImpl implements UserDao{
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private JdbcTemplate jdbcTemplate;
 
@@ -24,6 +28,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void addUser(User user) {
+        LOGGER.debug("addUser({})",user);
         String sql="INSERT INTO USER (userid,login,name) VALUES (?,?,?)";
         Object args[]={user.getUserId(),user.getLogin(),user.getUserName()};
         jdbcTemplate.update(sql,args);
@@ -32,12 +37,14 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public List<User> getUsers() {
+        LOGGER.debug("getUsers()");
         String sql="SELECT userid, login, name from USER";
         return jdbcTemplate.query(sql,new UserMapper());
     }
 
     @Override
     public void removeUser(Long userId) {
+        LOGGER.debug("removeUser({})",userId);
         String sql="DELETE FROM USER WHERE userid=?";
         Object args[]={userId};
         jdbcTemplate.update(sql,args);
@@ -45,15 +52,17 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public User getUserById(Long userId) {
+        LOGGER.debug("getUserById({})",userId);
         String sql="SELECT userid, login, name from USER WHERE userid=?";
         Object args[]={userId};
         return jdbcTemplate.queryForObject(sql,args,new UserMapper());
     }
 
     @Override
-    public User getUserByLogin(String name) {
+    public User getUserByLogin(String login) {
+        LOGGER.debug("getUserByLogin({})",login);
         String sql="SELECT userid, login, name from USER WHERE login=?";
-        Object args[]={name};
+        Object args[]={login};
         return jdbcTemplate.queryForObject(sql,args,new UserMapper());
     }
 
