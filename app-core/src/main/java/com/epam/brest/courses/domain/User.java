@@ -5,6 +5,16 @@ public class User{
 
 
     private Long userId;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", login='" + login + '\'' +
+                ", userName='" + userName + '\'' +
+                '}';
+    }
+
     private String login;
     private String userName;
 
