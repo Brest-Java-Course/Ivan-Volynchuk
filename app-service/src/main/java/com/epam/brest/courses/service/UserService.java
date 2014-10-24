@@ -11,5 +11,5 @@ public interface UserService {
     public void addUser(User user);
 
     public User getUserByLogin(String login);
-    //TODO:log4j,del,get,update(TESTed ALL)
+    //TODO:log4j,del,get,update(TESTed ALL) (HomeTask)
 }
