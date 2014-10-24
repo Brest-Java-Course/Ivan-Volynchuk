@@ -1,5 +1,7 @@
 package com.epam.brest.courses.service;
 
+import com.epam.brest.courses.domain.User;
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,13 +23,29 @@ public class UserServiceImplTest {
 
     }
 
-    @Test
-    public void testAddUser() throws Exception {
+    @Test(expected = IllegalArgumentException.class)//Ожидается выбрасывание исключения
+    public void testAddNullUser() throws Exception {
+        userService.addUser(null);
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddEmptyUser() throws Exception {
+        userService.addUser(new User());
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddNotNullIdUser() throws Exception {
+        userService.addUser(new User(12L,"",""));
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddUserWithSameLogin() throws Exception {
+        userService.addUser(new User(null,"admin","admin"));
+        userService.addUser(new User(null,"admin","admin"));
     }
 
     @Test
-    public void testGetAllUsers() throws Exception {
-
+    public void testAddUser() throws Exception {
+        userService.addUser(new User(null,"admin","admin"));
+        User user=userService.getUserByLogin("admin");
+        assertEquals("admin",user.getLogin());
     }
 }

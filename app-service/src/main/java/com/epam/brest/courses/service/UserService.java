@@ -9,5 +9,7 @@ import java.util.List;
  */
 public interface UserService {
     public void addUser(User user);
-    public List<User> getAllUsers();
+
+    public User getUserByLogin(String login);
+    //TODO:log4j,del,get,update(TESTed ALL)
 }

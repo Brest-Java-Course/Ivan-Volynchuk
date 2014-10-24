@@ -4,7 +4,7 @@ package com.epam.brest.courses.domain;
 public class User{
 
 
-    private Long userId;
+
 
     @Override
     public String toString() {
@@ -13,6 +13,17 @@ public class User{
                 ", login='" + login + '\'' +
                 ", userName='" + userName + '\'' +
                 '}';
+    }
+
+    private Long userId;
+
+    public User(Long userId, String login, String userName) {
+        this.userId = userId;
+        this.login = login;
+        this.userName = userName;
+    }
+    public User(){
+
     }
 
     private String login;
