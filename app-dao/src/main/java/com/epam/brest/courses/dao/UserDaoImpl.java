@@ -26,6 +26,11 @@ public class UserDaoImpl implements UserDao{
     private static final String SELECT_ALL_USERS_SQL = "SELECT userid, login, name from USER";
     private static final String SELECT_USER_BY_ID = "SELECT userid, login, name from USER WHERE userid=:userid";
     private static final String SELECT_USER_BY_LOGIN = "SELECT userid, login, name from USER WHERE login=:login";
+    private static final String UPDATE_USER_SQL = "UPDATE USER SET name = :name, login = :login where userid = :userid";
+
+    private static final String USER_ID = "userid";
+    private static final String LOGIN = "login";
+    private static final String NAME = "name";
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
     private static final Logger LOGGER = LogManager.getLogger();
@@ -40,9 +45,9 @@ public class UserDaoImpl implements UserDao{
         LOGGER.debug("addUser({})",user);
 
         Map<String, Object> args = new HashMap(3);
-        args.put("name",user.getUserName());
-        args.put("login",user.getLogin());
-        args.put("userid",user.getUserId());
+        args.put(NAME,user.getUserName());
+        args.put(LOGIN,user.getLogin());
+        args.put(USER_ID,user.getUserId());
         namedJdbcTemplate.update(ADD_NEW_USER_SQL,args);
 
     }
@@ -59,7 +64,7 @@ public class UserDaoImpl implements UserDao{
         LOGGER.debug("removeUser({})",userId);
 
         Map<String, Object> args = new HashMap(1);
-        args.put("userid",userId);
+        args.put(USER_ID,userId);
         namedJdbcTemplate.update(DELETE_USER_BY_USERID,args);
     }
 
@@ -69,7 +74,7 @@ public class UserDaoImpl implements UserDao{
 
 
         Map<String, Object> args = new HashMap(1);
-        args.put("userid",userId);
+        args.put(USER_ID,userId);
         return namedJdbcTemplate.queryForObject(SELECT_USER_BY_ID,args,new UserMapper());
     }
 
@@ -78,17 +83,29 @@ public class UserDaoImpl implements UserDao{
         LOGGER.debug("getUserByLogin({})",login);
 
         Map<String, Object> args = new HashMap(1);
-        args.put("login",login);
+        args.put(LOGIN,login);
         return namedJdbcTemplate.queryForObject(SELECT_USER_BY_LOGIN,args,new UserMapper());
+    }
+
+    @Override
+    public void updateUser(User user) {
+        LOGGER.debug("updateUser({})", user);
+
+        Map<String, Object> args = new HashMap(3);
+        args.put(NAME,user.getUserName());
+        args.put(LOGIN,user.getLogin());
+        args.put(USER_ID,user.getUserId());
+        namedJdbcTemplate.update(UPDATE_USER_SQL, args);
+
     }
 
     public class UserMapper implements RowMapper<User>{
         @Override
         public User mapRow(ResultSet resultSet,int i) throws SQLException{
             User user=new User();
-            user.setUserId(resultSet.getLong("userId"));
-            user.setLogin(resultSet.getString("login"));
-            user.setUserName(resultSet.getString("name"));
+            user.setUserId(resultSet.getLong(USER_ID));
+            user.setLogin(resultSet.getString(LOGIN));
+            user.setUserName(resultSet.getString(NAME));
             return user;
         }
     }
