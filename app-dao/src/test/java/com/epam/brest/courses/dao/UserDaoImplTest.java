@@ -36,16 +36,13 @@ public class UserDaoImplTest {
 
     @Test
     public void getUsers() {
-        showUsers("getUsers() START");
         List<User> users = userDao.getUsers();
         assertNotNull(users);
         assertFalse(users.isEmpty());
-        showUsers("getUsers() END");
     }
 
     @Test
     public void addUser() {
-        showUsers("AddUser() START");
         List<User> users = userDao.getUsers();
         int sizeBefore=users.size();
 
@@ -53,11 +50,9 @@ public class UserDaoImplTest {
         userDao.addUser(user);
         users = userDao.getUsers();
         assertEquals(sizeBefore,users.size()-1);
-        showUsers("AddUser() END");
     }
     @Test
     public void removeUserById(){
-        showUsers("removeUserByIF() START");
 
         List<User> users = userDao.getUsers();
         int sizeBefore=users.size();
@@ -65,33 +60,26 @@ public class UserDaoImplTest {
         userDao.removeUser(2L);
         users = userDao.getUsers();
         assertEquals(sizeBefore,users.size()+1);
-        showUsers("removeUserByIF() END");
     }
     @Test
     public void getUserById(){
-        showUsers("getUserById() START");
         User usr=userDao.getUserById(1L);
         assertTrue(usr.getUserId().equals(1L));
-        showUsers("getUserById() END");
     }
 
     @Test
     public void getUserByLogin(){
-        showUsers("getUserByLogin() START");
         User usr=userDao.getUserByLogin("userLogin1");
         assertTrue(usr.getLogin().equals("userLogin1"));
-        showUsers("getUserByLogin() END");
     }
 
     @Test
     public void updateUser(){
-        showUsers("updateUser() START");
         User usr= new User(1L,"newLogin","newName");
         userDao.updateUser(usr);
 
         User gUsr=userDao.getUserById(1L);
         assertEquals(usr,gUsr);
-        showUsers("updateUser() End");
     }
 
 }
