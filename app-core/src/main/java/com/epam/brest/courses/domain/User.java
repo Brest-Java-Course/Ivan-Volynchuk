@@ -15,6 +15,25 @@ public class User{
                 '}';
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (!userId.equals(other.getUserId()))
+            return false;
+        if (!getUserName().equals(other.getUserName()))
+            return false;
+        if (!getLogin().equals(other.getLogin()))
+            return false;
+        return true;
+    }
+
+
     private Long userId;
 
     public User(Long userId, String login, String userName) {
