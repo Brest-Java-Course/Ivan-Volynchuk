@@ -31,8 +31,6 @@ public class UserServiceImpl implements UserService{
         userDao.addUser(user);
     }
 
-
-
     @Override
     public User getUserByLogin(String login) {
         User user=null;
