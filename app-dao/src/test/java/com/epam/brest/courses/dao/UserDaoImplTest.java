@@ -1,6 +1,7 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,10 @@ import static org.junit.Assert.*;
 @ContextConfiguration(locations = { "classpath:/testApplicationContextSpring.xml" })
 public class UserDaoImplTest {
 
-    public void showUsers(List<User> usr,String msg){
-        System.out.println(msg+":");
-        for(User us:usr){
-            System.out.println(us.getLogin()+" "+us.getUserName()+" "+us.getUserId());
-        }
-        System.out.println("");
-    }
+
     @Autowired
     private UserDao userDao;
+
 
     @Test
     public void getUsers() {
@@ -38,12 +34,8 @@ public class UserDaoImplTest {
         List<User> users = userDao.getUsers();
         int sizeBefore=users.size();
 
-        User user=new User();
-        user.setLogin("userLogin3");
-        user.setUserName("userName3");
-        user.setUserId(3L);
+        User user=new User(3L,"userLogin3","userName3");
         userDao.addUser(user);
-
         users = userDao.getUsers();
         assertEquals(sizeBefore,users.size()-1);
 
@@ -67,6 +59,11 @@ public class UserDaoImplTest {
     public void getUserByLogin(){
         User usr=userDao.getUserByLogin("userLogin1");
         assertTrue(usr.getLogin().equals("userLogin1"));
+    }
+
+    @Test
+    public void updateUser(){
+        //User usr= new User(1L,"");
     }
 
 }
