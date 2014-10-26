@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService{
         catch(EmptyResultDataAccessException e){
             LOGGER.debug("There are not any items.");
         }
-        return usr;
+        return usr.size()!=0?usr:null;
     }
 
     @Override

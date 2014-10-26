@@ -120,9 +120,11 @@ public class UserServiceImplTest {
     }
 
     @Test
-    @Ignore
     public void getEmptyAllUsers(){
-
+        userService.removeUser(1L);
+        userService.removeUser(2L);
+        List<User> usr=userService.getUsers();
+        assertNull(usr);
     }
 
     /****
