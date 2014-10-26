@@ -23,6 +23,8 @@ import static org.junit.Assert.*;
 public class UserDaoImplTest {
 
 
+    private static final String CUSTOM_STRING = "userLogin3";
+    private static final String USER_LOGIN_1 = "userLogin1";
     @Autowired
     private UserDao userDao;
 
@@ -40,7 +42,7 @@ public class UserDaoImplTest {
         List<User> users = userDao.getUsers();
         int sizeBefore=users.size();
 
-        User user=new User(3L,"userLogin3","userName3");
+        User user=new User(3L, CUSTOM_STRING,CUSTOM_STRING);
         userDao.addUser(user);
         users = userDao.getUsers();
         assertEquals(sizeBefore,users.size()-1);
@@ -65,14 +67,14 @@ public class UserDaoImplTest {
 
     @Test
     public void getUserByLogin(){
-        User usr=userDao.getUserByLogin("userLogin1");
-        assertTrue(usr.getLogin().equals("userLogin1"));
+        User usr=userDao.getUserByLogin(USER_LOGIN_1);
+        assertTrue(usr.getLogin().equals(USER_LOGIN_1));
     }
 
     @Test
     @Rollback(true)
     public void updateUser(){
-        User usr= new User(1L,"newLogin","newName");
+        User usr= new User(1L,CUSTOM_STRING,CUSTOM_STRING);
         userDao.updateUser(usr);
 
         User gUsr=userDao.getUserById(1L);
