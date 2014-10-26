@@ -35,6 +35,10 @@ public class UserServiceImplTest {
 
     }
 
+    /****
+     *
+     * Test AddUser
+    */
     @Test(expected = IllegalArgumentException.class)//Ожидается выбрасывание исключения
     public void testAddNullUser() throws Exception {
         userService.addUser(null);
@@ -70,7 +74,10 @@ public class UserServiceImplTest {
         User user=userService.getUserByLogin(customStr);
         assertTrue(user.getLogin().equals(customStr) && user.getUserName().equals(customStr));
     }
-
+    /****
+     *
+     * Test getUserByLogin
+     */
     @Test
     public void getUserByLogin(){
         User user=userService.getUserByLogin("userLogin2");
@@ -88,7 +95,10 @@ public class UserServiceImplTest {
         assertNull(user);
     }
 
-
+    /****
+     *
+     * Test getAllUsers
+     */
     @Test
     public void getAllUsers(){
         List<User> usr=new LinkedList<User>();
@@ -115,18 +125,60 @@ public class UserServiceImplTest {
 
     }
 
+    /****
+     *
+     * Test removeUserById
+     */
     @Test
     public void removeUserById(){
         userService.removeUser(2L);
-    }
-
-    @Test
-    public void removeUserByIncorrectId(){
-        userService.removeUser(66L);
+        assertNull(userService.getUserById(2L));
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void removeUserByIncorrectId(){
+        userService.removeUser(99L);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeUserByNullId(){
+        userService.removeUser(null);
+    }
+
+    /****
+     *
+     * Test getUserById
+     */
+    @Test(expected = IllegalArgumentException.class)
     public void getUserByNullId(){
         userService.getUserById(null);
+    }
+    @Test
+    public void getUserById(){
+        User us=userService.getUserById(1L);
+        assertTrue(us.getUserId().equals(1L));
+    }
+    @Test
+    public void getUserByIncorrectId(){
+        User us=userService.getUserById(55L);
+        assertNull(us);
+    }
+    /****
+     *
+     * Test updateUser
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void updateNullUser(){
+        userService.updateUser(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateUserWithNoId(){
+        userService.updateUser(new User(null,customStr,customStr));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateUserWithIncorrectId(){
+        userService.updateUser(new User(44L,customStr,customStr));
     }
 }

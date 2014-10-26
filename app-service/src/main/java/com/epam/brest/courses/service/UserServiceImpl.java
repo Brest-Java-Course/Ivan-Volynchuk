@@ -70,10 +70,11 @@ public class UserServiceImpl implements UserService{
         LOGGER.debug("removeUser({})",userId);
 
         Assert.notNull(userId,"UserId should be not specified.");
-        try {
+        if(getUserById(userId)!=null) {
             userDao.removeUser(userId);
-        }catch(Throwable e){
-            System.out.println(123456);
+        }
+        else{
+            throw new IllegalArgumentException("There isn't user with such userId");
         }
     }
 
@@ -93,7 +94,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User user) {
+        Assert.notNull(user,"User should be not specified.");
+        Assert.notNull(user.getUserId(),"UserId can't be Null");
 
+        if(getUserById(user.getUserId())!=null) {
+            userDao.updateUser(user);
+        }
+        else{
+            throw new IllegalArgumentException("There isn't user with such userId");
+        }
     }
 
 }
