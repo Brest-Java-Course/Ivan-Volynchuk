@@ -21,15 +21,6 @@ import static org.junit.Assert.*;
 public class UserDaoImplTest {
 
 
-    public void showUsers(String msg){
-        List<User> usr = userDao.getUsers();
-        System.out.println(msg+":");
-        for(User us:usr){
-            System.out.println(us.getLogin()+" "+us.getUserName()+" "+us.getUserId());
-        }
-        System.out.println("");
-    }
-
     @Autowired
     private UserDao userDao;
 

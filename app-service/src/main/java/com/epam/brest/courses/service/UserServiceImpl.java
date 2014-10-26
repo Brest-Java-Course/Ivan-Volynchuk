@@ -14,7 +14,7 @@ import java.util.List;
  * Created by fieldistor on 24.10.14.
  */
 public class UserServiceImpl implements UserService{
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
     private UserDao userDao;
 
     public void setUserDao(UserDao userDao) {
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService{
             usr=userDao.getUsers();
         }
         catch(EmptyResultDataAccessException e){
-            LOGGER.debug("There are not any items.");
+            LOGGER.debug("There aren't any items.");
         }
         return usr.size()!=0?usr:null;
     }

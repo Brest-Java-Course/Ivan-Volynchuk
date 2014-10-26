@@ -33,7 +33,7 @@ public class UserDaoImpl implements UserDao{
     private static final String NAME = "name";
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
-    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
 
     public void setDataSource(DataSource dataSource){
 
