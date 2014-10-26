@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService{
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
+    //TODO: ask about ResourceBundleMessageSource
     private static final String INCORRECT_USER_ID = "There isn't user with such userId";
     private static final String NULL_LOGIN = "User login should be not specified.";
     private static final String NULL_NAME = "User name should be not specified.";
