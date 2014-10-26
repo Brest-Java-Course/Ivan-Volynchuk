@@ -9,7 +9,9 @@ import java.util.List;
  */
 public interface UserService {
     public void addUser(User user);
-
+    public List<User> getUsers();
+    public void removeUser (Long userId);
+    public User getUserById(Long userId);
     public User getUserByLogin(String login);
-    //TODO:log4j,del,get,update(TESTed ALL) (HomeTask)
+    public void updateUser(User user);
 }
