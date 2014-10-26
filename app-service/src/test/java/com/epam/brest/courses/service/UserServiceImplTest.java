@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
 @Transactional
 
 public class UserServiceImplTest {
-
+    //TODO: ask about ResourceBundleMessageSource
     private static final String CUSTOM_INCORRECT_STR = "admin";
     private static final String CUSTOM_WRONG_LOGIN = "dd";
     private static final Long CUSTOM_WRONG_ID=55L;
