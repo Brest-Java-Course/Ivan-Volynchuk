@@ -15,6 +15,11 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService{
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
+    private static final String INCORRECT_USER_ID = "There isn't user with such userId";
+    private static final String NULL_LOGIN = "User login should be not specified.";
+    private static final String NULL_NAME = "User name should be not specified.";
+    private static final String USER_ID_NULL = "UserId should be not specified.";
+    private static final String USER_NULL = "User should be not specified.";
     private UserDao userDao;
 
     public void setUserDao(UserDao userDao) {
@@ -27,8 +32,8 @@ public class UserServiceImpl implements UserService{
 
         Assert.notNull(user);
         Assert.isNull(user.getUserId());
-        Assert.notNull(user.getLogin(),"User login should be not specified.");
-        Assert.notNull(user.getUserName(),"User name should be not specified.");
+        Assert.notNull(user.getLogin(), NULL_LOGIN);
+        Assert.notNull(user.getUserName(), NULL_NAME);
         User existingUser=getUserByLogin(user.getLogin());
         if(existingUser!=null){
             throw new IllegalArgumentException("User is already exist");
@@ -41,7 +46,7 @@ public class UserServiceImpl implements UserService{
         LOGGER.debug("getUserByLogin({})",login);
 
         User user=null;
-        Assert.notNull(login,"User login should be not specified.");
+        Assert.notNull(login,NULL_LOGIN);
         try{
             user=userDao.getUserByLogin(login);
         }catch(EmptyResultDataAccessException e){
@@ -69,12 +74,12 @@ public class UserServiceImpl implements UserService{
     public void removeUser(Long userId) {
         LOGGER.debug("removeUser({})",userId);
 
-        Assert.notNull(userId,"UserId should be not specified.");
+        Assert.notNull(userId, USER_ID_NULL);
         if(getUserById(userId)!=null) {
             userDao.removeUser(userId);
         }
         else{
-            throw new IllegalArgumentException("There isn't user with such userId");
+            throw new IllegalArgumentException(INCORRECT_USER_ID);
         }
     }
 
@@ -83,7 +88,7 @@ public class UserServiceImpl implements UserService{
         LOGGER.debug("getUserById({})",userId);
 
         User user=null;
-        Assert.notNull(userId,"UserId should be not specified.");
+        Assert.notNull(userId,USER_ID_NULL);
         try{
             user=userDao.getUserById(userId);
         }catch(EmptyResultDataAccessException e){
@@ -94,14 +99,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateUser(User user) {
-        Assert.notNull(user,"User should be not specified.");
-        Assert.notNull(user.getUserId(),"UserId can't be Null");
-
+        Assert.notNull(user, USER_NULL);
+        Assert.notNull(user.getUserId(),USER_ID_NULL);
+        Assert.isTrue(!user.getUserId().equals(0L));
         if(getUserById(user.getUserId())!=null) {
             userDao.updateUser(user);
         }
         else{
-            throw new IllegalArgumentException("There isn't user with such userId");
+            throw new IllegalArgumentException(INCORRECT_USER_ID);
         }
     }
 

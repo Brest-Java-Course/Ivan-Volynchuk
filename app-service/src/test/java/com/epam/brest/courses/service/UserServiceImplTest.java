@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,8 +26,13 @@ import static org.junit.Assert.*;
 
 public class UserServiceImplTest {
 
-    private static final String customStr = "admin";
-    private static final String wrongLogin = "dd";
+    private static final String CUSTOM_INCORRECT_STR = "admin";
+    private static final String CUSTOM_WRONG_LOGIN = "dd";
+    private static final Long CUSTOM_WRONG_ID=55L;
+    private static final String USER_LOGIN_2 = "userLogin2";
+    private static final String USER_LOGIN_1 = "userLogin1";
+    private static final String USER_NAME_1 = "userName1";
+    private static final String USER_NAME_2 = "userName2";
     @Autowired
     private UserService userService;
 
@@ -37,9 +43,9 @@ public class UserServiceImplTest {
 
     /****
      *
-     * Test AddUser
+     * TestCases AddUser
     */
-    @Test(expected = IllegalArgumentException.class)//Ожидается выбрасывание исключения
+    @Test(expected = IllegalArgumentException.class)
     public void testAddNullUser() throws Exception {
         userService.addUser(null);
     }
@@ -48,62 +54,67 @@ public class UserServiceImplTest {
     public void testAddEmptyUser() throws Exception {
         userService.addUser(new User());
     }
+
     @Test(expected = IllegalArgumentException.class)
     public void testAddNotNullIdUser() throws Exception {
-        userService.addUser(new User(55L,"",""));
+        userService.addUser(new User(CUSTOM_WRONG_ID,"",""));
     }
     @Test(expected = IllegalArgumentException.class)
     public void testAddUserWithSameLogin() throws Exception {
-        userService.addUser(new User(null,customStr,customStr));
-        userService.addUser(new User(null, customStr,customStr));
+        userService.addUser(new User(null,CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
+        userService.addUser(new User(null, CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddUserWithoutLogin() throws Exception {
-        userService.addUser(new User(null,null,customStr));
+        userService.addUser(new User(null,null,CUSTOM_INCORRECT_STR));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddUserWithoutName() throws Exception {
-        userService.addUser(new User(null,customStr,null));
+        userService.addUser(new User(null,CUSTOM_INCORRECT_STR,null));
     }
 
     @Test
     public void testAddUser() throws Exception {
-        userService.addUser(new User(null,customStr,customStr));
-        User user=userService.getUserByLogin(customStr);
-        assertTrue(user.getLogin().equals(customStr) && user.getUserName().equals(customStr));
+        userService.addUser(new User(null,CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
+        User user=userService.getUserByLogin(CUSTOM_INCORRECT_STR);
+        assertTrue(user.getLogin().equals(CUSTOM_INCORRECT_STR) && user.getUserName().equals(CUSTOM_INCORRECT_STR));
     }
     /****
      *
-     * Test getUserByLogin
+     * TestCases getUserByLogin
      */
     @Test
+    @Rollback(false)
     public void getUserByLogin(){
-        User user=userService.getUserByLogin("userLogin2");
-        assertEquals(user.getLogin(),"userLogin2");
+        User user=userService.getUserByLogin(USER_LOGIN_2);
+        assertEquals(user.getLogin(),USER_LOGIN_2);
     }
 
     @Test(expected = IllegalArgumentException.class)
+    @Rollback(false)
     public void getUserByNullLogin(){
         User user=userService.getUserByLogin(null);
     }
 
     @Test
+    @Rollback(false)
     public void getUserByWrongLogin(){
-        User user=userService.getUserByLogin(wrongLogin);
+        User user=userService.getUserByLogin(CUSTOM_WRONG_LOGIN);
         assertNull(user);
     }
 
     /****
      *
-     * Test getAllUsers
+     * TestCases getAllUsers
      */
     @Test
+    @Rollback(false)
     public void getAllUsers(){
         List<User> usr=new LinkedList<User>();
-        usr.add(new User(1L,"userLogin1","userName1"));
-        usr.add(new User(2L,"userLogin2","userName2"));
+        usr.add(new User(1L,USER_LOGIN_1, USER_NAME_1));
+        usr.add(new User(2L,USER_LOGIN_2, USER_NAME_2));
 
         List<User>nUsr=userService.getUsers();
         assertEquals(usr,nUsr);
@@ -111,10 +122,10 @@ public class UserServiceImplTest {
     @Test
     public void getAllUsers2(){
         List<User> usr=new LinkedList<User>();
-        usr.add(new User(1L,"userLogin1","userName1"));
-        usr.add(new User(2L,"userLogin2","userName2"));
+        usr.add(new User(1L,USER_LOGIN_1,USER_NAME_1));
+        usr.add(new User(2L,USER_LOGIN_2,USER_NAME_2));
 
-        userService.addUser(new User(null,customStr,customStr));
+        userService.addUser(new User(null,CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
         List<User>nUsr=userService.getUsers();
         assertNotEquals(usr, nUsr);
     }
@@ -129,7 +140,7 @@ public class UserServiceImplTest {
 
     /****
      *
-     * Test removeUserById
+     * TestCases removeUserById
      */
     @Test
     public void removeUserById(){
@@ -139,7 +150,7 @@ public class UserServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void removeUserByIncorrectId(){
-        userService.removeUser(99L);
+        userService.removeUser(CUSTOM_WRONG_ID);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -149,25 +160,29 @@ public class UserServiceImplTest {
 
     /****
      *
-     * Test getUserById
+     * TestCases getUserById
      */
     @Test(expected = IllegalArgumentException.class)
+    @Rollback(false)
     public void getUserByNullId(){
         userService.getUserById(null);
     }
+
     @Test
+    @Rollback(false)
     public void getUserById(){
         User us=userService.getUserById(1L);
         assertTrue(us.getUserId().equals(1L));
     }
     @Test
+    @Rollback(false)
     public void getUserByIncorrectId(){
-        User us=userService.getUserById(55L);
+        User us=userService.getUserById(CUSTOM_WRONG_ID);
         assertNull(us);
     }
     /****
      *
-     * Test updateUser
+     * TestCases updateUser
      */
     @Test(expected = IllegalArgumentException.class)
     public void updateNullUser(){
@@ -176,11 +191,12 @@ public class UserServiceImplTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithNoId(){
-        userService.updateUser(new User(null,customStr,customStr));
+        userService.updateUser(new User(null,CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
+        userService.updateUser(new User(0L,CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithIncorrectId(){
-        userService.updateUser(new User(44L,customStr,customStr));
+        userService.updateUser(new User(CUSTOM_WRONG_ID,CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
     }
 }
