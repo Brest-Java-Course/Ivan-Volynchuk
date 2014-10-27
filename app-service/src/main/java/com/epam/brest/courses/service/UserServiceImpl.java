@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService{
         try{
             user=userDao.getUserByLogin(login);
         }catch(EmptyResultDataAccessException e){
-            LOGGER.debug("User with ({}) login doesn't exist",login);
+            LOGGER.error("User with ({}) login doesn't exist",login);
 
         }
         return user;
