@@ -21,6 +21,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  * Created by fieldistor on 20.10.14.
  */
 public class UserDaoImpl implements UserDao{
+    //TODO: ask about ResourceBundleMessageSource
+
     private static final String DELETE_USER_BY_USERID = "DELETE FROM USER WHERE userid=:userid";
     private static final String ADD_NEW_USER_SQL = "INSERT INTO USER (userid,login,name) VALUES (:userid, :login, :name)";
     private static final String SELECT_ALL_USERS_SQL = "SELECT userid, login, name from USER";

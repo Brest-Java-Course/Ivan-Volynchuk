@@ -16,7 +16,7 @@ import static org.easymock.EasyMock.*;
  * Created by fieldistor on 27.10.14.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:/testServiceMockApplicationContextSpring.xml" })
+@ContextConfiguration(locations = { "classpath*:/spring-services-mock-test.xml" })
 public class UserServiceImplMockTest {
 
     @Autowired

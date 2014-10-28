@@ -17,7 +17,7 @@ import java.util.Collection;
  * Created by fieldistor on 27.10.14.
  */
 @RunWith(Parameterized.class)
-@ContextConfiguration(locations = { "classpath:/testServiceApplicationContextSpring.xml" })
+@ContextConfiguration(locations = { "classpath:/spring-services-test.xml" })
 public class UserParameterizedTest {
 
     private User user;
