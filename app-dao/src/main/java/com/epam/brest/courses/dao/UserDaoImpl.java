@@ -24,16 +24,23 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 public class UserDaoImpl implements UserDao{
     //TODO: to sql directory, see DBeaver
 
-    private static final String DELETE_USER_BY_USERID = "DELETE FROM USER WHERE userid=:userid";
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${delete_from_user_path}')).file)}")
+    private String DELETE_USER_BY_USERID;
 
     @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${insert_into_user_path}')).file)}")
-    public String ADD_NEW_USER_SQL;
-    private static final String SELECT_ALL_USERS_SQL = "SELECT userid, login, name from USER";
+    private String ADD_NEW_USER_SQL;
 
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select_all_users}')).file)}")
+    private  String SELECT_ALL_USERS_SQL;
 
-    private static final String SELECT_USER_BY_ID = "SELECT userid, login, name from USER WHERE userid=:userid";
-    private static final String SELECT_USER_BY_LOGIN = "SELECT userid, login, name from USER WHERE login=:login";
-    private static final String UPDATE_USER_SQL = "UPDATE USER SET name = :name, login = :login where userid = :userid";
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select_user_by_id}')).file)}")
+    private  String SELECT_USER_BY_ID;
+
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${select_user_by_login}')).file)}")
+    private  String SELECT_USER_BY_LOGIN;
+
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${update_user}')).file)}")
+    private  String UPDATE_USER_SQL;
 
     private static final String USER_ID = "userid";
     private static final String LOGIN = "login";

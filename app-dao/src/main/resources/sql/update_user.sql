@@ -1,0 +1,1 @@
+UPDATE USER SET name = :name, login = :login where userid = :userid
