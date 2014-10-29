@@ -192,6 +192,10 @@ public class UserServiceImplTest {
     @Test(expected = IllegalArgumentException.class)
     public void updateUserWithNoId(){
         userService.updateUser(new User(null,CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateUserWithZeroId(){
         userService.updateUser(new User(0L,CUSTOM_INCORRECT_STR,CUSTOM_INCORRECT_STR));
     }
 
