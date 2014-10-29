@@ -13,6 +13,7 @@ import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
@@ -21,11 +22,15 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
  * Created by fieldistor on 20.10.14.
  */
 public class UserDaoImpl implements UserDao{
-    //TODO: ask about ResourceBundleMessageSource
+    //TODO: to sql directory, see DBeaver
 
     private static final String DELETE_USER_BY_USERID = "DELETE FROM USER WHERE userid=:userid";
-    private static final String ADD_NEW_USER_SQL = "INSERT INTO USER (userid,login,name) VALUES (:userid, :login, :name)";
+
+    @Value("#{T(org.apache.commons.io.FileUtils).readFileToString((new org.springframework.core.io.ClassPathResource('${insert_into_user_path}')).file)}")
+    public String ADD_NEW_USER_SQL;
     private static final String SELECT_ALL_USERS_SQL = "SELECT userid, login, name from USER";
+
+
     private static final String SELECT_USER_BY_ID = "SELECT userid, login, name from USER WHERE userid=:userid";
     private static final String SELECT_USER_BY_LOGIN = "SELECT userid, login, name from USER WHERE login=:login";
     private static final String UPDATE_USER_SQL = "UPDATE USER SET name = :name, login = :login where userid = :userid";
