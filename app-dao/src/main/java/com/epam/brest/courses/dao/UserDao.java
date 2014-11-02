@@ -10,8 +10,9 @@ public interface UserDao {
      * The method used for adding the user to base.
      *
      * @param user the data(id, login, name) to be added
+     * @return id of user
      */
-    public void addUser(User user);
+    public Long addUser(User user);
 
     /**
      * The method returns a list of users that can then be processed.

@@ -11,12 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.epam.brest.courses.domain.UserImpl;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 /**
  * Created by fieldistor on 20.10.14.
@@ -48,22 +54,26 @@ public class UserDaoImpl implements UserDao{
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
     private static final Logger LOGGER = LogManager.getLogger(UserDaoImpl.class);
-
     public void setDataSource(DataSource dataSource){
 
         namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
 
     @Override
-    public void addUser(User user) {
+    public Long addUser(User user) {
         LOGGER.debug("addUser({})",user);
 
-        Map<String, Object> args = new HashMap(3);
-        args.put(NAME,user.getUserName());
-        args.put(LOGIN,user.getLogin());
-        args.put(USER_ID,user.getUserId());
-        namedJdbcTemplate.update(ADD_NEW_USER_SQL,args);
+        Long userid;
+        KeyHolder holder=new GeneratedKeyHolder();
+        MapSqlParameterSource parameterSource= new MapSqlParameterSource();
+        parameterSource.addValue(NAME,user.getUserName());
+        parameterSource.addValue(LOGIN,user.getLogin());
+        parameterSource.addValue(USER_ID,user.getUserId());
+        namedJdbcTemplate.update(ADD_NEW_USER_SQL,parameterSource,holder);
 
+        userid=holder.getKey().longValue();
+        LOGGER.debug("User with id {} added",userid);
+        return userid;
     }
 
     @Override
@@ -116,7 +126,7 @@ public class UserDaoImpl implements UserDao{
     public class UserMapper implements RowMapper<User>{
         @Override
         public User mapRow(ResultSet resultSet,int i) throws SQLException{
-            User user=new User();
+            User user=new UserImpl();
             user.setUserId(resultSet.getLong(USER_ID));
             user.setLogin(resultSet.getString(LOGIN));
             user.setUserName(resultSet.getString(NAME));

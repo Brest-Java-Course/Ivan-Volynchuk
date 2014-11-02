@@ -36,7 +36,7 @@ public class UserServiceImplMockTest {
         userDao.getUserByLogin(user.getLogin());
         expectLastCall().andReturn(null);
         userDao.addUser(user);
-        expectLastCall();
+        expectLastCall().andReturn(new Long(0L));
 
         replay(userDao);
         userService.addUser(user);
@@ -50,12 +50,12 @@ public class UserServiceImplMockTest {
         userDao.getUserByLogin(user.getLogin());
         expectLastCall().andReturn(null);
         userDao.addUser(user);
-        expectLastCall();
+        expectLastCall().andReturn(new Long(0L));
 
         userDao.getUserByLogin(user.getLogin());
         expectLastCall().andReturn(null);
         userDao.addUser(user);
-        expectLastCall();
+        expectLastCall().andReturn(new Long(0L));
 
 
 
@@ -83,11 +83,7 @@ public class UserServiceImplMockTest {
     public void addUserWithTheSameLogin() {
         User user=UserDataFixture.getNewUser();
 
-
         expect(userDao.getUserByLogin(user.getLogin())).andReturn(user);
-
-
-
 
         replay(userDao);
         userService.addUser(user);

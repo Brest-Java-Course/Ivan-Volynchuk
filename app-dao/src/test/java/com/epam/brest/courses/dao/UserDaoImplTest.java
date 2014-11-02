@@ -1,6 +1,7 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.UserImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +43,7 @@ public class UserDaoImplTest {
         List<User> users = userDao.getUsers();
         int sizeBefore=users.size();
 
-        User user=new User(3L, CUSTOM_STRING,CUSTOM_STRING);
+        User user=new UserImpl(3L, CUSTOM_STRING,CUSTOM_STRING);
         userDao.addUser(user);
         users = userDao.getUsers();
         assertEquals(sizeBefore,users.size()-1);
@@ -74,7 +75,7 @@ public class UserDaoImplTest {
     @Test
     @Rollback(true)
     public void updateUser(){
-        User usr= new User(1L,CUSTOM_STRING,CUSTOM_STRING);
+        User usr= new UserImpl(1L,CUSTOM_STRING,CUSTOM_STRING);
         userDao.updateUser(usr);
 
         User gUsr=userDao.getUserById(1L);

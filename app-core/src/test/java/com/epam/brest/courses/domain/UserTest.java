@@ -9,7 +9,7 @@ public class UserTest {
 
     @Before
     public void setUp() throws Exception {
-        user=new User();
+        user=new UserImpl();
     }
     @Test
     public void testGetUserName() throws Exception {
