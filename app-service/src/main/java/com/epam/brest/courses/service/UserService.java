@@ -19,7 +19,7 @@ public interface UserService {
      *
      * @param user the data(id, login, name) to be added
      */
-    public void addUser(User user);
+    public Long addUser(User user);
 
     /**
      * The method returns a list of users that can then be processed.

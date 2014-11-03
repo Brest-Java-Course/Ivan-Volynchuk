@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void addUser(User user) {
+    public Long addUser(User user) {
         LOGGER.debug("addUser({})",user);
 
         Assert.notNull(user);
@@ -39,7 +39,9 @@ public class UserServiceImpl implements UserService{
         if(existingUser!=null){
             throw new IllegalArgumentException("User is already exist");
         }
-        userDao.addUser(user);
+        Long userid=userDao.addUser(user);
+        LOGGER.debug("User id is {}",userid);
+        return userid;
     }
 
     @Override
