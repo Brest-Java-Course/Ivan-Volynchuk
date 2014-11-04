@@ -2,6 +2,7 @@ package com.epam.brest.courses.service;
 
 import com.epam.brest.courses.dao.UserDao;
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.UserDataFixture;
 import com.epam.brest.courses.domain.exception.BadInputData;
 import com.epam.brest.courses.domain.exception.NotFoundException;
 import org.junit.After;

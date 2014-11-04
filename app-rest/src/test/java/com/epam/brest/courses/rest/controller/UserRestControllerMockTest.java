@@ -1,6 +1,7 @@
 package com.epam.brest.courses.rest.controller;
 
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.UserDataFixture;
 import com.epam.brest.courses.domain.UserImpl;
 import com.epam.brest.courses.domain.exception.BadInputData;
 import com.epam.brest.courses.domain.exception.NotFoundException;
@@ -219,46 +220,5 @@ public class UserRestControllerMockTest {
         verify(userService);
     }
 
-    public static class UserDataFixture {
 
-        public static User getNewUser() {
-            User user = new UserImpl();
-            user.setUserName("name");
-            user.setLogin("login");
-            return user;
-        }
-
-        public static User getNewUser(Long id) {
-            User user = new UserImpl();
-            user.setUserId(id);
-            user.setUserName("name" + id);
-            user.setLogin("login" + id);
-            return user;
-        }
-
-        public static User getNewUserWithoutLogin() {
-            User user = new UserImpl();
-            user.setUserName("name");
-            return user;
-        }
-
-        public static User getExistUser(long id) {
-            User user = new UserImpl();
-            user.setUserId(id);
-            user.setUserName("name");
-            user.setLogin("login");
-            return user;
-        }
-
-        public static List<User> getSampleUserList() {
-            List<User> list = new ArrayList(3);
-            list.add(UserDataFixture.getNewUser(1L));
-            list.add(UserDataFixture.getNewUser(2L));
-            list.add(UserDataFixture.getNewUser(3L));
-            return list;
-        }
-        public static User getExistUserWithoutLogin(Long id) {
-            return new UserImpl(id,null,"name");
-        }
-    }
 }
