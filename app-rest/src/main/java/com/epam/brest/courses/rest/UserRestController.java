@@ -1,6 +1,7 @@
 package com.epam.brest.courses.rest;
 
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.UserImpl;
 import com.epam.brest.courses.domain.exception.BadInputData;
 import com.epam.brest.courses.domain.exception.NotFoundException;
 import com.epam.brest.courses.service.UserService;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -71,7 +73,7 @@ public class UserRestController {
 
     @ResponseBody
     @RequestMapping(method= RequestMethod.POST)
-    public ResponseEntity<Long> addUser(@RequestBody User user) {
+    public ResponseEntity<Long> addUser(@RequestBody UserImpl user) {
         try {
             Long id = userService.addUser(user);
             return new ResponseEntity(id, HttpStatus.CREATED);
@@ -82,7 +84,7 @@ public class UserRestController {
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updateUser(@RequestBody User user) {
+    public ResponseEntity updateUser(@RequestBody UserImpl user) {
 
         try {
             userService.updateUser(user);
@@ -92,6 +94,7 @@ public class UserRestController {
         }catch(BadInputData e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
+
 
     }
 
