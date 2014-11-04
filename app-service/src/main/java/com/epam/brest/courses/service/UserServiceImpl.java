@@ -2,6 +2,8 @@ package com.epam.brest.courses.service;
 
 import com.epam.brest.courses.dao.UserDao;
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.exception.BadInputData;
+import com.epam.brest.courses.domain.exception.NotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +17,14 @@ import java.util.List;
  */
 public class UserServiceImpl implements UserService{
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
-    //TODO: ask about ResourceBundleMessageSource
-    private static final String INCORRECT_USER_ID = "There isn't user with such userId";
-    private static final String NULL_LOGIN = "User login should be not specified.";
-    private static final String NULL_NAME = "User name should be not specified.";
+
+    //Constants for Exceptions
+    private static final String LOGIN_NOT_NULL = "User login should be specified.";
+    private static final String NAME_NOT_NULL = "User name should be specified.";
+    private static final String USER_ID_NOT_NULL = "UserId should be specified.";
     private static final String USER_ID_NULL = "UserId should be not specified.";
-    private static final String USER_NULL = "User should be not specified.";
+    private static final String USER_NOT_NULL = "User should be specified.";
+    private static final String BAD_DATA = "Bad input user's data. ";
     private UserDao userDao;
 
     public void setUserDao(UserDao userDao) {
@@ -31,17 +35,22 @@ public class UserServiceImpl implements UserService{
     public Long addUser(User user) {
         LOGGER.debug("addUser({})",user);
 
-        Assert.notNull(user);
-        Assert.isNull(user.getUserId());
-        Assert.notNull(user.getLogin(), NULL_LOGIN);
-        Assert.notNull(user.getUserName(), NULL_NAME);
+        try {
+            Assert.notNull(user,USER_NOT_NULL);
+            Assert.isNull(user.getUserId(),USER_ID_NULL);
+            Assert.notNull(user.getLogin(), LOGIN_NOT_NULL);
+            Assert.notNull(user.getUserName(), NAME_NOT_NULL);
+        }
+        catch(IllegalArgumentException e) {
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
+        }
+
         User existingUser=getUserByLogin(user.getLogin());
         if(existingUser!=null){
-            throw new IllegalArgumentException("User is already exist");
+            throw new BadInputData("User with "+user.getLogin()+"login already exist",LOGGER);
         }
-        Long userid=userDao.addUser(user);
-        LOGGER.debug("User id is {}",userid);
-        return userid;
+
+        return userDao.addUser(user);
     }
 
     @Override
@@ -49,13 +58,16 @@ public class UserServiceImpl implements UserService{
         LOGGER.debug("getUserByLogin({})",login);
 
         User user=null;
-        Assert.notNull(login,NULL_LOGIN);
         try{
+            Assert.notNull(login,LOGIN_NOT_NULL);
             user=userDao.getUserByLogin(login);
         }catch(EmptyResultDataAccessException e){
             LOGGER.error("User with ({}) login doesn't exist",login);
-
+            throw new NotFoundException("User with "+login+" login doesn't exist",login);
+        }catch(IllegalArgumentException e){
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
         }
+
         return user;
     }
 
@@ -69,20 +81,27 @@ public class UserServiceImpl implements UserService{
         }
         catch(EmptyResultDataAccessException e){
             LOGGER.debug("There aren't any items.");
+            throw new NotFoundException("No users' data",null);
         }
-        return usr.size()!=0?usr:null;
+        return usr;
     }
 
     @Override
     public void removeUser(Long userId) {
         LOGGER.debug("removeUser({})",userId);
 
-        Assert.notNull(userId, USER_ID_NULL);
+        try {
+            Assert.notNull(userId, USER_ID_NOT_NULL);
+        }
+        catch(IllegalArgumentException e){
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
+        }
         if(getUserById(userId)!=null) {
             userDao.removeUser(userId);
         }
         else{
-            throw new IllegalArgumentException(INCORRECT_USER_ID);
+            LOGGER.debug("No user with {} id",userId);
+            throw new NotFoundException("User with "+userId+" userId doesn't exist",userId.toString());
         }
     }
 
@@ -91,25 +110,34 @@ public class UserServiceImpl implements UserService{
         LOGGER.debug("getUserById({})",userId);
 
         User user=null;
-        Assert.notNull(userId,USER_ID_NULL);
         try{
+            Assert.notNull(userId,USER_ID_NOT_NULL);
             user=userDao.getUserById(userId);
         }catch(EmptyResultDataAccessException e){
             LOGGER.debug("User with ({}) UserId doesn't exist",userId);
+            throw new NotFoundException("User with "+userId+" userId doesn't exist",userId.toString());
+        }catch(IllegalArgumentException e){
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
         }
         return user;
     }
 
     @Override
     public void updateUser(User user) {
-        Assert.notNull(user, USER_NULL);
-        Assert.notNull(user.getUserId(),USER_ID_NULL);
-        Assert.isTrue(!user.getUserId().equals(0L));
+
+        try {
+            Assert.notNull(user, USER_NOT_NULL);
+            Assert.notNull(user.getUserId(), USER_ID_NOT_NULL);
+            Assert.isTrue(!user.getUserId().equals(0L),USER_ID_NOT_NULL);
+        }catch(IllegalArgumentException e) {
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
+        }
         if(getUserById(user.getUserId())!=null) {
             userDao.updateUser(user);
         }
         else{
-            throw new IllegalArgumentException(INCORRECT_USER_ID);
+            LOGGER.debug("No user with {} id",user.getUserId());
+            throw new NotFoundException("User with "+user.getUserId()+" userId doesn't exist",user.getUserId().toString());
         }
     }
 

@@ -18,4 +18,6 @@ public class UserDataFixture {
     public static User getExistUser(Long id){
         return new UserImpl(id,LOGIN_FIX,NAME_FIX);
     }
+
+    public static User getExistUserWithoutLogin(Long id) { return new UserImpl(id,null,NAME_FIX);}
 }

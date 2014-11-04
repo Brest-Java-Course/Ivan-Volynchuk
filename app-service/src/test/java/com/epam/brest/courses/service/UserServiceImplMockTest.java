@@ -2,6 +2,8 @@ package com.epam.brest.courses.service;
 
 import com.epam.brest.courses.dao.UserDao;
 import com.epam.brest.courses.domain.User;
+import com.epam.brest.courses.domain.exception.BadInputData;
+import com.epam.brest.courses.domain.exception.NotFoundException;
 import junit.framework.Assert;
 import org.junit.After;
 import static org.junit.Assert.*;
@@ -29,6 +31,25 @@ public class UserServiceImplMockTest {
     public void clean(){
         reset(userDao);
     }
+
+    @Test(expected = BadInputData.class)
+    public void addUserWithNullLogin() {
+        User user= UserDataFixture.getExistUserWithoutLogin(1L);
+
+        replay(userDao);
+        userService.addUser(user);
+        verify(userDao);
+    }
+
+    @Test(expected = BadInputData.class)
+    public void getUserByLoginWithoutLogin() {
+        User user= UserDataFixture.getExistUserWithoutLogin(1L);
+
+        replay(userDao);
+        userService.getUserByLogin(user.getLogin());
+        verify(userDao);
+    }
+
     @Test
     public void addUser() {
         User user= UserDataFixture.getNewUser();
@@ -79,7 +100,7 @@ public class UserServiceImplMockTest {
         assertSame(user, result);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = BadInputData.class)
     public void addUserWithTheSameLogin() {
         User user=UserDataFixture.getNewUser();
 
@@ -90,15 +111,45 @@ public class UserServiceImplMockTest {
 
     }
 
-    @Test(expected = NumberFormatException.class)
-    public void addUserException() {
+    @Test(expected = NotFoundException.class)
+    public void getUserByLogin() {
         User user=UserDataFixture.getNewUser();
 
-        expect(userDao.getUserByLogin(user.getLogin())).andThrow(new NumberFormatException());
+        userDao.getUserByLogin(user.getLogin());
+        expectLastCall().andThrow(new NotFoundException("User login should be not specified.", user.getLogin()));
 
         replay(userDao);
-        userService.addUser(user);
+        userService.getUserByLogin(user.getLogin());
+        verify(userDao);
     }
+
+    @Test
+    public void UpdateUser() {
+        User user=UserDataFixture.getExistUser(13L);
+
+        userDao.getUserById(user.getUserId());
+        expectLastCall().andReturn(UserDataFixture.getNewUser());
+        userDao.updateUser(user);
+        expectLastCall();
+
+        replay(userDao);
+        userService.updateUser(user);
+        verify(userDao);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void UpdateUser2() {
+        User user=UserDataFixture.getExistUser(13L);
+
+        userDao.getUserById(user.getUserId());
+        expectLastCall().andReturn(null).andThrow(new NotFoundException("",""));
+
+
+        replay(userDao);
+        userService.updateUser(user);
+        verify(userDao);
+    }
+
 
 
 }
