@@ -1,28 +1,22 @@
 package com.epam.brest.courses.dao;
 
 import com.epam.brest.courses.domain.User;
-
+import com.epam.brest.courses.domain.UserImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.epam.brest.courses.domain.UserImpl;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.*;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 
 /**
  * Created by fieldistor on 20.10.14.

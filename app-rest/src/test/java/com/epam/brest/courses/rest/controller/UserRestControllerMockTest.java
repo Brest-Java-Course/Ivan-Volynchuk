@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.annotation.Resource;
-
 import java.util.ArrayList;
 import java.util.List;
 

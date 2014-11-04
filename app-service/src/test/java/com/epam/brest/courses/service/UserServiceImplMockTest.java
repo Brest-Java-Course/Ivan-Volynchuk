@@ -4,16 +4,15 @@ import com.epam.brest.courses.dao.UserDao;
 import com.epam.brest.courses.domain.User;
 import com.epam.brest.courses.domain.exception.BadInputData;
 import com.epam.brest.courses.domain.exception.NotFoundException;
-import junit.framework.Assert;
 import org.junit.After;
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import static org.easymock.EasyMock.*;
+import static org.junit.Assert.assertSame;
 /**
  * Created by fieldistor on 27.10.14.
  */

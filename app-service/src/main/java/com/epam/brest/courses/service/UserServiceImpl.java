@@ -6,7 +6,6 @@ import com.epam.brest.courses.domain.exception.BadInputData;
 import com.epam.brest.courses.domain.exception.NotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.util.Assert;
 
