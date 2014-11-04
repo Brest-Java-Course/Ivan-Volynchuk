@@ -72,7 +72,8 @@ public class UserRestControllerMockTest {
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andDo(print())
-                .andExpect(status().isCreated());
+                .andExpect(status().isCreated())
+		.andExpect(content().string(new Long(1L).toString()));
         verify(userService);
     }
 
