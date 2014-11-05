@@ -84,7 +84,7 @@ public class UserRestController {
 
     @RequestMapping(method = RequestMethod.PUT)
     @ResponseBody
-    public ResponseEntity updateUser(@RequestBody UserImpl user) {
+    public ResponseEntity updateUser(@RequestBody User user) {
 
         try {
             userService.updateUser(user);

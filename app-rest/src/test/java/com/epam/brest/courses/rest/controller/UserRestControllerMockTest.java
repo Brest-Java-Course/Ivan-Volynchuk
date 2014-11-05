@@ -166,7 +166,7 @@ public class UserRestControllerMockTest {
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"userId\":1,\"login\":\"login\",\"userName\":\"name\"}"));
+                .andExpect(content().string("{\"type\":\"userimpl\",\"userId\":1,\"login\":\"login\",\"userName\":\"name\"}"));
         verify(userService);
     }
 
