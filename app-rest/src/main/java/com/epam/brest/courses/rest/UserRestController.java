@@ -73,7 +73,7 @@ public class UserRestController {
 
     @ResponseBody
     @RequestMapping(method= RequestMethod.POST)
-    public ResponseEntity<Long> addUser(@RequestBody UserImpl user) {
+    public ResponseEntity<Long> addUser(@RequestBody User user) {
         try {
             Long id = userService.addUser(user);
             return new ResponseEntity(id, HttpStatus.CREATED);
