@@ -82,7 +82,7 @@ public class UserRestControllerMockTest {
 
         User user=UserDataFixture.getExistUser(10L);
         String userJson = new ObjectMapper().writeValueAsString(user);
-
+        System.out.println(userJson);
         userService.updateUser(user);
         expectLastCall();
 

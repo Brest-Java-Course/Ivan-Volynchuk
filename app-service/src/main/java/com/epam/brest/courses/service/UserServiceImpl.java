@@ -44,12 +44,14 @@ public class UserServiceImpl implements UserService{
             throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
         }
 
-        User existingUser=getUserByLogin(user.getLogin());
-        if(existingUser!=null){
-            throw new BadInputData("User with "+user.getLogin()+"login already exist",LOGGER);
+        try {
+            User existingUser=getUserByLogin(user.getLogin());
+        }catch(NotFoundException e) {
+            return userDao.addUser(user);
         }
+         throw new BadInputData("User with "+user.getLogin()+"login already exist",LOGGER);
 
-        return userDao.addUser(user);
+
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.epam.brest.courses.domain.User;
 import com.epam.brest.courses.domain.UserDataFixture;
 import com.epam.brest.courses.domain.exception.BadInputData;
 import com.epam.brest.courses.domain.exception.NotFoundException;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -55,7 +56,7 @@ public class UserServiceImplMockTest {
         User user= UserDataFixture.getNewUser();
 
         userDao.getUserByLogin(user.getLogin());
-        expectLastCall().andReturn(null);
+        expectLastCall().andThrow(new NotFoundException("",""));
         userDao.addUser(user);
         expectLastCall().andReturn(new Long(0L));
 
@@ -69,12 +70,12 @@ public class UserServiceImplMockTest {
         User user= UserDataFixture.getNewUser();
 
         userDao.getUserByLogin(user.getLogin());
-        expectLastCall().andReturn(null);
+        expectLastCall().andThrow(new NotFoundException("",""));
         userDao.addUser(user);
         expectLastCall().andReturn(new Long(0L));
 
         userDao.getUserByLogin(user.getLogin());
-        expectLastCall().andReturn(null);
+        expectLastCall().andThrow(new NotFoundException("",""));
         userDao.addUser(user);
         expectLastCall().andReturn(new Long(0L));
 
