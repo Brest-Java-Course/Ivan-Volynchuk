@@ -3,28 +3,29 @@
     <title> Users </title>
 
     <body>
-            <label path="userId">
-                Id of User:
-            </label>
-            <label path="userName">
-                Name:
-            </label>
-            <label path="login">
-                Login:
-            </label>
 
-            <c:forEach items="${users}" var="user">
-                <h2>
-                    <c:out value="${user.userId}"/>
-                </h2>
-                <h2>
-                    <c:out value="${user.userName}"/>
-                </h2>
-                <h2>
-                    <c:out value="${user.login}"/>
-                </h2></br>
-            </c:forEach>
+            <TABLE BORDER>
+                    <TR>
+                            <TH>userId</TH> <TH>userName</TH> <TH>login</TH>
+                    </TR>
 
+                    <c:forEach items="${users}" var="user">
+                         <TR>
+                            <TD>
+                                <c:out value="${user.userId}"/>
+                            </TD>
+
+                            <TD>
+                                <c:out value="${user.userName}"/>
+                            </TD>
+
+                            <TD>
+                                <c:out value="${user.login}"/>
+                            </TD>
+
+                         </TR>
+                    </c:forEach>
+            </TABLE>
     </body>
 
 </html>
