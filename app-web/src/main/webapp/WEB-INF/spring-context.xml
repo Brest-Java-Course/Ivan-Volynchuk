@@ -17,6 +17,8 @@
 
     <import resource="classpath:spring-service.xml"/>
 
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
             <value>/WEB-INF/JSP/</value>
@@ -28,6 +30,7 @@
 
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="WEB-INF/create-tables.sql"/>
+        <jdbc:script location="WEB-INF/data-script.sql"/>
     </jdbc:initialize-database>
 
 

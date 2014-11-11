@@ -7,6 +7,7 @@ import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,30 +24,48 @@ public class UserControlller {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value={"/index"})
+    @RequestMapping(value={"/"})
     public ModelAndView showIndex() {
 
         List<User> users =userService.getUsers();
         return new ModelAndView("index","users",users);
     }
 
-    @RequestMapping(value={"/"})
-    public ModelAndView launchInputForm() {
+    @RequestMapping(value={"/delete"}, method = RequestMethod.GET)
+    public ModelAndView deleteUser(@RequestParam("id") Long id) {
 
-
-        return new ModelAndView("inputForm","user",new UserImpl());
+        userService.removeUser(id);
+        return new ModelAndView("index","users",userService.getUsers());
     }
 
-    @RequestMapping(value={"/submitData"})
-    public ModelAndView getInputForm(@RequestParam("userName") String userName,@RequestParam("login") String login) {
+    @RequestMapping(value={"/update"}, method = RequestMethod.GET)
+    public ModelAndView showUserToUpdate(@RequestParam("id") Long id) {
 
-        UserImpl user= new UserImpl();
-        user.setUserName(userName);
-        user.setLogin(login);
 
-        Long id=userService.addUser(user);
-        user.setUserId(id);
-
-        return new ModelAndView("displayResult","user",user);
+        return new ModelAndView("changer","user",userService.getUserById(id));
     }
+
+    @RequestMapping(value={"/update"}, method = RequestMethod.POST)
+    public ModelAndView updateUser(@RequestParam("userId") Long id,
+                                   @RequestParam("userName") String name,
+                                   @RequestParam("login") String login) {
+
+        userService.updateUser(new UserImpl(id,login,name));
+        return new ModelAndView("index","users",userService.getUsers());
+    }
+
+    @RequestMapping(value={"/add"}, method = RequestMethod.GET)
+    public ModelAndView showAdd() {
+
+        return new ModelAndView("adder");
+    }
+    @RequestMapping(value={"/add"}, method = RequestMethod.POST)
+    public ModelAndView addUser(@RequestParam("userName") String name,
+                                @RequestParam("login") String login) {
+
+        userService.addUser(new UserImpl(null,login,name));
+        return new ModelAndView("index","users",userService.getUsers());
+    }
+
+
 }
