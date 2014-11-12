@@ -5,14 +5,21 @@ table{
     margin: 0 auto;
     border-collapse:collapse;
 }
+
+tr:nth-child(2n){
+    background: #ededed;
+}
+
 th{
     border-bottom: 2px solid #00bcb5;
     padding: 10px 50px;
+    color: #808080;
 }
+
 td{
-    text-align: center;
     border-bottom: 1px solid #ccc;
-    color: #767676;
+    color: #adadad;
+    text-align: center;
 }
 
 .add{
@@ -47,9 +54,24 @@ td{
     text-decoration: none;
     border-bottom: 1px solid #d66652;
     color: #d66652;
+    margin-right: 25px;
+    transition: border .2s ease-in-out;
+}
+
+.wrapp span{
+    color: #00bcb5;
 }
 
 .wrapp a:last-child{
     border-bottom: 1px solid #5bb54a;
     color: #5bb54a;
+    margin-left: 25px;
+}
+
+.wrapp a:hover{
+     border-bottom: 5px solid #d66652;
+}
+
+.wrapp a:last-child:hover{
+     border-bottom: 5px solid #5bb54a;
 }

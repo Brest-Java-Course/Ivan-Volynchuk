@@ -40,6 +40,7 @@
             </TABLE>
             <div class="wrapp">
             <a href='<spring:url value="/add" />'>Add user</a>
+            <span>|</span>
             <a href='<spring:url value="/add" />'>Empty</a>
             </div>
     </body>

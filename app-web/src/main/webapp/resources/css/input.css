@@ -1,0 +1,34 @@
+body{
+    font-size: 20px;
+}
+
+
+/*Form*/
+form{
+    margin: 30px auto;
+    text-align: center;
+    width: 500px;
+    padding-top: 20px;
+    border-top: 2px solid #00bcb5;
+}
+
+input{
+    margin-bottom: 10px;
+    color: #adadad;
+    font-size: 18px;
+}
+
+.sub{
+    border: none;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #5bb54a;
+    background: none;
+    color: #000;
+    color: #5bb54a;
+    transition: border .2s ease-in-out;
+}
+
+.sub:hover{
+    border-bottom: 5px solid #5bb54a;
+    cursor: pointer;
+}
