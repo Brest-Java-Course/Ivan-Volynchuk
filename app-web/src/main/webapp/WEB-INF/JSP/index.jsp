@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
     <title> Users </title>
     <link href="<c:url value="/resources/css/index.css" />" rel="stylesheet">
@@ -24,18 +25,22 @@
                             </TD>
 
                             <TD class="add">
-                                <a href="${pageContext.request.contextPath}/mvc/update?id=${user.userId}">+</a>
+                                <a href='<spring:url value="/update" >  <spring:param name="id" value="${user.userId}" />   </spring:url>'>
+                                +
+                                </a>
                             </TD>
 
                             <TD class="del">
-                                <a href="${pageContext.request.contextPath}/mvc/delete?id=${user.userId}">-</a>
+                                <a href='<spring:url value="/delete" >  <spring:param name="id" value="${user.userId}" />   </spring:url>'>
+                                -
+                                </a>
                             </TD>
                          </TR>
                     </c:forEach>
             </TABLE>
             <div class="wrapp">
-            <a href="${pageContext.request.contextPath}/mvc/add">Add user</a>
-            <a href="${pageContext.request.contextPath}/mvc/add">Empty</a>
+            <a href='<spring:url value="/add" />'>Add user</a>
+            <a href='<spring:url value="/add" />'>Empty</a>
             </div>
     </body>
 

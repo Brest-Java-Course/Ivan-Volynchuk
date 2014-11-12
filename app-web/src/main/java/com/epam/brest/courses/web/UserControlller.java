@@ -18,7 +18,6 @@ import java.util.List;
  * Created by fieldistor on 10.11.14.
  */
 @Controller
-@RequestMapping("/mvc")
 public class UserControlller {
 
     @Autowired
@@ -32,10 +31,11 @@ public class UserControlller {
     }
 
     @RequestMapping(value={"/delete"}, method = RequestMethod.GET)
-    public ModelAndView deleteUser(@RequestParam("id") Long id) {
+    public String deleteUser(@RequestParam("id") Long id) {
 
         userService.removeUser(id);
-        return new ModelAndView("index","users",userService.getUsers());
+        return "redirect:/";
+
     }
 
     @RequestMapping(value={"/update"}, method = RequestMethod.GET)
@@ -46,12 +46,12 @@ public class UserControlller {
     }
 
     @RequestMapping(value={"/update"}, method = RequestMethod.POST)
-    public ModelAndView updateUser(@RequestParam("userId") Long id,
+    public String updateUser(@RequestParam("userId") Long id,
                                    @RequestParam("userName") String name,
                                    @RequestParam("login") String login) {
 
         userService.updateUser(new UserImpl(id,login,name));
-        return new ModelAndView("index","users",userService.getUsers());
+        return "redirect:/";
     }
 
     @RequestMapping(value={"/add"}, method = RequestMethod.GET)
@@ -60,11 +60,11 @@ public class UserControlller {
         return new ModelAndView("adder");
     }
     @RequestMapping(value={"/add"}, method = RequestMethod.POST)
-    public ModelAndView addUser(@RequestParam("userName") String name,
+    public String addUser(@RequestParam("userName") String name,
                                 @RequestParam("login") String login) {
 
         userService.addUser(new UserImpl(null,login,name));
-        return new ModelAndView("index","users",userService.getUsers());
+        return "redirect:/";
     }
 
 

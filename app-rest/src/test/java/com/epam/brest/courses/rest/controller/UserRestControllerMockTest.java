@@ -105,7 +105,7 @@ public class UserRestControllerMockTest {
         String userJson = new ObjectMapper().writeValueAsString(user);
 
         userService.addUser(user);
-        expectLastCall().andThrow(new BadInputData(""));
+        expectLastCall().andThrow(new BadInputData("",""));
 
         replay(userService);
         this.mockMvc.perform(
@@ -174,7 +174,7 @@ public class UserRestControllerMockTest {
     public void getUserByNullIdTest() throws Exception{
 
         userService.getUserById(0L);
-        expectLastCall().andThrow(new BadInputData("NULL ID"));
+        expectLastCall().andThrow(new BadInputData("NULL ID","NO"));
 
         replay(userService);
         this.mockMvc.perform(

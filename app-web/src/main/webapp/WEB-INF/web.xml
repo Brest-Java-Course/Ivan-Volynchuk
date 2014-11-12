@@ -15,25 +15,19 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
-    <!--
-
-
-
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:spring-*.xml</param-value>
+    </context-param>
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <context-param>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:*-context.xml</param-value>
-    </context-param>
-
-
-
-
-    -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/JSP/error/404.jsp</location>
+    </error-page>
 
 
 </web-app>

@@ -7,21 +7,26 @@ import org.apache.logging.log4j.Logger;
  */
 public class BadInputData extends RuntimeException {
 
+    private String place;
 
     /**
      * Constructs a new exception with the specified detail message and objectId value.
      *
      * @param message the detail message
+     * @param place  the place of error
      */
-    public BadInputData(String message, Logger LOGGER) {
+    public BadInputData(String message, Logger LOGGER, String place) {
         super(message);
         LOGGER.debug(message);
+        this.place=place;
     }
 
-    public BadInputData(String message) {
+    public BadInputData(String message, String place) {
         super(message);
-
+        this.place=place;
     }
 
-
+    public String getPlace() {
+        return place;
+    }
 }

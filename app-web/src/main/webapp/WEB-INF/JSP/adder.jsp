@@ -2,7 +2,7 @@
         <title> inputForm </title>
 
         <body>
-            <form action="${pageContext.request.contextPath}/mvc/add" method="post">
+            <form action="${pageContext.request.contextPath}/add" method="post">
 
 
                 <label path="name">

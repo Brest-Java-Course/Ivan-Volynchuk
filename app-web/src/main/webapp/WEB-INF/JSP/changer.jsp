@@ -2,7 +2,7 @@
         <title> inputForm </title>
 
         <body>
-            <form action="${pageContext.request.contextPath}/mvc/update" method="post">
+            <form action="${pageContext.request.contextPath}/update" method="post">
 
 
                 <label path="Id">

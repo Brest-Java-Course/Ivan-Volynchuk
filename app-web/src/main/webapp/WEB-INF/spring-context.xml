@@ -17,6 +17,24 @@
 
     <import resource="classpath:spring-service.xml"/>
 
+
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="com.epam.brest.courses.domain.exception.NotFoundException">error/404</prop>
+                <prop key="com.epam.brest.courses.domain.exception.BadInputData">error/badData</prop>
+                <prop key="java.lang.Exception">error/error</prop>
+                <prop key="java.lang.RuntimeException">error/error</prop>
+            </props>
+        </property>
+        <property name="statusCodes">
+            <props>
+                <prop key="error/404">404</prop>
+                <prop key="error/error">500</prop>
+            </props>
+        </property>
+    </bean>
+
     <mvc:resources mapping="/resources/**" location="/resources/" />
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

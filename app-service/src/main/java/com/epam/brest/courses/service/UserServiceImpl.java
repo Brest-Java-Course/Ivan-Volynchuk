@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService{
             Assert.notNull(user.getUserName(), NAME_NOT_NULL);
         }
         catch(IllegalArgumentException e) {
-            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER,"Adding user");
         }
 
         try {
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService{
         }catch(NotFoundException e) {
             return userDao.addUser(user);
         }
-         throw new BadInputData("User with "+user.getLogin()+"login already exist",LOGGER);
+         throw new BadInputData("User with "+user.getLogin()+" login already exist",LOGGER,"Adding user");
 
 
     }
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService{
             LOGGER.error("User with ({}) login doesn't exist",login);
             throw new NotFoundException("User with "+login+" login doesn't exist",login);
         }catch(IllegalArgumentException e){
-            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER,"Getting user by login");
         }
 
         return user;
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService{
             Assert.notNull(userId, USER_ID_NOT_NULL);
         }
         catch(IllegalArgumentException e){
-            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER,"Removing user");
         }
         if(getUserById(userId)!=null) {
             userDao.removeUser(userId);
@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService{
             LOGGER.debug("User with ({}) UserId doesn't exist",userId);
             throw new NotFoundException("User with "+userId+" userId doesn't exist",userId.toString());
         }catch(IllegalArgumentException e){
-            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER,"Getting user by id");
         }
         return user;
     }
@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService{
             Assert.notNull(user.getUserId(), USER_ID_NOT_NULL);
             Assert.isTrue(!user.getUserId().equals(0L),USER_ID_NOT_NULL);
         }catch(IllegalArgumentException e) {
-            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER);
+            throw new BadInputData(BAD_DATA+e.getMessage(),LOGGER,"Updating user");
         }
         if(getUserById(user.getUserId())!=null) {
             userDao.updateUser(user);
