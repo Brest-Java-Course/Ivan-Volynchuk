@@ -11,6 +11,14 @@ $('#adderLink').click(function () {
 });
 
 $('#sub').click(function () {
+   var loginLength = $("#login").val().length;
+   var nameLength = $("#name").val().length;
+
+   if(loginLength==0 | nameLength==0) {
+   alert("Please check your input.");
+   return;
+   }
+
    if(state==1) {
         updateUser();
    }
