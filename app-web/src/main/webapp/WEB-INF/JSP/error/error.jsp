@@ -12,15 +12,15 @@
 <button onclick="history.back()">Back to Previous Page</button>
 
 <c:if test="${not empty datetime}">
-		<h1>Date: ${exception.datetime}</h1>
+		<h1>Date: ${datetime}</h1>
 		</br>
 </c:if>
 <c:if test="${not empty exception}">
-		<h1>Error code: ${exception} : System Errors</h1>
+		<h1>Error code: ${exception}</h1>
 		</br>
 </c:if>
 <c:if test="${not empty url}">
-		<h1>Request URI: ${exception.datetime} : System Errors</h1>
+		<h1>Request URI: ${url}</h1>
 		</br>
 </c:if>
 

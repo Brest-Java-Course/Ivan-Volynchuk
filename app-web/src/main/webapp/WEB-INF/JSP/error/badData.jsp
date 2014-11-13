@@ -21,5 +21,15 @@
 		</br>
 </c:if>
 
+<c:if test="${not empty datetime}">
+		<h1>Date: ${datetime}</h1>
+		</br>
+</c:if>
+
+<c:if test="${not empty url}">
+		<h1>Request URI: ${url}</h1>
+		</br>
+</c:if>
+
 </body>
 </html>

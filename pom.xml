@@ -12,6 +12,7 @@
         <module>app-service</module>
         <module>app-rest</module>
         <module>app-web</module>
+        <module>app-client</module>
     </modules>
 	
 	<properties>
@@ -22,24 +23,6 @@
 
 	<dependencyManagement>
         <dependencies>
-                        <dependency>
-                            <groupId>javax.servlet</groupId>
-                            <artifactId>servlet-api</artifactId>
-                            <version>2.5</version>
-                            <scope>provided</scope>
-                        </dependency>
-                        <dependency>
-                            <groupId>javax.servlet.jsp</groupId>
-                            <artifactId>jsp-api</artifactId>
-                            <version>2.1</version>
-                            <scope>provided</scope>
-                        </dependency>
-
-                        <dependency>
-                            <groupId>taglibs</groupId>
-                            <artifactId>standard</artifactId>
-                            <version>1.1.2</version>
-                        </dependency>
                         <dependency>
                             <groupId>javax.servlet</groupId>
                             <artifactId>jstl</artifactId>
@@ -61,6 +44,12 @@
                                 <groupId>javax.servlet</groupId>
                                 <artifactId>javax.servlet-api</artifactId>
                                 <version>3.1.0</version>
+                        </dependency>
+
+                        <dependency>
+                            <groupId>org.eclipse.jetty</groupId>
+                            <artifactId>jetty-servlets</artifactId>
+                            <version>9.2.4.v20141103</version>
                         </dependency>
 
                         <dependency>
@@ -171,38 +160,47 @@
 		</dependencies>
 	</dependencyManagement>
 
-    <build>
-        <pluginManagement>
+        <build>
+            <pluginManagement>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>2.3.2</version>
+                        <configuration>
+                            <source>1.6</source>
+                            <target>1.6</target>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>cobertura-maven-plugin</artifactId>
+                        <version>2.6</version>
+                        <configuration>
+                            <formats>
+                                <format>html</format>
+                                <format>xml</format>
+                            </formats>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>clean</id>
+                                <phase>clean</phase>
+                                <goals>
+                                    <goal>clean</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </pluginManagement>
+        </build>
+        <reporting>
             <plugins>
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>cobertura-maven-plugin</artifactId>
-                    <version>2.6</version>
-                    <configuration>
-                        <formats>
-                            <format>html</format>
-                            <format>xml</format>
-                        </formats>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>clean</id>
-                            <phase>clean</phase>
-                            <goals>
-                                <goal>clean</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
             </plugins>
-        </pluginManagement>
-    </build>
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
+        </reporting>
 </project>
