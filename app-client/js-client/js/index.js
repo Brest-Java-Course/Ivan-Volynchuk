@@ -11,13 +11,11 @@ $('#adderLink').click(function () {
 });
 
 $('#sub').click(function () {
-   if(state==0) {
-        addUser();
+   if(state==1) {
+        updateUser();
    }
-   else if(state==1) {
-
-       updateUser();
-
+   else{
+        addUser();
    }
 });
 
@@ -69,12 +67,12 @@ function deleteById(id) {
         $.ajax({
             type: 'DELETE',
             url: REST_URL + '/' + id,
-            success: function(data, textStatus, jqXHR){
-                alert('user deleted successfully');
+            success: function(){
+                findAll();
             },
             error: function(jqXHR, textStatus, errorThrown){
                 console.log(jqXHR, textStatus, errorThrown);
-                alert('delete user error');
+
             }
         });
     }
@@ -89,7 +87,7 @@ function addUser() {
         dataType: "json",
         data: formToJSON(),
         success: function (data,textStatus, jqXHR) {
-            alert('User created successfully');
+            findAll();
         },
         error: function (jqXHR, textStatus, errorThrown) {
            console.log(jqXHR, textStatus, errorThrown);
@@ -100,8 +98,8 @@ function addUser() {
 
 function formToJSONID() {
     return JSON.stringify({
-        "userId":userId,
         "type":"userimpl",
+        "userId":userId,
         "login": $('#login').val(),
         "userName": $('#name').val()
     });
@@ -138,11 +136,11 @@ function updateUser() {
     $.ajax({
         type: 'PUT',
         contentType: 'application/json',
-        url: REST_URL + '/' + $('#userId').val(),
+        url: REST_URL,
         dataType: "json",
         data: formToJSONID(),
         success: function (data, textStatus, jqXHR) {
-            alert('User updated successfully');
+            findAll();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR, textStatus, errorThrown);
