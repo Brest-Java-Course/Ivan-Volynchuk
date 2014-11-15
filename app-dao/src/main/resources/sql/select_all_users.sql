@@ -1,1 +1,0 @@
-SELECT userid, login, name from USER
