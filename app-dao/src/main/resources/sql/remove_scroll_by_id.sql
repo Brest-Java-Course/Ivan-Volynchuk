@@ -1,0 +1,1 @@
+DELETE FROM SCROLL WHERE scroll_id=:scroll_id

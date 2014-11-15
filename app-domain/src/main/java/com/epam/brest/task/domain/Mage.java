@@ -1,0 +1,66 @@
+package com.epam.brest.task.domain;
+
+import java.util.Date;
+import java.util.List;
+
+/**
+ * Created by fieldistor on 15.11.14.
+ */
+public class Mage {
+
+    private Long mage_id;
+
+    private String name;
+
+    private Long scroll_amount;
+
+    private Long average_manacost;
+
+    private List<MagicScroll> magicScrollList;
+
+    public Mage() {
+
+    }
+
+    public List<MagicScroll> getMagicScrollList() {
+        return magicScrollList;
+    }
+
+    public void setMagicScrollList(List<MagicScroll> magicScrollList) {
+        this.magicScrollList = magicScrollList;
+    }
+
+    public Long getMage_id() {
+        return mage_id;
+    }
+
+    public void setMage_id(Long mage_id) {
+        this.mage_id = mage_id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getScroll_amount() {
+        return scroll_amount;
+    }
+
+    public void setScroll_amount(Long scroll_amount) {
+        this.scroll_amount = scroll_amount;
+    }
+
+    public Long getAverage_manacost() {
+        return average_manacost;
+    }
+
+    public void setAverage_manacost(Long average_manacost) {
+        this.average_manacost = average_manacost;
+    }
+
+
+}

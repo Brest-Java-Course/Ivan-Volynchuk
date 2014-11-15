@@ -1,0 +1,1 @@
+SELECT scroll_id, description, durability, mana_cost, creation_date from SCROLL
