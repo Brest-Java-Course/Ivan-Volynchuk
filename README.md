@@ -1,3 +1,3 @@
-==============
-SampleUserManagement by Ivan-Volynchuk.
-==============
+==========================================
+Mage-Academy by Ivan-Volynchuk.
+==========================================
