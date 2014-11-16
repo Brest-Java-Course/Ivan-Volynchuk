@@ -22,6 +22,10 @@ public class Mage {
 
     }
 
+    public Mage(String name) {
+        this.name = name;
+    }
+
     public List<MagicScroll> getMagicScrollList() {
         return magicScrollList;
     }
@@ -60,6 +64,17 @@ public class Mage {
 
     public void setAverage_manacost(Long average_manacost) {
         this.average_manacost = average_manacost;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "mage_id:" + mage_id +
+                ", name:'" + name + '\'' +
+                ", scroll_amount:" + scroll_amount +
+                ", average_manacost:" + average_manacost +
+                ", magicScrollList:" + magicScrollList +
+                '}';
     }
 
 

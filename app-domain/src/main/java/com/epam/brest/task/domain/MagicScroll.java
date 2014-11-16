@@ -1,5 +1,9 @@
 package com.epam.brest.task.domain;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+
 import java.util.Date;
 
 /**
@@ -13,7 +17,7 @@ public class MagicScroll {
 
     private Long durability;
 
-    private Date creation_date;
+    private LocalDate creation_date;
 
     private Long mana_cost;
 
@@ -26,7 +30,7 @@ public class MagicScroll {
     }
 
     public MagicScroll(Long scroll_id, String description, Long durability,
-                       Date creation_date, Long mana_cost) {
+                       LocalDate creation_date, Long mana_cost) {
         this.scroll_id = scroll_id;
         this.description = description;
         this.durability = durability;
@@ -58,11 +62,11 @@ public class MagicScroll {
         this.durability = durability;
     }
 
-    public Date getCreation_date() {
+    public LocalDate getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(Date creation_date) {
+    public void setCreation_date(LocalDate creation_date) {
         this.creation_date = creation_date;
     }
 

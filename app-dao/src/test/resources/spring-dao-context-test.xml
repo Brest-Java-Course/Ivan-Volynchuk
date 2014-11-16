@@ -10,6 +10,7 @@
     <import resource="classpath:spring-dao-context.xml"/>
 
     <bean id="MagicScrollDAO" class="com.epam.brest.task.dao.MagicScrollDAOImpl"></bean>
+    <bean id="MageDAO" class="com.epam.brest.task.dao.MageDAOImpl"></bean>
 
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="create-tables.sql"/>

@@ -1,0 +1,1 @@
+SELECT mage_id, mage_name, scroll_amount, average_manacost FROM MAGE WHERE mage_id=:mage_id

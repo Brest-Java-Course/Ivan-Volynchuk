@@ -1,0 +1,1 @@
+SELECT * FROM MAGE WHERE mage_name=:mage_name

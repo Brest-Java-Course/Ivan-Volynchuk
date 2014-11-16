@@ -1,6 +1,9 @@
 package com.epam.brest.task.dao;
 
 import com.epam.brest.task.domain.MagicScroll;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,10 +31,13 @@ public class MagicScrollDAOImplTest {
 
     @Test
     public void TestAddUser() {
+        MagicScroll scroll = new MagicScroll(null, "Fireball", 100L, new LocalDate(),50L);
+        System.out.println(scroll);
 
-        Long id = magicScrollDAO.addMagicScroll(new MagicScroll(null, "Fireball", 100L, new Date(),50L));
+        Long id = magicScrollDAO.addMagicScroll(scroll);
         System.out.println(id);
         Assert.assertNotNull(id);
+
     }
 
     @Test
@@ -45,7 +51,7 @@ public class MagicScrollDAOImplTest {
     @Test
     public void getScrollById() {
 
-        Long id=1L;
+        Long id=0L;
 
         MagicScroll scroll = magicScrollDAO.getMagicScrollById(id);
         System.out.println(scroll);
@@ -79,17 +85,28 @@ public class MagicScrollDAOImplTest {
     @Test
     public void updateScroll() {
 
-        MagicScroll scroll = new MagicScroll(0L,"FrostNova", 100L, new Date(),2500L);
-        magicScrollDAO.updateMagicScroll(scroll);
-     // Assert.assertEquals(scroll, magicScrollDAO.getMagicScrollById(0L));
+        MagicScroll oldScroll = magicScrollDAO.getMagicScrollById(0L);
+        oldScroll.setMana_cost(1500L);
+        oldScroll.setDescription("Pyroblast");
+        oldScroll.setCreation_date(new LocalDate(2018,12,31));
+        magicScrollDAO.updateMagicScroll(oldScroll);
+        MagicScroll newscroll=magicScrollDAO.getMagicScrollById(0L);
+
+        Assert.assertEquals(oldScroll, newscroll);
+
     }
 
     @Test
-    public void setupDate() {
+    public void AddGetTest() {
 
-        MagicScroll scroll = new MagicScroll(5L,"MysteryArrows", 5L, new Date(),15000L);
-        magicScrollDAO.addMagicScroll(scroll);
-        MagicScroll scroll2 = magicScrollDAO.getMagicScrollById(2L);
-        System.out.println("Input: "+scroll+"\nOutput:"+scroll2);
+        MagicScroll scroll = new MagicScroll(null, "Nova", 15L, new LocalDate(1999,11,10),400L);
+        Long id=magicScrollDAO.addMagicScroll(scroll);
+        scroll.setScroll_id(id);
+        MagicScroll scroll2 = magicScrollDAO.getMagicScrollById(id);
+
+        Assert.assertEquals(scroll, scroll2);
+
     }
+
+
 }

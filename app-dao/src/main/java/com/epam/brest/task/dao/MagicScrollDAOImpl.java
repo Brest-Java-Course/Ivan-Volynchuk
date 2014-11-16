@@ -3,6 +3,9 @@ package com.epam.brest.task.dao;
 import com.epam.brest.task.domain.MagicScroll;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
@@ -50,7 +53,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-    private static final Logger LOGGER = LogManager.getLogger(MagicScrollDAOImpl.class);
+    //private static final Logger LOGGER = LogManager.getLogger(MagicScrollDAOImpl.class);
 
     @Autowired
     public void setDataSource(DataSource dataSource) {
@@ -61,13 +64,14 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     @Override
     public Long addMagicScroll(MagicScroll magicScroll) {
 
+
         Long scrollid;
 
         KeyHolder holder=new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource= new MapSqlParameterSource();
         parameterSource.addValue(DESCRIPTION, magicScroll.getDescription());
         parameterSource.addValue(DURABILITY, magicScroll.getDurability());
-        parameterSource.addValue(DATE, magicScroll.getCreation_date());
+        parameterSource.addValue(DATE, magicScroll.getCreation_date().toString());
         parameterSource.addValue(MANA, magicScroll.getMana_cost());
         namedJdbcTemplate.update(INSERT_SCROLL, parameterSource,holder);
 
@@ -113,7 +117,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         args.put(SCROLL_ID, magicScroll.getScroll_id());
         args.put(DESCRIPTION, magicScroll.getDescription());
         args.put(DURABILITY, magicScroll.getDurability());
-        args.put(DATE, magicScroll.getCreation_date());
+        args.put(DATE, magicScroll.getCreation_date().toString());
         args.put(MANA, magicScroll.getMana_cost());
         namedJdbcTemplate.update(UPDATE_SCROLL, args);
     }
@@ -132,7 +136,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
             scroll.setDescription(resultSet.getString(DESCRIPTION));
             scroll.setDurability(resultSet.getLong(DURABILITY));
             scroll.setMana_cost(resultSet.getLong(MANA));
-            scroll.setCreation_date(resultSet.getDate(DATE));
+            scroll.setCreation_date(new LocalDate(resultSet.getDate(DATE)));
             return scroll;
         }
     }
