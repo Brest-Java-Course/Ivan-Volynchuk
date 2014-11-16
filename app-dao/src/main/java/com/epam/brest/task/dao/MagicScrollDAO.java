@@ -1,5 +1,6 @@
 package com.epam.brest.task.dao;
 
+import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
 
 import java.util.List;
@@ -21,6 +22,5 @@ public interface MagicScrollDAO {
 
     public void updateMagicScroll(MagicScroll magicScroll);
 
-    public void setMageById(Long id);
-
+    public List<MagicScroll> getMagicScrollsByMageId(Long id);
 }

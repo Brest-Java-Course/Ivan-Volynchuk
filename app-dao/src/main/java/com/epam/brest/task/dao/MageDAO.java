@@ -14,8 +14,6 @@ public interface MageDAO {
 
     public Mage getMageByName(String name);
 
-    public List<MagicScroll> getAllScrolls();
-
     public List<Mage> getAllMages();
 
     public Long addMage(Mage mage);

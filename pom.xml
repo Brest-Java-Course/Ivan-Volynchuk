@@ -9,6 +9,7 @@
     <modules>
         <module>app-domain</module>
         <module>app-dao</module>
+        <module>app-service</module>
     </modules>
 
     <properties>

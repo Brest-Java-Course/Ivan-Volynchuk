@@ -1,5 +1,6 @@
 package com.epam.brest.task.dao;
 
+import com.epam.brest.task.dao.Mappers.ScrollMapper;
 import com.epam.brest.task.domain.MagicScroll;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,6 +33,10 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     private static final String DURABILITY = "durability";
     private static final String DATE = "creation_date";
     private static final String MANA = "mana_cost";
+    private static final String MAGE_ID= "mage_id";
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_all_mage_scrolls_path}')).inputStream)}")
+    private String SELECT_ALL_MAGE_SCROLLS;
 
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${insert_scroll_path}')).inputStream)}")
     private String INSERT_SCROLL;
@@ -51,19 +56,16 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${update_scroll_path}')).inputStream)}")
     private String UPDATE_SCROLL;
 
-    private NamedParameterJdbcTemplate namedJdbcTemplate;
-
-    //private static final Logger LOGGER = LogManager.getLogger(MagicScrollDAOImpl.class);
 
     @Autowired
-    public void setDataSource(DataSource dataSource) {
+    private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-        namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
+    private static final Logger LOGGER = LogManager.getLogger(MagicScrollDAOImpl.class);
 
     @Override
     public Long addMagicScroll(MagicScroll magicScroll) {
 
+        LOGGER.debug("MagicScrollDAOImpl:addMagicScroll({})", magicScroll);
 
         Long scrollid;
 
@@ -73,6 +75,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         parameterSource.addValue(DURABILITY, magicScroll.getDurability());
         parameterSource.addValue(DATE, magicScroll.getCreation_date().toString());
         parameterSource.addValue(MANA, magicScroll.getMana_cost());
+        parameterSource.addValue(MAGE_ID, magicScroll.getMage_id());
         namedJdbcTemplate.update(INSERT_SCROLL, parameterSource,holder);
 
         scrollid=holder.getKey().longValue();
@@ -83,11 +86,15 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     @Override
     public List<MagicScroll> getAllMagicScrolls() {
 
+        LOGGER.debug("MagicScrollDAOImpl:getAllMagicScrolls({})");
+
         return namedJdbcTemplate.query(SELECT_ALL_SCROLLS,new ScrollMapper());
     }
 
     @Override
     public void removeMagicScroll(Long id) {
+
+        LOGGER.debug("MagicScrollDAOImpl:removeMagicScroll({})", id);
 
         Map<String, Object> args = new HashMap(1);
         args.put(SCROLL_ID,id);
@@ -97,6 +104,8 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     @Override
     public MagicScroll getMagicScrollById(Long id) {
 
+        LOGGER.debug("MagicScrollDAOImpl:getMagicScrollById({})", id);
+
         Map<String, Object> args = new HashMap(1);
         args.put(SCROLL_ID,id);
         return namedJdbcTemplate.queryForObject(SELECT_SCROLL_BY_ID,args,new ScrollMapper());
@@ -104,6 +113,8 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
 
     @Override
     public MagicScroll getMagicScrollByDescription(String description) {
+
+        LOGGER.debug("MagicScrollDAOImpl:getMagicScrollByDescription({})", description);
 
         Map<String, Object> args = new HashMap(1);
         args.put(DESCRIPTION,description);
@@ -113,31 +124,28 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     @Override
     public void updateMagicScroll(MagicScroll magicScroll) {
 
+        LOGGER.debug("MagicScrollDAOImpl:updateMagicScroll({})", magicScroll);
+
         Map<String, Object> args = new HashMap(3);
         args.put(SCROLL_ID, magicScroll.getScroll_id());
         args.put(DESCRIPTION, magicScroll.getDescription());
         args.put(DURABILITY, magicScroll.getDurability());
         args.put(DATE, magicScroll.getCreation_date().toString());
         args.put(MANA, magicScroll.getMana_cost());
+        args.put(MAGE_ID, magicScroll.getMage_id());
         namedJdbcTemplate.update(UPDATE_SCROLL, args);
     }
 
     @Override
-    public void setMageById(Long id) {
-        throw new NotImplementedException();
-    }
+    public List<MagicScroll> getMagicScrollsByMageId(Long id) {
+
+        LOGGER.debug("MagicScrollDAOImpl:getMagicScrollsByMageId({})", id);
+
+        Map<String, Object> args = new HashMap(1);
+        args.put(MAGE_ID,id);
+        return namedJdbcTemplate.query(SELECT_ALL_MAGE_SCROLLS, args,new ScrollMapper());
 
 
-    public class ScrollMapper implements RowMapper<MagicScroll> {
-        @Override
-        public MagicScroll mapRow(ResultSet resultSet,int i) throws SQLException {
-            MagicScroll scroll=new MagicScroll();
-            scroll.setScroll_id(resultSet.getLong(SCROLL_ID));
-            scroll.setDescription(resultSet.getString(DESCRIPTION));
-            scroll.setDurability(resultSet.getLong(DURABILITY));
-            scroll.setMana_cost(resultSet.getLong(MANA));
-            scroll.setCreation_date(new LocalDate(resultSet.getDate(DATE)));
-            return scroll;
-        }
     }
+
 }

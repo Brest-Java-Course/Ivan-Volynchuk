@@ -1,7 +1,10 @@
 package com.epam.brest.task.dao;
 
+import com.epam.brest.task.dao.Mappers.MageMapper;
 import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,16 +44,15 @@ public class MageDAOImpl implements MageDAO {
     private String INSERT_MAGE;
 
 
+    @Autowired
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-    @Autowired
-    public void setDataSource(DataSource dataSource) {
-
-        namedJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
-    }
+    private static final Logger LOGGER = LogManager.getLogger(MageDAOImpl.class);
 
     @Override
     public Mage getMageById(Long id) {
+
+        LOGGER.debug("MageDAOImpl:getMageById({})", id);
 
         Map<String, Object> args = new HashMap(1);
         args.put(MAGE_ID,id);
@@ -61,25 +63,25 @@ public class MageDAOImpl implements MageDAO {
     @Override
     public Mage getMageByName(String name) {
 
+        LOGGER.debug("MageDAOImpl:getMageByName({})", name);
+
         Map<String, Object> args = new HashMap(1);
         args.put(NAME,name);
         return namedJdbcTemplate.queryForObject(SELECT_MAGE_BY_NAME, args, new MageMapper());
     }
 
     @Override
-    public List<MagicScroll> getAllScrolls() {
-
-        return null;
-    }
-
-    @Override
     public List<Mage> getAllMages() {
+
+        LOGGER.debug("MageDAOImpl:getAllMages({})");
 
         return namedJdbcTemplate.query(SELECT_ALL_MAGES,new MageMapper());
     }
 
     @Override
     public Long addMage(Mage mage) {
+
+        LOGGER.debug("MageDAOImpl:addMage({})", mage);
 
         Long mageid;
 
@@ -95,15 +97,5 @@ public class MageDAOImpl implements MageDAO {
         return mageid;
     }
 
-    public class MageMapper implements RowMapper<Mage> {
-        @Override
-        public Mage mapRow(ResultSet resultSet,int i) throws SQLException {
-            Mage mage=new Mage();
-            mage.setMage_id(resultSet.getLong(MAGE_ID));
-            mage.setAverage_manacost(resultSet.getLong(AVERAGE_MANACOST));
-            mage.setName(resultSet.getString(NAME));
-            mage.setScroll_amount(resultSet.getLong(SCROLL_AMOUNT));
-            return mage;
-        }
-    }
+
 }

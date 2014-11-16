@@ -21,9 +21,15 @@ public class MagicScroll {
 
     private Long mana_cost;
 
+    private Long mage_id;
 
+    public Long getMage_id() {
+        return mage_id;
+    }
 
-
+    public void setMage_id(Long mage_id) {
+        this.mage_id = mage_id;
+    }
 
     public MagicScroll() {
 
@@ -36,6 +42,16 @@ public class MagicScroll {
         this.durability = durability;
         this.creation_date = creation_date;
         this.mana_cost = mana_cost;
+    }
+
+    public MagicScroll(Long scroll_id, String description, Long durability, LocalDate creation_date,
+                       Long mana_cost, Long mage_id) {
+        this.scroll_id = scroll_id;
+        this.description = description;
+        this.durability = durability;
+        this.creation_date = creation_date;
+        this.mana_cost = mana_cost;
+        this.mage_id = mage_id;
     }
 
     public Long getScroll_id() {
@@ -80,12 +96,13 @@ public class MagicScroll {
 
     @Override
     public String toString() {
-        return "{" +
-                "scroll_id:" + scroll_id +
-                ", description:'" + description + '\'' +
-                ", durability:" + durability +
-                ", creation_date:" + creation_date +
-                ", mana_cost:" + mana_cost +
+        return "MagicScroll{" +
+                "scroll_id=" + scroll_id +
+                ", description='" + description + '\'' +
+                ", durability=" + durability +
+                ", creation_date=" + creation_date +
+                ", mana_cost=" + mana_cost +
+                ", mage_id=" + mage_id +
                 '}';
     }
 

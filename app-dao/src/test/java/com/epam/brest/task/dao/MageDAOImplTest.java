@@ -31,15 +31,13 @@ public class MageDAOImplTest {
         Mage mage = new Mage("John");
 
         Long id=mageDAO.addMage(mage);
-        System.out.println(id);
     }
 
     @Test
     public void getMageById() {
 
-        Mage mage=mageDAO.getMageById(0L);
-        System.out.println(mage);
-        Assert.assertEquals(mage.getMage_id(),new Long(0L));
+        Mage mage=mageDAO.getMageById(1L);
+        Assert.assertEquals(mage.getMage_id(),new Long(1L));
     }
 
     @Test

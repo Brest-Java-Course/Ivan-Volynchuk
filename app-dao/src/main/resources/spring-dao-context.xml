@@ -16,6 +16,9 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <property name="ignoreUnresolvablePlaceholders" value="true"/>
     </bean>
 
+    <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg name="dataSource" ref="dataSource"></constructor-arg>
+    </bean>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}" />

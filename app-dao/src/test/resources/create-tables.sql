@@ -3,7 +3,8 @@ scroll_id BIGINT IDENTITY,
 description VARCHAR(255),
 durability BIGINT,
 mana_cost BIGINT,
-creation_date DATE
+creation_date DATE,
+mage_id BIGINT
 );
 
 CREATE TABLE MAGE (

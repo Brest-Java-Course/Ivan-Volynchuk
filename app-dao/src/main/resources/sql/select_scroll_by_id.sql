@@ -1,1 +1,1 @@
-SELECT scroll_id, description, durability, mana_cost, creation_date FROM SCROLL WHERE scroll_id=:scroll_id
+SELECT * FROM SCROLL WHERE scroll_id=:scroll_id
