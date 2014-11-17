@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import static com.epam.brest.task.dao.tolls.TestMagicScrollFactory.getNewScroll;
 
 /**
  * Created by fieldistor on 15.11.14.
@@ -32,12 +33,14 @@ public class MagicScrollDAOImplTest {
 
     @Test
     public void TestAddUser() {
-        MagicScroll scroll = new MagicScroll(null, "Fireball", 100L, new LocalDate(),50L);
-        System.out.println(scroll);
+        MagicScroll scroll = getNewScroll();
 
         Long id = magicScrollDAO.addMagicScroll(scroll);
-        System.out.println(id);
         Assert.assertNotNull(id);
+        scroll.setScroll_id(id);
+        Assert.assertEquals(scroll, magicScrollDAO.getMagicScrollById(id));
+
+        System.out.println( magicScrollDAO.getMagicScrollById(id));
 
     }
 
@@ -52,10 +55,9 @@ public class MagicScrollDAOImplTest {
     @Test
     public void getScrollById() {
 
-        Long id=1L;
+        Long id=0L;
 
         MagicScroll scroll = magicScrollDAO.getMagicScrollById(id);
-        System.out.println(scroll);
         Assert.assertEquals(scroll.getScroll_id(),id);
 
     }
@@ -66,7 +68,6 @@ public class MagicScrollDAOImplTest {
         String description="Frostball";
 
         MagicScroll scroll = magicScrollDAO.getMagicScrollByDescription(description);
-        System.out.println(scroll);
         Assert.assertEquals(scroll.getDescription(),description);
 
     }
@@ -76,10 +77,10 @@ public class MagicScrollDAOImplTest {
 
         magicScrollDAO.removeMagicScroll(2L);
         List<MagicScroll> scrolls = magicScrollDAO.getAllMagicScrolls();
-        Assert.assertEquals(scrolls.size(),5);
+        Assert.assertEquals(scrolls.size(),7);
         magicScrollDAO.removeMagicScroll(1L);
         scrolls = magicScrollDAO.getAllMagicScrolls();
-        Assert.assertEquals(scrolls.size(),4);
+        Assert.assertEquals(scrolls.size(),6);
     }
 
     @Test
@@ -97,26 +98,14 @@ public class MagicScrollDAOImplTest {
     }
 
     @Test
-    public void AddGetTest() {
-
-        MagicScroll scroll = new MagicScroll(null, "Nova", 15L, new LocalDate(1999,11,10),400L);
-        Long id=magicScrollDAO.addMagicScroll(scroll);
-        scroll.setScroll_id(id);
-        MagicScroll scroll2 = magicScrollDAO.getMagicScrollById(id);
-
-        Assert.assertEquals(scroll, scroll2);
-
-    }
-
-    @Test
     public void getScrollsOfMage() {
 
         Long MageId = 1L;
 
         List<MagicScroll> scrolls = new LinkedList<MagicScroll>();
-        scrolls.add(new MagicScroll(2L,"Frostball", 800L, new LocalDate(2008,03,02), 560L, 1L));
-        scrolls.add(new MagicScroll(5L,"ArcanIntellect", 170L, new LocalDate(2013,07,02), 123L, 1L));
-        scrolls.add(new MagicScroll(6L,"ArcanMissles", 100L, new LocalDate(2012,03,02), 55L, 1L));
+        scrolls.add(new MagicScroll(1L,"Frostball", 800L, new LocalDate(2008,03,02), 560L, 1L));
+        scrolls.add(new MagicScroll(5L,"ArcanMissles", 100L, new LocalDate(2012,03,02), 55L, 1L));
+        scrolls.add(new MagicScroll(7L,"Rocket", 100L, new LocalDate(2012,03,02), 55L, 1L));
 
         List<MagicScroll> scrollsR= magicScrollDAO.getMagicScrollsByMageId(MageId);
         Assert.assertEquals(scrolls, scrollsR);

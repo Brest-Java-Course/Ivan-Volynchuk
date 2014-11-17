@@ -27,4 +27,7 @@ http://www.springframework.org/schema/beans/spring-beans.xsd">
         <property name="password" value="${jdbc.password}" />
     </bean>
 
-</beans>
+    <bean id="magicScrollDAO" class="com.epam.brest.task.dao.MagicScrollDAOImpl"></bean>
+    <bean id="mageDAO" class="com.epam.brest.task.dao.MageDAOImpl"></bean>
+
+    </beans>

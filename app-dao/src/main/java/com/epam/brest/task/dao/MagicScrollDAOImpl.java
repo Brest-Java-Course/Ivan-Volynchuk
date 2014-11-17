@@ -1,6 +1,6 @@
 package com.epam.brest.task.dao;
 
-import com.epam.brest.task.dao.Mappers.ScrollMapper;
+import com.epam.brest.task.dao.tolls.CheckNullTool;
 import com.epam.brest.task.domain.MagicScroll;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -146,6 +146,22 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         return namedJdbcTemplate.query(SELECT_ALL_MAGE_SCROLLS, args,new ScrollMapper());
 
 
+    }
+
+    public class ScrollMapper implements RowMapper<MagicScroll> {
+
+        @Override
+        public MagicScroll mapRow(ResultSet resultSet,int i) throws SQLException {
+
+            MagicScroll scroll=new MagicScroll();
+            scroll.setScroll_id(resultSet.getLong(SCROLL_ID));
+            scroll.setDescription(resultSet.getString(DESCRIPTION));
+            scroll.setDurability(resultSet.getLong(DURABILITY));
+            scroll.setMana_cost(resultSet.getLong(MANA));
+            scroll.setMage_id(CheckNullTool.getLong(resultSet,MAGE_ID));
+            scroll.setCreation_date(new LocalDate(resultSet.getDate(DATE)));
+            return scroll;
+        }
     }
 
 }

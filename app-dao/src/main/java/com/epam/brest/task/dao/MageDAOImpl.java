@@ -1,6 +1,5 @@
 package com.epam.brest.task.dao;
 
-import com.epam.brest.task.dao.Mappers.MageMapper;
 import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
 import org.apache.logging.log4j.LogManager;
@@ -97,5 +96,17 @@ public class MageDAOImpl implements MageDAO {
         return mageid;
     }
 
+    public class MageMapper implements RowMapper<Mage> {
+
+        @Override
+        public Mage mapRow(ResultSet resultSet,int i) throws SQLException {
+            Mage mage=new Mage();
+            mage.setMage_id(resultSet.getLong(MAGE_ID));
+            mage.setAverage_manacost(resultSet.getLong(AVERAGE_MANACOST));
+            mage.setName(resultSet.getString(NAME));
+            mage.setScroll_amount(resultSet.getLong(SCROLL_AMOUNT));
+            return mage;
+        }
+    }
 
 }
