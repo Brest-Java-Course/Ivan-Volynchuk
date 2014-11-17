@@ -1,9 +1,7 @@
 package com.epam.brest.task.dao;
 
 import com.epam.brest.task.domain.MagicScroll;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,10 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import static com.epam.brest.task.dao.tolls.TestMagicScrollFactory.getNewScroll;
+import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getNewScroll;
 
 /**
  * Created by fieldistor on 15.11.14.
@@ -98,6 +95,18 @@ public class MagicScrollDAOImplTest {
     }
 
     @Test
+    public void updateScrollWithNullMageId() {
+
+        Long scrollId=1L;
+
+        MagicScroll oldScroll = magicScrollDAO.getMagicScrollById(scrollId);
+        oldScroll.setMage_id(null);
+        magicScrollDAO.updateMagicScroll(oldScroll);
+
+        Assert.assertNull(magicScrollDAO.getMagicScrollById(scrollId).getMage_id());
+    }
+
+    @Test
     public void getScrollsOfMage() {
 
         Long MageId = 1L;
@@ -110,6 +119,19 @@ public class MagicScrollDAOImplTest {
         List<MagicScroll> scrollsR= magicScrollDAO.getMagicScrollsByMageId(MageId);
         Assert.assertEquals(scrolls, scrollsR);
 
+    }
+
+    @Test
+    public void clearMagicId() {
+
+        Long MageId = 1L;
+
+        Integer size = magicScrollDAO.getMagicScrollsByMageId(MageId).size();
+        Assert.assertNotNull(size);
+        magicScrollDAO.clearScrollsByMagicId(MageId);
+        Integer newsize = magicScrollDAO.getMagicScrollsByMageId(MageId).size();
+
+        Assert.assertEquals(newsize, new Integer(0));
     }
 
 

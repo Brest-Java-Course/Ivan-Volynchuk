@@ -23,4 +23,10 @@ public interface MagicScrollDAO {
     public void updateMagicScroll(MagicScroll magicScroll);
 
     public List<MagicScroll> getMagicScrollsByMageId(Long id);
+
+    public void clearScrollsByMagicId(Long id);
+
+    public Long getScrollAmountByMageId(Long id);
+
+    public Long getAverageManacostByMageId(Long id);
 }

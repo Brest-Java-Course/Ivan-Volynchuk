@@ -1,12 +1,10 @@
 package com.epam.brest.task.dao;
 
-import com.epam.brest.task.dao.tolls.CheckNullTool;
+import com.epam.brest.task.dao.tools.CheckNullTool;
 import com.epam.brest.task.domain.MagicScroll;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.RowMapper;
@@ -16,7 +14,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -34,6 +31,9 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     private static final String DATE = "creation_date";
     private static final String MANA = "mana_cost";
     private static final String MAGE_ID= "mage_id";
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${clear_mage_id_path}')).inputStream)}")
+    private String CLEAR_MAGE_ID;
 
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_all_mage_scrolls_path}')).inputStream)}")
     private String SELECT_ALL_MAGE_SCROLLS;
@@ -146,6 +146,29 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         return namedJdbcTemplate.query(SELECT_ALL_MAGE_SCROLLS, args,new ScrollMapper());
 
 
+    }
+
+    @Override
+    public void clearScrollsByMagicId(Long id) {
+
+        LOGGER.debug("MagicScrollDAOImpl:clearScrollsByMagicId({})", id);
+
+        Map<String, Object> args = new HashMap(1);
+        args.put(MAGE_ID,id);
+        namedJdbcTemplate.update(CLEAR_MAGE_ID, args);
+    }
+
+    @Override
+    public Long getScrollAmountByMageId(Long id) {
+
+
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Long getAverageManacostByMageId(Long id) {
+
+        throw new NotImplementedException();
     }
 
     public class ScrollMapper implements RowMapper<MagicScroll> {

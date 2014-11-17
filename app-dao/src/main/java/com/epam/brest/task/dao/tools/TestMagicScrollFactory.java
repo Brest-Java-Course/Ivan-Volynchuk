@@ -1,4 +1,4 @@
-package com.epam.brest.task.dao.tolls;
+package com.epam.brest.task.dao.tools;
 
 import com.epam.brest.task.domain.MagicScroll;
 import org.joda.time.LocalDate;

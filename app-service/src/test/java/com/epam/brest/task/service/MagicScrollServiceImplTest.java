@@ -3,7 +3,6 @@ package com.epam.brest.task.service;
 import com.epam.brest.task.domain.MagicScroll;
 import com.epam.brest.task.service.Exception.*;
 import junit.framework.Assert;
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.task.dao.tolls.TestMagicScrollFactory.getNewScroll;
+import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getNewScroll;
 
 /**
  * Created by fieldistor on 16.11.14.

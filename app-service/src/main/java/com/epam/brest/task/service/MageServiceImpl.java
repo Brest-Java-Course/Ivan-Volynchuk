@@ -11,6 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -30,6 +32,9 @@ public class MageServiceImpl implements MageService {
     @Autowired
     private MageDAO mageDAO;
 
+    @Autowired
+    private MagicScrollDAO magicScrollDAO;
+
     @Override
     public Mage getMageById(Long id) {
 
@@ -40,14 +45,18 @@ public class MageServiceImpl implements MageService {
             Assert.notNull(id, NOT_NULL_ID);
 
             mage = mageDAO.getMageById(id);
-        }catch(EmptyResultDataAccessException e){
+            mage.setMagicScrollList( magicScrollDAO.getMagicScrollsByMageId(mage.getMage_id()));
+        }catch(EmptyResultDataAccessException e) {
 
             LOGGER.debug("Mage with ({}) id doesn't exist", id);
             throw new NotFoundException("Mage with such id doesn't exist", "Getting mage by id", id);
-        }catch(IllegalArgumentException e){
+        }catch(IllegalArgumentException e) {
 
             LOGGER.debug(e.getMessage());
             throw new NotFoundException(e.getMessage(), "Getting mage by id", id);
+        }catch(NotFoundException e) {
+
+            LOGGER.debug("No scrolls for ({})", mage);
         }
         return mage;
     }
@@ -62,6 +71,7 @@ public class MageServiceImpl implements MageService {
             Assert.notNull(name, NOT_NULL_NAME);
 
             mage = mageDAO.getMageByName(name);
+            mage.setMagicScrollList( magicScrollDAO.getMagicScrollsByMageId(mage.getMage_id()));
         }catch(EmptyResultDataAccessException e){
 
             LOGGER.debug("Mage with ({}) name doesn't exist", name);
@@ -70,6 +80,9 @@ public class MageServiceImpl implements MageService {
 
             LOGGER.debug(e.getMessage());
             throw new NotFoundException(e.getMessage(), "Getting mage by name", name);
+        }catch(NotFoundException e) {
+
+            LOGGER.debug("No scrolls for ({})", mage);
         }
         return mage;
     }
@@ -117,6 +130,7 @@ public class MageServiceImpl implements MageService {
     }
 
     @Override
+    @Transactional(propagation=Propagation.REQUIRED)
     public void removeMageById(Long id) {
 
         LOGGER.debug("removeMageById({})", id);
@@ -124,6 +138,8 @@ public class MageServiceImpl implements MageService {
         try {
             Assert.notNull(id, NOT_NULL_ID);
             getMageById(id);
+            mageDAO.removeMageById(id);
+            magicScrollDAO.clearScrollsByMagicId(id);
         }catch(IllegalArgumentException e){
 
             LOGGER.debug(e.getMessage());
@@ -134,6 +150,6 @@ public class MageServiceImpl implements MageService {
             throw new BadRemoveException(e.getMessage(), "Removing mage", id);
         }
 
-        mageDAO.removeMageById(id);
+
     }
 }

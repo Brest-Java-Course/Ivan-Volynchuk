@@ -6,7 +6,7 @@ INSERT INTO SCROLL (scroll_id, description, durability, mana_cost, creation_date
                         VALUES (1,'Frostball', 800, 560, '2008-03-02', 1);
 
 INSERT INTO SCROLL (scroll_id, description, durability, mana_cost, creation_date, mage_id)
-                        VALUES (2,'FrostNova', 240, 126, '2001-09-02', 2);
+                        VALUES (2,'FrostNova', 240, 126, '2001-09-02', 1);
 
 INSERT INTO SCROLL (scroll_id, description, durability, mana_cost, creation_date, mage_id)
                         VALUES (3,'IceLands', 125, 58, '2108-12-03', NULL);

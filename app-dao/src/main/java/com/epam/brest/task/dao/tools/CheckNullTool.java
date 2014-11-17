@@ -1,4 +1,4 @@
-package com.epam.brest.task.dao.tolls;
+package com.epam.brest.task.dao.tools;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
