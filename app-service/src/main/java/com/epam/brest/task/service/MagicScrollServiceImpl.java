@@ -79,6 +79,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
 
     @Override
     public void removeMagicScroll(Long id) {
+
         LOGGER.debug("removeMagicScroll({})", id);
 
         try {

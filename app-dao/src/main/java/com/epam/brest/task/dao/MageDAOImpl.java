@@ -30,6 +30,9 @@ public class MageDAOImpl implements MageDAO {
     private static final String SCROLL_AMOUNT = "scroll_amount";
     private static final String AVERAGE_MANACOST = "average_manacost";
 
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${remove_mage_by_id_path}')).inputStream)}")
+    private String REMOVE_MAGE_BY_ID;
+
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_mage_by_name_path}')).inputStream)}")
     private String SELECT_MAGE_BY_NAME;
 
@@ -94,6 +97,16 @@ public class MageDAOImpl implements MageDAO {
         mageid=holder.getKey().longValue();
 
         return mageid;
+    }
+
+    @Override
+    public void removeMageById(Long id) {
+
+        LOGGER.debug("MageDAOImpl:removeMageById({})", id);
+
+        Map<String, Object> args = new HashMap(1);
+        args.put(MAGE_ID,id);
+        namedJdbcTemplate.update(REMOVE_MAGE_BY_ID,args);
     }
 
     public class MageMapper implements RowMapper<Mage> {

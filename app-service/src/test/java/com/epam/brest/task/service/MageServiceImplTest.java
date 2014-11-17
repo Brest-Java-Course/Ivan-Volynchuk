@@ -2,6 +2,7 @@ package com.epam.brest.task.service;
 
 import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.service.Exception.BadInsertException;
+import com.epam.brest.task.service.Exception.BadRemoveException;
 import com.epam.brest.task.service.Exception.NotFoundException;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -131,5 +132,30 @@ public class MageServiceImplTest {
         mage.setName(null);
         Long id = mageService.addMage(mage);
 
+    }
+
+    //Test removeMage
+    @Test
+    public void removeTest() {
+
+        Long deleteId = 0L;
+
+        int oldsize = mageService.getAllMages().size();
+        mageService.removeMageById(deleteId);
+        int newsize = mageService.getAllMages().size();
+        Assert.assertEquals(newsize + 1, oldsize);
+
+    }
+
+    @Test(expected = BadRemoveException.class)
+    public void removeMageByIncorrectId() {
+
+        mageService.removeMageById(99L);
+    }
+
+    @Test(expected = BadRemoveException.class)
+    public void removeMageByNullId() {
+
+        mageService.removeMageById(null);
     }
 }

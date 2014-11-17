@@ -1,0 +1,1 @@
+DELETE FROM MAGE WHERE mage_id=:mage_id

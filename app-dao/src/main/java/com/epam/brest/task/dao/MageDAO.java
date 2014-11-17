@@ -17,4 +17,6 @@ public interface MageDAO {
     public List<Mage> getAllMages();
 
     public Long addMage(Mage mage);
+
+    public void removeMageById(Long id);
 }

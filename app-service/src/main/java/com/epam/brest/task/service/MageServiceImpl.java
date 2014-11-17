@@ -5,6 +5,7 @@ import com.epam.brest.task.dao.MagicScrollDAO;
 import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
 import com.epam.brest.task.service.Exception.BadInsertException;
+import com.epam.brest.task.service.Exception.BadRemoveException;
 import com.epam.brest.task.service.Exception.NotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -113,5 +114,26 @@ public class MageServiceImpl implements MageService {
 
             return mageDAO.addMage(mage);
         }
+    }
+
+    @Override
+    public void removeMageById(Long id) {
+
+        LOGGER.debug("removeMageById({})", id);
+
+        try {
+            Assert.notNull(id, NOT_NULL_ID);
+            getMageById(id);
+        }catch(IllegalArgumentException e){
+
+            LOGGER.debug(e.getMessage());
+            throw new BadRemoveException(e.getMessage(), "Removing mage.", id);
+        }catch(NotFoundException e){
+
+            LOGGER.debug("No mage with such id ({})", id);
+            throw new BadRemoveException(e.getMessage(), "Removing mage", id);
+        }
+
+        mageDAO.removeMageById(id);
     }
 }

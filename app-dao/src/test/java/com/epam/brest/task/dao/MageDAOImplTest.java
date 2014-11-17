@@ -66,5 +66,14 @@ public class MageDAOImplTest {
         Assert.assertEquals(mage.getName(),"Paladin");
     }
 
+    @Test
+    public void removeMageById() {
+
+        List<Mage> mages= mageDAO.getAllMages();
+        int size = mages.size();
+        mageDAO.removeMageById(0L);
+        Assert.assertEquals(size-1, mageDAO.getAllMages().size());
+    }
+
 
 }
