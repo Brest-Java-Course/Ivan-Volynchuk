@@ -90,8 +90,6 @@ public class MageDAOImpl implements MageDAO {
         KeyHolder holder=new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource= new MapSqlParameterSource();
         parameterSource.addValue(NAME, mage.getName());
-        parameterSource.addValue(SCROLL_AMOUNT, 0);
-        parameterSource.addValue(AVERAGE_MANACOST, 0);
         namedJdbcTemplate.update(INSERT_MAGE, parameterSource,holder);
 
         mageid=holder.getKey().longValue();

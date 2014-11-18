@@ -39,10 +39,12 @@ public class MageServiceImplTest {
     @Test
     public void getMageById() {
 
-        Long id=0L;
+        Long id=1L;
 
         Mage mage = mageService.getMageById(id);
         Assert.assertEquals(id, mage.getMage_id());
+
+        System.out.println(mage);
     }
 
     @Test(expected = NotFoundException.class)

@@ -32,6 +32,11 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     private static final String MANA = "mana_cost";
     private static final String MAGE_ID= "mage_id";
 
+    /*
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${scroll_amount_by_mage_id_path}')).inputStream)}")
+    private String SCROLL_AMOUNT_BY_MAGE_ID;
+    */
+
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${clear_mage_id_path}')).inputStream)}")
     private String CLEAR_MAGE_ID;
 
@@ -158,11 +163,19 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         namedJdbcTemplate.update(CLEAR_MAGE_ID, args);
     }
 
+    /*
     @Override
     public Long getScrollAmountByMageId(Long id) {
 
 
-        throw new NotImplementedException();
+        LOGGER.debug("MagicScrollDAOImpl:getScrollAmountByMageId({})", id);
+
+        Map<String, Object> args = new HashMap(1);
+        args.put(MAGE_ID,id);
+        Long amount = namedJdbcTemplate.queryForLong(SCROLL_AMOUNT_BY_MAGE_ID,args);
+
+        LOGGER.debug("Amount is {}", amount);
+        return amount;
     }
 
     @Override
@@ -170,7 +183,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
 
         throw new NotImplementedException();
     }
-
+    */
     public class ScrollMapper implements RowMapper<MagicScroll> {
 
         @Override

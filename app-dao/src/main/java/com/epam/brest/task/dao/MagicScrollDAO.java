@@ -26,7 +26,9 @@ public interface MagicScrollDAO {
 
     public void clearScrollsByMagicId(Long id);
 
+    /*
     public Long getScrollAmountByMageId(Long id);
 
     public Long getAverageManacostByMageId(Long id);
+    */
 }

@@ -36,8 +36,11 @@ public class MageDAOImplTest {
     @Test
     public void getMageById() {
 
-        Mage mage=mageDAO.getMageById(1L);
-        Assert.assertEquals(mage.getMage_id(),new Long(1L));
+        Long mageid=1L;
+
+        Mage mage=mageDAO.getMageById(mageid);
+        System.out.println(mage);
+        Assert.assertEquals(mage.getMage_id(),new Long(mageid));
     }
 
     @Test
@@ -62,8 +65,10 @@ public class MageDAOImplTest {
     @Test
     public void getMageByLogin() {
 
-        Mage mage = mageDAO.getMageByName("Paladin");
-        Assert.assertEquals(mage.getName(),"Paladin");
+        String mageName="Paladin";
+
+        Mage mage = mageDAO.getMageByName(mageName);
+        Assert.assertEquals(mage.getName(),mageName);
     }
 
     @Test
