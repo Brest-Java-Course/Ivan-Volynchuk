@@ -1,0 +1,2 @@
+SELECT * FROM SCROLL WHERE mage_id IS NULL
+ORDER BY scroll_id LIMIT :amt OFFSET :n_from

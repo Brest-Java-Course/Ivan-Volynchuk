@@ -78,6 +78,23 @@ public class MagicScrollServiceImpl implements MagicScrollService {
     }
 
     @Override
+    public List<MagicScroll> getLimitScrolls(Long page, Long per_page) {
+
+        LOGGER.debug("getLimitScrolls({})","Page:"+page+",Amout:"+per_page);
+
+        List<MagicScroll> scrolls = null;
+        try{
+            Long n_from = page*per_page;
+            scrolls = magicScrollDAO.getLimitScrolls(per_page, n_from);
+            Assert.notEmpty(scrolls);
+        }catch(IllegalArgumentException e){
+            LOGGER.debug(NO_SCROLLS_TO_GET);
+            throw new NotFoundException(NO_SCROLLS_TO_GET, "Getting limited scrolls.", null);
+        }
+        return scrolls;
+    }
+
+    @Override
     public void removeMagicScroll(Long id) {
 
         LOGGER.debug("removeMagicScroll({})", id);
@@ -185,5 +202,20 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             throw new NotFoundException(e.getMessage(), "Getting scrolls by mage's id","Updating user");
         }
         return scrolls;
+    }
+
+    @Override
+    public List<MagicScroll> getLimitMagicScrollsByMageId(Long id, Long page, Long per_page) {
+        return null;
+    }
+
+    @Override
+    public List<MagicScroll> getMagicScrollsWithoutMage() {
+        return null;
+    }
+
+    @Override
+    public List<MagicScroll> getLimitMagicScrollsWithoutMage(Long page, Long per_page) {
+        return null;
     }
 }

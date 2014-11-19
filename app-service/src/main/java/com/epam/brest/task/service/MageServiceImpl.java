@@ -105,6 +105,24 @@ public class MageServiceImpl implements MageService {
     }
 
     @Override
+    public List<Mage> getLimitMages(Long page, Long per_page) {
+
+        LOGGER.debug("getLimitMages({})","Page:"+page+",Amout:"+per_page);
+
+        List<Mage> mages = null;
+        try{
+            Long n_from = page*per_page;
+            mages = mageDAO.getLimitMages(per_page, n_from);
+            Assert.notEmpty(mages, NO_MAGES_TO_GET);
+        }catch(IllegalArgumentException e){
+
+            LOGGER.debug(e.getMessage());
+            throw new NotFoundException(e.getMessage(), "Getting limited mages.", null);
+        }
+        return mages;
+    }
+
+    @Override
     public Long addMage(Mage mage) {
 
         LOGGER.debug("addMage({})", mage);

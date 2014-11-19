@@ -15,6 +15,8 @@ public interface MageService {
 
         public List<Mage> getAllMages();
 
+        public List<Mage> getLimitMages(Long page, Long per_page);
+
         public Long addMage(Mage mage);
 
         public void removeMageById(Long id);

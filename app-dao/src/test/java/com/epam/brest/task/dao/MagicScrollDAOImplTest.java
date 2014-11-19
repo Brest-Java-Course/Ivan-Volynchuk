@@ -25,6 +25,8 @@ import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getNewScroll;
 @Transactional
 public class MagicScrollDAOImplTest {
 
+    private int amount_scrolls = 17;
+
     @Autowired
     private MagicScrollDAO magicScrollDAO;
 
@@ -74,10 +76,10 @@ public class MagicScrollDAOImplTest {
 
         magicScrollDAO.removeMagicScroll(2L);
         List<MagicScroll> scrolls = magicScrollDAO.getAllMagicScrolls();
-        Assert.assertEquals(scrolls.size(),7);
+        Assert.assertEquals(scrolls.size(),amount_scrolls-1);
         magicScrollDAO.removeMagicScroll(1L);
         scrolls = magicScrollDAO.getAllMagicScrolls();
-        Assert.assertEquals(scrolls.size(),6);
+        Assert.assertEquals(scrolls.size(),amount_scrolls-2);
     }
 
     @Test
@@ -112,12 +114,9 @@ public class MagicScrollDAOImplTest {
         Long MageId = 1L;
 
         List<MagicScroll> scrolls = new LinkedList<MagicScroll>();
-        scrolls.add(new MagicScroll(1L,"Frostball", 800L, new LocalDate(2008,03,02), 560L, 1L));
-        scrolls.add(new MagicScroll(5L,"ArcanMissles", 100L, new LocalDate(2012,03,02), 55L, 1L));
-        scrolls.add(new MagicScroll(7L,"Rocket", 100L, new LocalDate(2012,03,02), 55L, 1L));
-
-        List<MagicScroll> scrollsR= magicScrollDAO.getMagicScrollsByMageId(MageId);
-        Assert.assertEquals(scrolls, scrollsR);
+        for(MagicScroll scroll:scrolls) {
+            Assert.assertEquals(scroll.getMage_id(), MageId);
+        }
 
     }
 
@@ -134,7 +133,61 @@ public class MagicScrollDAOImplTest {
         Assert.assertEquals(newsize, new Integer(0));
     }
 
+    //Tests for getMagicScrollsWithoutMage
+    @Test
+    public void getMagicScrollsWithoutMage() {
 
+        List<MagicScroll> scrolls = magicScrollDAO.getMagicScrollsWithoutMage();
+        for(MagicScroll scroll:scrolls) {
+            Assert.assertNull(scroll.getMage_id());
+        }
+    }
+
+    //Tests for getLimitScrolls
+    @Test
+    public void getLimitScrolls() {
+
+        Long amt = 9L;
+        Long n_from = 2L;
+
+        List<MagicScroll> scrolls = magicScrollDAO.getLimitScrolls(amt, n_from);
+        Assert.assertTrue(scrolls.size()<=amt);
+        for(MagicScroll scroll:scrolls) {
+            Long scroll_id = scroll.getScroll_id();
+            Assert.assertTrue(scroll_id>=n_from && scroll_id<=n_from+amt-1);
+        }
+    }
+
+    //Tests for getLimitMagicScrollsWithoutMage
+    @Test
+    public void getLimitMagicScrollsWithoutMage() {
+
+        Long amt = 3L;
+        Long n_from = 1L;
+
+        List<MagicScroll> scrolls = magicScrollDAO.getLimitMagicScrollsWithoutMage(amt, n_from);
+        Assert.assertTrue(scrolls.size()<=amt);
+        for(MagicScroll scroll:scrolls) {
+            Assert.assertNull(scroll.getMage_id());
+        }
+
+    }
+
+    //Tests for getLimitMagicScrollsByMageId
+    @Test
+    public void getLimitMagicScrollsByMageId() {
+
+        Long mage_id = 0L;
+
+        Long amt = 4L;
+        Long n_from = 1L;
+
+        List<MagicScroll> scrolls = magicScrollDAO.getLimitMagicScrollsByMageId(mage_id, amt, n_from);
+        Assert.assertTrue(scrolls.size()<=amt);
+        for(MagicScroll scroll:scrolls) {
+            Assert.assertEquals(scroll.getMage_id(), mage_id);
+        }
+    }
 
 
 }

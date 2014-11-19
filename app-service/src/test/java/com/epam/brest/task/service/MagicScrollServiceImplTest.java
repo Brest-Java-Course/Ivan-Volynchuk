@@ -26,6 +26,12 @@ import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getNewScroll;
 
 public class MagicScrollServiceImplTest {
 
+    Long incorrectId = 99L;
+    Long correctId1 = 0L;
+    Long correctId2 = 1L;
+
+    int amountScrolls = 17;
+
     @Autowired
     private MagicScrollService magicScrollService;
 
@@ -35,7 +41,7 @@ public class MagicScrollServiceImplTest {
     public void getAllScrolls() {
 
         List<MagicScroll> scrolls = magicScrollService.getAllMagicScrolls();
-        Assert.assertEquals(scrolls.size(),8);
+        Assert.assertEquals(scrolls.size(), amountScrolls);
 
     }
 
@@ -51,19 +57,40 @@ public class MagicScrollServiceImplTest {
         magicScrollService.getAllMagicScrolls();
     }
 
+    // Tests for getLimitScrolls
+    @Test
+    public void getLimitScrolls() {
+
+        Long page = 3L;
+        Long per_page = 2L;
+
+        List<MagicScroll> scrolls = magicScrollService.getLimitScrolls(page, per_page);
+        Assert.assertTrue(scrolls.size()<=per_page);
+
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getEmptyLimitScrolls() {
+
+        Long page = 3L;
+        Long per_page = 99L;
+
+        List<MagicScroll> scrolls = magicScrollService.getLimitScrolls(page, per_page);
+    }
+
     //Test for removeMagicScroll
     @Test
     public void removeScrollById() {
 
         int size = magicScrollService.getAllMagicScrolls().size();
-        magicScrollService.removeMagicScroll(0L);
+        magicScrollService.removeMagicScroll(correctId1);
         Assert.assertEquals(size-1, magicScrollService.getAllMagicScrolls().size());
     }
 
     @Test(expected = BadRemoveException.class)
     public void removeScrollException() {
 
-        magicScrollService.removeMagicScroll(10L);
+        magicScrollService.removeMagicScroll(incorrectId);
     }
 
     @Test(expected = BadRemoveException.class)
@@ -76,15 +103,15 @@ public class MagicScrollServiceImplTest {
     @Test
     public void getScrollByid() {
 
-        Long id = 0L;
-        MagicScroll scroll = magicScrollService.getMagicScrollById(id);
-        Assert.assertEquals(scroll.getScroll_id(), new Long(id));
+
+        MagicScroll scroll = magicScrollService.getMagicScrollById(correctId1);
+        Assert.assertEquals(scroll.getScroll_id(), correctId1);
     }
 
     @Test(expected = NotFoundException.class)
     public void getEmptyScrollByid() {
 
-        MagicScroll scroll = magicScrollService.getMagicScrollById(99L);
+        MagicScroll scroll = magicScrollService.getMagicScrollById(incorrectId);
     }
 
     @Test(expected = NotFoundException.class)
@@ -116,7 +143,7 @@ public class MagicScrollServiceImplTest {
     @Test
     public void updateScroll() {
 
-        MagicScroll scroll = magicScrollService.getMagicScrollById(0L);
+        MagicScroll scroll = magicScrollService.getMagicScrollById(correctId1);
         scroll.setMage_id(3L);
         scroll.setDescription("TestScroll");
         magicScrollService.updateMagicScroll(scroll);
@@ -126,15 +153,15 @@ public class MagicScrollServiceImplTest {
     @Test(expected = BadUpdateException.class)
     public void updateScrollWithIncorrectId() {
 
-        MagicScroll scroll = magicScrollService.getMagicScrollById(1L);
-        scroll.setScroll_id(99L);
+        MagicScroll scroll = magicScrollService.getMagicScrollById(correctId1);
+        scroll.setScroll_id(incorrectId);
         magicScrollService.updateMagicScroll(scroll);
     }
 
     @Test(expected = BadUpdateException.class)
     public void updateScrollWithNullDecription() {
 
-        MagicScroll scroll = magicScrollService.getMagicScrollById(1L);
+        MagicScroll scroll = magicScrollService.getMagicScrollById(correctId1);
         scroll.setDescription(null);
         magicScrollService.updateMagicScroll(scroll);
     }
@@ -142,7 +169,7 @@ public class MagicScrollServiceImplTest {
     @Test(expected = BadUpdateException.class)
     public void updateScrollWithNullDate() {
 
-        MagicScroll scroll = magicScrollService.getMagicScrollById(1L);
+        MagicScroll scroll = magicScrollService.getMagicScrollById(correctId1);
         scroll.setCreation_date(null);
         magicScrollService.updateMagicScroll(scroll);
     }
@@ -150,7 +177,7 @@ public class MagicScrollServiceImplTest {
     @Test(expected = BadUpdateException.class)
     public void updateScrollWithNullId() {
 
-        MagicScroll scroll = magicScrollService.getMagicScrollById(1L);
+        MagicScroll scroll = magicScrollService.getMagicScrollById(correctId1);
         scroll.setScroll_id(null);
         magicScrollService.updateMagicScroll(scroll);
     }
@@ -159,11 +186,9 @@ public class MagicScrollServiceImplTest {
     @Test
     public void getMagicScrollsByMageId() {
 
-        Long mage_id=0L;
-
-        List<MagicScroll> scrolls = magicScrollService.getMagicScrollsByMageId(mage_id);
+        List<MagicScroll> scrolls = magicScrollService.getMagicScrollsByMageId(correctId1);
         for(MagicScroll scroll:scrolls) {
-            Assert.assertEquals(mage_id, scroll.getMage_id());
+            Assert.assertEquals(correctId1, scroll.getMage_id());
         }
         System.out.println(scrolls);
     }
@@ -178,7 +203,7 @@ public class MagicScrollServiceImplTest {
     @Test(expected = NotFoundException.class)
     public void getMagicScrollsByIncorrectMageId() {
 
-        List<MagicScroll> scrolls = magicScrollService.getMagicScrollsByMageId(99L);
+        List<MagicScroll> scrolls = magicScrollService.getMagicScrollsByMageId(incorrectId);
 
     }
 
@@ -198,7 +223,7 @@ public class MagicScrollServiceImplTest {
     public void addIncorrectScroll() {
 
         MagicScroll scroll = getNewScroll();
-        scroll.setScroll_id(0L);
+        scroll.setScroll_id(correctId1);
         Long id = magicScrollService.addMagicScroll(scroll);
     }
 

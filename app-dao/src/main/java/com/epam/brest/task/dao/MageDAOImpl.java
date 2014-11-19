@@ -30,6 +30,9 @@ public class MageDAOImpl implements MageDAO {
     private static final String SCROLL_AMOUNT = "scroll_amount";
     private static final String AVERAGE_MANACOST = "average_manacost";
 
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_limit_mages_path}')).inputStream)}")
+    private String SELECT_LIMIT_MAGES;
+
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${remove_mage_by_id_path}')).inputStream)}")
     private String REMOVE_MAGE_BY_ID;
 
@@ -78,6 +81,18 @@ public class MageDAOImpl implements MageDAO {
         LOGGER.debug("MageDAOImpl:getAllMages({})");
 
         return namedJdbcTemplate.query(SELECT_ALL_MAGES,new MageMapper());
+    }
+
+    @Override
+    public List<Mage> getLimitMages(Long amt, Long n_from) {
+
+        LOGGER.debug("MageDAOImpl:getLimitMages({})",amt+","+n_from);
+
+        Map<String, Object> args = new HashMap(2);
+        args.put("n_from", n_from);
+        args.put("amt", amt);
+        return namedJdbcTemplate.query(SELECT_LIMIT_MAGES, args, new MageMapper());
+
     }
 
     @Override

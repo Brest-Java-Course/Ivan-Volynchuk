@@ -80,5 +80,19 @@ public class MageDAOImplTest {
         Assert.assertEquals(size-1, mageDAO.getAllMages().size());
     }
 
+    //Tests for getLimitMages
+    @Test
+    public void getLimitMages() {
+
+        Long amt = 3L;
+        Long n_from = 0L;
+
+        List<Mage> mages = mageDAO.getLimitMages(amt, n_from);
+        Assert.assertTrue(mages.size() <= amt);
+        for(Mage mage:mages) {
+            Assert.assertTrue(mage.getMage_id()<=amt);
+        }
+    }
+
 
 }

@@ -32,6 +32,18 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     private static final String MANA = "mana_cost";
     private static final String MAGE_ID= "mage_id";
 
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_limit_mage_scrolls_path}')).inputStream)}")
+    private String SELECT_LIMIT_MAGE_SCROLLS;
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_limit_scrolls_without_mage_path}')).inputStream)}")
+    private String SELECT_LIMIT_SCROLLS_WITHOUT_MAGE;
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_limit_scrolls_path}')).inputStream)}")
+    private String SELECT_LIMIT_SCROLLS;
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_scrolls_without_mage_path}')).inputStream)}")
+    private String SELECT_SCROLLS_WITHOUT_MAGE;
+
     /*
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${scroll_amount_by_mage_id_path}')).inputStream)}")
     private String SCROLL_AMOUNT_BY_MAGE_ID;
@@ -97,6 +109,17 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     }
 
     @Override
+    public List<MagicScroll> getLimitScrolls(Long amt, Long n_from) {
+
+        LOGGER.debug("MagicScrollDAOImpl:getLimitScrolls({})",amt+","+n_from);
+
+        Map<String, Object> args = new HashMap(2);
+        args.put("n_from", n_from);
+        args.put("amt", amt);
+        return namedJdbcTemplate.query(SELECT_LIMIT_SCROLLS, args, new ScrollMapper());
+    }
+
+    @Override
     public void removeMagicScroll(Long id) {
 
         LOGGER.debug("MagicScrollDAOImpl:removeMagicScroll({})", id);
@@ -154,6 +177,18 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     }
 
     @Override
+    public List<MagicScroll> getLimitMagicScrollsByMageId(Long id, Long amt, Long n_from) {
+
+        LOGGER.debug("MagicScrollDAOImpl:getLimitMagicScrollsByMageId({})",amt+","+n_from);
+
+        Map<String, Object> args = new HashMap(2);
+        args.put("n_from", n_from);
+        args.put("amt", amt);
+        args.put(MAGE_ID, id);
+        return namedJdbcTemplate.query(SELECT_LIMIT_MAGE_SCROLLS, args, new ScrollMapper());
+    }
+
+    @Override
     public void clearScrollsByMagicId(Long id) {
 
         LOGGER.debug("MagicScrollDAOImpl:clearScrollsByMagicId({})", id);
@@ -163,6 +198,24 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         namedJdbcTemplate.update(CLEAR_MAGE_ID, args);
     }
 
+    @Override
+    public List<MagicScroll> getMagicScrollsWithoutMage() {
+
+        LOGGER.debug("MagicScrollDAOImpl:getMagicScrollsWithoutMage({})");
+
+        return namedJdbcTemplate.query(SELECT_SCROLLS_WITHOUT_MAGE,new ScrollMapper());
+    }
+
+    @Override
+    public List<MagicScroll> getLimitMagicScrollsWithoutMage(Long amt, Long n_from) {
+
+        LOGGER.debug("MagicScrollDAOImpl:getLimitMagicScrollsWithoutMage({})",amt+","+n_from);
+
+        Map<String, Object> args = new HashMap(2);
+        args.put("n_from", n_from);
+        args.put("amt", amt);
+        return namedJdbcTemplate.query(SELECT_LIMIT_SCROLLS_WITHOUT_MAGE, args, new ScrollMapper());
+    }
     /*
     @Override
     public Long getScrollAmountByMageId(Long id) {

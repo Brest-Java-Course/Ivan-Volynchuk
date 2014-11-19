@@ -14,6 +14,8 @@ public interface MagicScrollDAO {
 
     public List<MagicScroll> getAllMagicScrolls();
 
+    public List<MagicScroll> getLimitScrolls(Long amt, Long n_from);
+
     public void removeMagicScroll(Long id);
 
     public MagicScroll getMagicScrollById(Long id);
@@ -22,9 +24,16 @@ public interface MagicScrollDAO {
 
     public void updateMagicScroll(MagicScroll magicScroll);
 
+    public void clearScrollsByMagicId(Long id);
+
     public List<MagicScroll> getMagicScrollsByMageId(Long id);
 
-    public void clearScrollsByMagicId(Long id);
+    public List<MagicScroll> getLimitMagicScrollsByMageId(Long id, Long amt, Long n_from);
+
+    public List<MagicScroll> getMagicScrollsWithoutMage();
+
+    public List<MagicScroll> getLimitMagicScrollsWithoutMage(Long amt, Long n_from);
+
 
     /*
     public Long getScrollAmountByMageId(Long id);
