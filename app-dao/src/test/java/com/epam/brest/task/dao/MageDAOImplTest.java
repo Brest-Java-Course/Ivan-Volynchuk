@@ -94,5 +94,15 @@ public class MageDAOImplTest {
         }
     }
 
+    //Tests for amount ;)
+    @Test
+    public void amountMages() {
+
+        Long amt = mageDAO.amountMages();
+        int size = mageDAO.getAllMages().size();
+        Assert.assertTrue(amt==size);
+
+    }
+
 
 }

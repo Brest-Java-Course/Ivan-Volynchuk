@@ -189,5 +189,24 @@ public class MagicScrollDAOImplTest {
         }
     }
 
+    //Tests for amountScrolls
+    @Test
+    public void amountScrolls() {
+
+        Long amt = magicScrollDAO.amountScrolls();
+        int size = magicScrollDAO.getAllMagicScrolls().size();
+        Assert.assertTrue(amt==size);
+    }
+    //Tests for amountScrollsByMageId
+    @Test
+    public void amountScrollsByMageId() {
+
+        Long mageId = 0L;
+
+        Long amt = magicScrollDAO.amountScrollsByMageId(mageId);
+        int size = magicScrollDAO.getMagicScrollsByMageId(mageId).size();
+        Assert.assertTrue(amt==size);
+    }
+
 
 }

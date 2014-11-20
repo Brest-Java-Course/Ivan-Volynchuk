@@ -18,6 +18,8 @@ public interface MageDAO {
 
     public List<Mage> getLimitMages(Long amt, Long n_from);
 
+    public Long amountMages();
+
     public Long addMage(Mage mage);
 
     public void removeMageById(Long id);

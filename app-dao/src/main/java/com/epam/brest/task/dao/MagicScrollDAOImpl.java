@@ -32,6 +32,12 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     private static final String MANA = "mana_cost";
     private static final String MAGE_ID= "mage_id";
 
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${get_amount_scrolls_by_mage_id_path}')).inputStream)}")
+    private String GET_AMOUNT_SCROLLS_BY_MAGE_ID;
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${get_amount_scrolls_path}')).inputStream)}")
+    private String GET_AMOUNT_SCROLLS;
+
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_limit_mage_scrolls_path}')).inputStream)}")
     private String SELECT_LIMIT_MAGE_SCROLLS;
 
@@ -120,6 +126,15 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     }
 
     @Override
+    public Long amountScrolls() {
+
+        LOGGER.debug("MagicScrollDAOImpl:amountScrolls()");
+
+        return namedJdbcTemplate.queryForLong(GET_AMOUNT_SCROLLS, new HashMap(0));
+
+    }
+
+    @Override
     public void removeMagicScroll(Long id) {
 
         LOGGER.debug("MagicScrollDAOImpl:removeMagicScroll({})", id);
@@ -189,6 +204,16 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     }
 
     @Override
+    public Long amountScrollsByMageId(Long id) {
+
+        LOGGER.debug("MagicScrollDAOImpl:amountScrollsByMageId({})",id);
+
+        Map<String, Object> args = new HashMap(1);
+        args.put(MAGE_ID,id);
+        return namedJdbcTemplate.queryForLong(GET_AMOUNT_SCROLLS_BY_MAGE_ID, args);
+    }
+
+    @Override
     public void clearScrollsByMagicId(Long id) {
 
         LOGGER.debug("MagicScrollDAOImpl:clearScrollsByMagicId({})", id);
@@ -216,6 +241,12 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         args.put("amt", amt);
         return namedJdbcTemplate.query(SELECT_LIMIT_SCROLLS_WITHOUT_MAGE, args, new ScrollMapper());
     }
+
+    @Override
+    public Long amountScrollsWithoutMage() {
+        return null;
+    }
+
     /*
     @Override
     public Long getScrollAmountByMageId(Long id) {
