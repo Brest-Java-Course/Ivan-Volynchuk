@@ -208,5 +208,14 @@ public class MagicScrollDAOImplTest {
         Assert.assertTrue(amt==size);
     }
 
+    //Tests for amountScrollsWithoutMage
+    @Test
+    public void amountScrollsWithoutMage() {
+
+        Long amt = magicScrollDAO.amountScrollsWithoutMage();
+        int size = magicScrollDAO.getMagicScrollsWithoutMage().size();
+        Assert.assertTrue(amt==size);
+    }
+
 
 }

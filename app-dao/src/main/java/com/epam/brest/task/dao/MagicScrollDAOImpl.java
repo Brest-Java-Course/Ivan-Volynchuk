@@ -32,6 +32,9 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     private static final String MANA = "mana_cost";
     private static final String MAGE_ID= "mage_id";
 
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${get_amount_scrolls_without_mage_path}')).inputStream)}")
+    private String GET_AMOUNT_SCROLLS_WITHOUT_MAGE;
+
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${get_amount_scrolls_by_mage_id_path}')).inputStream)}")
     private String GET_AMOUNT_SCROLLS_BY_MAGE_ID;
 
@@ -226,7 +229,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     @Override
     public List<MagicScroll> getMagicScrollsWithoutMage() {
 
-        LOGGER.debug("MagicScrollDAOImpl:getMagicScrollsWithoutMage({})");
+        LOGGER.debug("MagicScrollDAOImpl:getMagicScrollsWithoutMage()");
 
         return namedJdbcTemplate.query(SELECT_SCROLLS_WITHOUT_MAGE,new ScrollMapper());
     }
@@ -244,7 +247,10 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
 
     @Override
     public Long amountScrollsWithoutMage() {
-        return null;
+
+        LOGGER.debug("MagicScrollDAOImpl:amountScrollsWithoutMage()");
+
+        return namedJdbcTemplate.queryForLong(GET_AMOUNT_SCROLLS_WITHOUT_MAGE, new HashMap(0));
     }
 
     /*

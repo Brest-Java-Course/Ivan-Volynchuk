@@ -199,23 +199,59 @@ public class MagicScrollServiceImpl implements MagicScrollService {
         }catch(IllegalArgumentException e) {
 
             LOGGER.debug(e.getMessage());
-            throw new NotFoundException(e.getMessage(), "Getting scrolls by mage's id","Updating user");
+            throw new NotFoundException(e.getMessage(), "Getting scrolls by mage's id", id);
         }
         return scrolls;
     }
 
     @Override
     public List<MagicScroll> getLimitMagicScrollsByMageId(Long id, Long page, Long per_page) {
-        return null;
+
+        LOGGER.debug("getLimitMagicScrollsByMageId({})","MageId:"+id+"Page:"+page+",Amout:"+per_page);
+
+        List<MagicScroll> scrolls = null;
+        try{
+            Long n_from = page*per_page;
+            scrolls = magicScrollDAO.getLimitMagicScrollsByMageId(id, per_page, n_from);
+            Assert.notEmpty(scrolls);
+        }catch(IllegalArgumentException e){
+            LOGGER.debug(NO_MAGE_SCROLLS);
+            throw new NotFoundException(NO_MAGE_SCROLLS, "Getting limited scrolls by mage id.", id);
+        }
+        return scrolls;
     }
 
     @Override
     public List<MagicScroll> getMagicScrollsWithoutMage() {
-        return null;
+
+        LOGGER.debug("getMagicScrollsWithoutMage()");
+
+        List<MagicScroll> scrolls = null;
+        try {
+            scrolls = magicScrollDAO.getMagicScrollsWithoutMage();
+            Assert.notEmpty(scrolls,NO_SCROLLS_TO_GET);
+        }catch(IllegalArgumentException e) {
+
+            LOGGER.debug(e.getMessage());
+            throw new NotFoundException(e.getMessage(), "Getting scrolls without mage", null);
+        }
+        return scrolls;
     }
 
     @Override
     public List<MagicScroll> getLimitMagicScrollsWithoutMage(Long page, Long per_page) {
-        return null;
+
+        LOGGER.debug("getLimitMagicScrollsWithoutMage({})","Page:"+page+",Amout:"+per_page);
+
+        List<MagicScroll> scrolls = null;
+        try{
+            Long n_from = page*per_page;
+            scrolls = magicScrollDAO.getLimitMagicScrollsWithoutMage(per_page, n_from);
+            Assert.notEmpty(scrolls);
+        }catch(IllegalArgumentException e){
+            LOGGER.debug(NO_SCROLLS_TO_GET);
+            throw new NotFoundException(NO_SCROLLS_TO_GET, "Getting limited scrolls without mage.", null);
+        }
+        return scrolls;
     }
 }

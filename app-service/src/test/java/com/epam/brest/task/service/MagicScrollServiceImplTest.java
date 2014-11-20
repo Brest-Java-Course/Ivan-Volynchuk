@@ -227,7 +227,77 @@ public class MagicScrollServiceImplTest {
         Long id = magicScrollService.addMagicScroll(scroll);
     }
 
+    // Tests for getLimitMagicScrollsByMageId
+    @Test
+    public void getLimitMagicScrollsByMageId() {
 
+        Long mageId = 0L;
+
+        Long page = 1L;
+        Long per_page = 2L;
+
+        List<MagicScroll> scrolls = magicScrollService.getLimitMagicScrollsByMageId(mageId ,page, per_page);
+        for(MagicScroll scroll:scrolls) {
+            Assert.assertEquals(scroll.getMage_id(), mageId);
+        }
+        Assert.assertTrue(scrolls.size()<=per_page);
+
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getEmptyLimitMagicScrollsByMageId() {
+
+        Long mageId = 0L;
+
+        Long page = 3L;
+        Long per_page = 99L;
+
+        List<MagicScroll> scrolls = magicScrollService.getLimitMagicScrollsByMageId(mageId ,page, per_page);
+    }
+
+    // Tests for getMagicScrollsWithoutMage
+    @Test
+    public void getMagicScrollsWithoutMage() {
+
+        List<MagicScroll> scrolls = magicScrollService.getMagicScrollsWithoutMage();
+        for(MagicScroll scroll:scrolls) {
+            Assert.assertNull(scroll.getMage_id());
+        }
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getEmptyMagicScrollsWithoutMage() {
+
+        List<MagicScroll> scrolls = magicScrollService.getMagicScrollsWithoutMage();
+        for(MagicScroll scroll:scrolls) {
+            magicScrollService.removeMagicScroll(scroll.getScroll_id());
+        }
+
+        magicScrollService.getMagicScrollsWithoutMage();
+    }
+
+    // Tests for getLimitMagicScrollsWithoutMage
+    @Test
+    public void getLimitMagicScrollsWithoutMage() {
+
+        Long page = 1L;
+        Long per_page = 3L;
+
+        List<MagicScroll> scrolls = magicScrollService.getLimitMagicScrollsWithoutMage(page, per_page);
+        for(MagicScroll scroll:scrolls) {
+            Assert.assertNull(scroll.getMage_id());
+        }
+        Assert.assertTrue(scrolls.size()<=per_page);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void getEmptyLimitMagicScrollsWithoutMage() {
+
+        Long page = 99L;
+        Long per_page = 3L;
+
+        magicScrollService.getLimitMagicScrollsWithoutMage(page, per_page);
+    }
 
 
 
