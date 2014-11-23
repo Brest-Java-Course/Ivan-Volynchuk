@@ -23,4 +23,6 @@ public interface MageDAO {
     public Long addMage(Mage mage);
 
     public void removeMageById(Long id);
+
+    public void updateMage(Mage mage);
 }

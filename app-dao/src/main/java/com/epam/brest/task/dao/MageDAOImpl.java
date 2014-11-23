@@ -27,8 +27,13 @@ public class MageDAOImpl implements MageDAO {
 
     private static final String MAGE_ID="mage_id";
     private static final String NAME = "mage_name";
+    private static final String LEVEL = "mage_level";
+    private static final String EXP = "mage_exp";
     private static final String SCROLL_AMOUNT = "scroll_amount";
     private static final String AVERAGE_MANACOST = "average_manacost";
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${update_mage_path}')).inputStream)}")
+    private String UPDATE_MAGE;
 
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${get_amount_mages_path}')).inputStream)}")
     private String GET_AMOUNT_MAGES;
@@ -102,7 +107,6 @@ public class MageDAOImpl implements MageDAO {
     public Long amountMages() {
 
         LOGGER.debug("MageDAOImpl:amountMages()");
-
         return namedJdbcTemplate.queryForLong(GET_AMOUNT_MAGES, new HashMap(0));
     }
 
@@ -116,6 +120,8 @@ public class MageDAOImpl implements MageDAO {
         KeyHolder holder=new GeneratedKeyHolder();
         MapSqlParameterSource parameterSource= new MapSqlParameterSource();
         parameterSource.addValue(NAME, mage.getName());
+        parameterSource.addValue(LEVEL, mage.getLevel());
+        parameterSource.addValue(EXP, mage.getExp());
         namedJdbcTemplate.update(INSERT_MAGE, parameterSource,holder);
 
         mageid=holder.getKey().longValue();
@@ -133,12 +139,29 @@ public class MageDAOImpl implements MageDAO {
         namedJdbcTemplate.update(REMOVE_MAGE_BY_ID,args);
     }
 
+    @Override
+    public void updateMage(Mage mage) {
+
+        LOGGER.debug("MageDAOImpl:updateMage({})", mage);
+
+        Map<String, Object> args = new HashMap(4);
+        args.put(MAGE_ID, mage.getMage_id());
+        args.put(NAME, mage.getName());
+        args.put(LEVEL, mage.getLevel());
+        args.put(EXP, mage.getExp());
+        namedJdbcTemplate.update(UPDATE_MAGE,args);
+
+
+    }
+
     public class MageMapper implements RowMapper<Mage> {
 
         @Override
         public Mage mapRow(ResultSet resultSet,int i) throws SQLException {
             Mage mage=new Mage();
             mage.setMage_id(resultSet.getLong(MAGE_ID));
+            mage.setLevel(resultSet.getLong(LEVEL));
+            mage.setExp(resultSet.getLong(EXP));
             mage.setAverage_manacost(resultSet.getLong(AVERAGE_MANACOST));
             mage.setName(resultSet.getString(NAME));
             mage.setScroll_amount(resultSet.getLong(SCROLL_AMOUNT));

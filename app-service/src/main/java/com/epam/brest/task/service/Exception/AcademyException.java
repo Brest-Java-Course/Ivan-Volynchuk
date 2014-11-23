@@ -5,26 +5,23 @@ package com.epam.brest.task.service.Exception;
  */
 public class AcademyException extends RuntimeException {
 
-    private Object object;
     private String place;
 
-    public AcademyException(String message, String place, Object object){
+    public AcademyException(String message, String place){
 
         super(message);
-        this.object = object;
         this.place = place;
     }
 
-    public String getObject() {
-        return object.toString();
+    public String getPlace() {
+        return place;
     }
 
     @Override
     public String toString() {
         return "AcademyException{" +
-                "Reason = " + super.getMessage() +
-                "Object = " + object +
-                "Place = " + place +
+                " Reason = " + super.getMessage() +
+                " Place = " + place +
                 '}';
     }
 }

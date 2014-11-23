@@ -17,8 +17,12 @@ public interface MageService {
 
         public List<Mage> getLimitMages(Long page, Long per_page);
 
+        public Long amountMages();
+
         public Long addMage(Mage mage);
 
         public void removeMageById(Long id);
+
+        public void updateMage(Mage mage);
 
 }

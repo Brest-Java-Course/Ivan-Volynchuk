@@ -1,25 +1,25 @@
 
-INSERT INTO MAGE (mage_id, mage_name)
-                        VALUES (0,'Enigma');
+INSERT INTO MAGE (mage_id, mage_name, mage_level, mage_exp)
+                        VALUES (0, 'Enigma', 25, 2500);
 
-INSERT INTO MAGE (mage_id, mage_name)
-                        VALUES (1,'Paladin');
+INSERT INTO MAGE (mage_id, mage_name, mage_level, mage_exp)
+                        VALUES (1, 'Paladin', 5, 500 );
 
-INSERT INTO MAGE (mage_id, mage_name)
-                        VALUES (2,'Rainforce');
+INSERT INTO MAGE (mage_id, mage_name, mage_level, mage_exp)
+                        VALUES (2, 'Rainforce', 3, 700 );
 
-INSERT INTO MAGE (mage_id, mage_name)
-                        VALUES (3,'Undertaker');
+INSERT INTO MAGE (mage_id, mage_name, mage_level, mage_exp)
+                        VALUES (3, 'Undertaker', 9, 1600);
 
-INSERT INTO MAGE (mage_id, mage_name)
-                        VALUES (4,'Knaves jungler');
+INSERT INTO MAGE (mage_id, mage_name, mage_level, mage_exp)
+                        VALUES (4, 'Knaves jungler', 7, 356);
 
-INSERT INTO MAGE (mage_id, mage_name)
-                        VALUES (5,'Gnome');
+INSERT INTO MAGE (mage_id, mage_name, mage_level, mage_exp)
+                        VALUES (5, 'Gnome', 8, 321);
 
-INSERT INTO MAGE (mage_id, mage_name)
-                        VALUES (6,'Priest');
+INSERT INTO MAGE (mage_id, mage_name, mage_level, mage_exp)
+                        VALUES (6, 'Priest', 9, 322);
 
-INSERT INTO MAGE (mage_id, mage_name)
-                        VALUES (7,'Netrolzub');
+INSERT INTO MAGE (mage_id, mage_name, mage_level, mage_exp)
+                        VALUES (7, 'Netrolzub', 45, 100);
 

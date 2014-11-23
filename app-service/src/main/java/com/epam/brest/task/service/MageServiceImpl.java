@@ -4,9 +4,7 @@ import com.epam.brest.task.dao.MageDAO;
 import com.epam.brest.task.dao.MagicScrollDAO;
 import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
-import com.epam.brest.task.service.Exception.BadInsertException;
-import com.epam.brest.task.service.Exception.BadRemoveException;
-import com.epam.brest.task.service.Exception.NotFoundException;
+import com.epam.brest.task.service.Exception.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +23,11 @@ public class MageServiceImpl implements MageService {
     private static final Logger LOGGER = LogManager.getLogger(MageServiceImpl.class);
     private static final String NOT_NULL_ID = "Id should be specified.";
     private static final String NOT_NULL_NAME = "Name should be specified.";
-    private static final String NO_MAGES_TO_GET = "No mages to get";
-    private static final String NOT_NULL_MAGE = "Mage should be specified";
-    private static final String NULL_ID = "Mage should not be specified";
+    private static final String NOT_NULL_LEVEL = "Level should be specified.";
+    private static final String NOT_NULL_EXP = "Experience should be specified.";
+    private static final String NO_MAGES_TO_GET = "No mages to get.";
+    private static final String NOT_NULL_MAGE = "Mage should be specified.";
+    private static final String NULL_ID = "Mage's id should not be specified.";
 
     @Autowired
     private MageDAO mageDAO;
@@ -49,11 +49,11 @@ public class MageServiceImpl implements MageService {
         }catch(EmptyResultDataAccessException e) {
 
             LOGGER.debug("Mage with ({}) id doesn't exist", id);
-            throw new NotFoundException("Mage with such id doesn't exist", "Getting mage by id", id);
+            throw new NoItemFoundException("Mage with such id doesn't exist", "Getting mage by id", id);
         }catch(IllegalArgumentException e) {
 
             LOGGER.debug(e.getMessage());
-            throw new NotFoundException(e.getMessage(), "Getting mage by id", id);
+            throw new NoItemFoundException(e.getMessage(), "Getting mage by id", id);
         }catch(NotFoundException e) {
 
             LOGGER.debug("No scrolls for ({})", mage);
@@ -75,11 +75,11 @@ public class MageServiceImpl implements MageService {
         }catch(EmptyResultDataAccessException e){
 
             LOGGER.debug("Mage with ({}) name doesn't exist", name);
-            throw new NotFoundException("Mage with such name doesn't exist", "Getting mage by name", name);
+            throw new NoItemFoundException("Mage with such name doesn't exist", "Getting mage by name", name);
         }catch(IllegalArgumentException e){
 
             LOGGER.debug(e.getMessage());
-            throw new NotFoundException(e.getMessage(), "Getting mage by name", name);
+            throw new NoItemFoundException(e.getMessage(), "Getting mage by name", name);
         }catch(NotFoundException e) {
 
             LOGGER.debug("No scrolls for ({})", mage);
@@ -99,7 +99,7 @@ public class MageServiceImpl implements MageService {
         }catch(IllegalArgumentException e){
 
             LOGGER.debug(e.getMessage());
-            throw new NotFoundException(e.getMessage(), "Getting all mages.", null);
+            throw new NoItemsFoundException(e.getMessage(), "Getting all mages.");
         }
         return mages;
     }
@@ -117,9 +117,17 @@ public class MageServiceImpl implements MageService {
         }catch(IllegalArgumentException e){
 
             LOGGER.debug(e.getMessage());
-            throw new NotFoundException(e.getMessage(), "Getting limited mages.", null);
+            throw new NoItemsFoundException(e.getMessage(), "Getting limited mages.");
         }
         return mages;
+    }
+
+    @Override
+    public Long amountMages() {
+
+        LOGGER.debug("amountMages()");
+
+        return mageDAO.amountMages();
     }
 
     @Override
@@ -133,15 +141,18 @@ public class MageServiceImpl implements MageService {
             Assert.notNull(mage, NOT_NULL_MAGE);
             Assert.isNull(mage.getMage_id(), NULL_ID);
             Assert.notNull(mage.getName(), NOT_NULL_NAME);
+            Assert.notNull(mage.getExp(), NOT_NULL_EXP);
+            Assert.notNull(mage.getLevel(), NOT_NULL_LEVEL);
 
             getMageByName(mage.getName());
-            throw new BadInsertException("Mage with such description already exist",
+            LOGGER.debug("This mage already exists");
+            throw new BadInsertException("Mage with such name already exist",
                     "Adding mage", mage);
         }catch(IllegalArgumentException e) {
 
             LOGGER.debug(e.getMessage());
             throw new BadInsertException(e.getMessage(), "Adding mage", mage);
-        }catch(NotFoundException e) {
+        }catch(NoItemFoundException e) {
 
             return mageDAO.addMage(mage);
         }
@@ -154,6 +165,7 @@ public class MageServiceImpl implements MageService {
         LOGGER.debug("removeMageById({})", id);
 
         try {
+
             Assert.notNull(id, NOT_NULL_ID);
             getMageById(id);
             mageDAO.removeMageById(id);
@@ -162,12 +174,45 @@ public class MageServiceImpl implements MageService {
 
             LOGGER.debug(e.getMessage());
             throw new BadRemoveException(e.getMessage(), "Removing mage.", id);
-        }catch(NotFoundException e){
+        }catch(NoItemFoundException e){
 
             LOGGER.debug("No mage with such id ({})", id);
             throw new BadRemoveException(e.getMessage(), "Removing mage", id);
         }
 
 
+    }
+
+    @Override
+    public void updateMage(Mage mage) {
+
+        LOGGER.debug("updateMage({})", mage);
+
+        try {
+            Assert.notNull(mage, NOT_NULL_MAGE);
+            Assert.notNull(mage.getMage_id(), NOT_NULL_ID);
+            Assert.notNull(mage.getName(), NOT_NULL_NAME);
+            Assert.notNull(mage.getExp(), NOT_NULL_EXP);
+            Assert.notNull(mage.getLevel(), NOT_NULL_LEVEL);
+
+            getMageByName(mage.getName());
+
+            LOGGER.debug("Mage with such name already exists.");
+            throw new BadUpdateException("Mage with such name already exist.", "Updating mage", mage);
+        }catch(IllegalArgumentException e) {
+
+            LOGGER.debug(e.getMessage());
+            throw new BadUpdateException(e.getMessage(), "Updating mage", mage);
+        }catch(NoItemFoundException e) {
+
+            try {
+                getMageById(mage.getMage_id());
+                mageDAO.updateMage(mage);
+            }catch(NoItemFoundException exception) {
+
+                LOGGER.debug("No Mage with such id.");
+                throw new BadUpdateException("No user with such id", "Updating mage", mage);
+            }
+        }
     }
 }

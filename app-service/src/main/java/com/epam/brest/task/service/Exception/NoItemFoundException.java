@@ -1,15 +1,14 @@
 package com.epam.brest.task.service.Exception;
 
 /**
- * Created by fieldistor on 17.11.14.
+ * Created by fieldistor on 23.11.14.
  */
-public class BadUpdateException extends AcademyException {
+public class NoItemFoundException extends NotFoundException {
 
     private Object object;
 
-    public BadUpdateException(String message, String place, Object object) {
+    public NoItemFoundException(String message, String place, Object object) {
         super(message, place);
-        this.object = object;
     }
 
     public Object getObject() {

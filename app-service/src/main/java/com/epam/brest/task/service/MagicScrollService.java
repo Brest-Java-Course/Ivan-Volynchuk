@@ -1,6 +1,7 @@
 package com.epam.brest.task.service;
 
 import com.epam.brest.task.domain.MagicScroll;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -15,6 +16,14 @@ public interface MagicScrollService {
 
     public List<MagicScroll> getLimitScrolls(Long page, Long per_page);
 
+    public List<MagicScroll> getAllMagicScrollsAfterDate(LocalDate afterDate);
+
+    public List<MagicScroll> getAllMagicScrollsBeforeDate(LocalDate beforeDate);
+
+    public List<MagicScroll> getAllMagicScrollsBetweenDates(LocalDate afterDate, LocalDate beforeDate);
+
+    public Long amountScrolls();
+
     public void removeMagicScroll(Long id);
 
     public MagicScroll getMagicScrollById(Long id);
@@ -27,8 +36,11 @@ public interface MagicScrollService {
 
     public List<MagicScroll> getLimitMagicScrollsByMageId(Long id, Long page, Long per_page);
 
+    public Long amountScrollsByMageId(Long id);
+
     public List<MagicScroll> getMagicScrollsWithoutMage();
 
     public List<MagicScroll> getLimitMagicScrollsWithoutMage(Long page, Long per_page);
 
+    public Long amountScrollsWithoutMage();
 }

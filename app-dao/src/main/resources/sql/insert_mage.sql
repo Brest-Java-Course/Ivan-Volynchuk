@@ -1,2 +1,2 @@
-INSERT INTO MAGE (mage_name)
-                        VALUES (:mage_name)
+INSERT INTO MAGE (mage_name, mage_level, mage_exp)
+                        VALUES (:mage_name, :mage_level, :mage_exp)

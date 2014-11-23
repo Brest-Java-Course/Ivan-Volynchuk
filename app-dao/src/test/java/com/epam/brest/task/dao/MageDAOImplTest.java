@@ -2,6 +2,7 @@ package com.epam.brest.task.dao;
 
 import com.epam.brest.task.domain.Mage;
 import junit.framework.Assert;
+import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.epam.brest.task.dao.tools.TestMageScrollFactory.getNewMage;
 
 /**
  * Created by fieldistor on 16.11.14.
@@ -25,58 +28,81 @@ public class MageDAOImplTest {
     @Autowired
     private MageDAO mageDAO;
 
+    private final static Long correctMageId1 = 0L;
+    private final static Long incorrectMageId = 99L;
+
+    private final static String correctMageName = "Paladin";
+
+    private final static Long amountMage = 8L;
+
+    //Tests for addMage
     @Test
     public void AddMage() {
 
-        Mage mage = new Mage("John");
-
-        Long id=mageDAO.addMage(mage);
+        Mage mage = getNewMage();
+        Long id = mageDAO.addMage(mage);
+        Assert.assertNotNull(id);
+        Long size = mageDAO.amountMages();
+        Assert.assertEquals(--size, amountMage);
     }
 
+
+    //Tests for getMageById
     @Test
     public void getMageById() {
 
-        Long mageid=1L;
-
-        Mage mage=mageDAO.getMageById(mageid);
-        System.out.println(mage);
-        Assert.assertEquals(mage.getMage_id(),new Long(mageid));
+        Mage mage=mageDAO.getMageById(correctMageId1);
+        Assert.assertEquals(mage.getMage_id(), correctMageId1);
     }
 
     @Test
-    public void AddAndGetTest() {
+    public void AddAndGetMageById() {
 
-        Mage mage = new Mage("Boris");
-        Long id=mageDAO.addMage(mage);
-        Mage mage2=mageDAO.getMageById(id);
-        Assert.assertEquals(mage2.getName(), mage.getName());
-
+        Mage mage = getNewMage();
+        Long id = mageDAO.addMage(mage);
+        Assert.assertNotNull(id);
+        mage.setMage_id(id);
+        Mage newMage = mageDAO.getMageById(id);
+        Assert.assertEquals(mage, newMage);
     }
 
+    //Tests for getAllMages
     @Test
     public void getAllMages() {
 
         List<Mage> mages= mageDAO.getAllMages();
         int size = mages.size();
-        mageDAO.addMage(new Mage("tesT"));
+        Assert.assertEquals(new Long(size), amountMage);
+        mageDAO.addMage(getNewMage());
         Assert.assertEquals(size,mageDAO.getAllMages().size()-1);
     }
 
+    //Tests for getMageByName
     @Test
-    public void getMageByLogin() {
+    public void getMageByName() {
 
-        String mageName="Paladin";
-
-        Mage mage = mageDAO.getMageByName(mageName);
-        Assert.assertEquals(mage.getName(),mageName);
+        Mage mage = mageDAO.getMageByName(correctMageName);
+        Assert.assertEquals(mage.getName(), correctMageName);
     }
 
+    @Test
+    public void AddAndGetMageByName() {
+
+        Mage mage = getNewMage();
+        Long id = mageDAO.addMage(mage);
+        Assert.assertNotNull(id);
+        mage.setMage_id(id);
+        Mage newMage = mageDAO.getMageByName(mage.getName());
+        Assert.assertEquals(mage, newMage);
+    }
+
+    //Tests for removeMageById
     @Test
     public void removeMageById() {
 
         List<Mage> mages= mageDAO.getAllMages();
         int size = mages.size();
-        mageDAO.removeMageById(0L);
+        mageDAO.removeMageById(correctMageId1);
         Assert.assertEquals(size-1, mageDAO.getAllMages().size());
     }
 
@@ -94,14 +120,53 @@ public class MageDAOImplTest {
         }
     }
 
-    //Tests for amount ;)
+    @Test
+    public void getEmptyLimitMages() {
+
+        Long amt = 3L;
+        Long n_from = 99L;
+
+        List<Mage> mages = mageDAO.getLimitMages(amt, n_from);
+        Assert.assertTrue(mages.size() == 0);
+    }
+
+    //Tests for amount
     @Test
     public void amountMages() {
 
         Long amt = mageDAO.amountMages();
-        int size = mageDAO.getAllMages().size();
-        Assert.assertTrue(amt==size);
+        Assert.assertEquals(amt, amountMage);
 
+    }
+
+    //Tests for updateMage
+    @Test
+    public void updateMage() {
+
+        Mage oldMage = mageDAO.getMageById(correctMageId1);
+
+        oldMage.setExp(0L);
+        oldMage.setLevel(80L);
+        oldMage.setName("Gul'Dan");
+        mageDAO.updateMage(oldMage);
+
+        Mage newMage= mageDAO.getMageById(oldMage.getMage_id());
+        Assert.assertEquals(oldMage, newMage);
+    }
+
+    @Test
+    public void updateMageWithIncorrectId() {
+
+        Mage original = mageDAO.getMageById(correctMageId1);
+        Mage oldMage = mageDAO.getMageById(correctMageId1);
+
+        oldMage.setMage_id(incorrectMageId);
+        oldMage.setExp(0L);
+        oldMage.setLevel(80L);
+        oldMage.setName("Gul'Dan");
+        mageDAO.updateMage(oldMage);
+
+        Assert.assertEquals(original, mageDAO.getMageById(correctMageId1));
     }
 
 

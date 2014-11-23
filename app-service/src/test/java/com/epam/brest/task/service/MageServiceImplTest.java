@@ -2,21 +2,27 @@ package com.epam.brest.task.service;
 
 import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
-import com.epam.brest.task.service.Exception.BadInsertException;
-import com.epam.brest.task.service.Exception.BadRemoveException;
-import com.epam.brest.task.service.Exception.NotFoundException;
+import com.epam.brest.task.service.Exception.*;
 import junit.framework.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestContextManager;
+import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.task.dao.tools.TestMageScrollFactory.getNewMage;
+import static com.epam.brest.task.dao.tools.TestMageScrollFactory.*;
 
 /**
  * Created by fieldistor on 17.11.14.
@@ -29,114 +35,96 @@ import static com.epam.brest.task.dao.tools.TestMageScrollFactory.getNewMage;
 
 public class MageServiceImplTest {
 
-    Long incorrectId = 99L;
-    Long correctId1 = 0L;
-    Long correctId2 = 1L;
-
-    int amountMages = 8;
-
     @Autowired
     MageService mageService;
 
     @Autowired
     MagicScrollService magicScrollService;
 
+    private final static Long correctMageId1 = 0L;
+    private final static Long incorrectMageId = 99L;
+
+    private final static String correctMageName = "Enigma";
+    private final static String incorrectMageName = "Void";
+
+    private final static Long amountMage = 8L;
+    private final static Long amoutScrollsOfMageId1 = 5L;
+
     //Tests for getMageById
     @Test
     public void getMageById() {
 
-        Mage mage = mageService.getMageById(correctId1);
-        Assert.assertEquals(correctId1, mage.getMage_id());
-
-        System.out.println(mage);
+        Mage mage = mageService.getMageById(correctMageId1);
+        Assert.assertEquals(correctMageId1, mage.getMage_id());
     }
 
-    @Test(expected = NotFoundException.class)
-    public void getMageByNullId() {
+    @Test
+    public void addAndGetMageById() {
 
-        Mage mage = mageService.getMageById(null);
-
-    }
-
-    @Test(expected = NotFoundException.class)
-    public void getMageByIncorrectId() {
-
-
-        Mage mage = mageService.getMageById(incorrectId);
-
+        Mage mage = getNewMage();
+        Long id = mageService.addMage(mage);
+        mage.setMage_id(id);
+        Assert.assertNotNull(id);
+        Assert.assertEquals(mage, mageService.getMageById(id));
     }
 
     @Test
     public void getMageByIdWithScrolls() {
 
-
-        for(long id=0;id<amountMages;id++) {
-            Mage mage = mageService.getMageById(id);
+            Mage mage = mageService.getMageById(correctMageId1);
             List<MagicScroll> scrolls = mage.getMagicScrollList();
-
+            Assert.assertEquals(new Long(scrolls.size()), amoutScrollsOfMageId1);
             for(MagicScroll scroll:scrolls) {
                 Assert.assertEquals(scroll.getMage_id(), mage.getMage_id());
             }
-
-        }
-
     }
 
     //Tests for getMageByName
     @Test
     public void getMageByName() {
 
-        String name="Enigma";
+        Mage mage = mageService.getMageByName(correctMageName);
 
-        Mage mage = mageService.getMageByName(name);
-        Assert.assertEquals(name, mage.getName());
-    }
-
-    @Test(expected = NotFoundException.class)
-    public void getMageByNullName() {
-
-        Mage mage = mageService.getMageByName(null);
-
-    }
-
-    @Test(expected = NotFoundException.class)
-    public void getMageByIncorrectName() {
-
-        String name= "Void";
-
-        Mage mage = mageService.getMageByName(name);
-
+        Assert.assertEquals(correctMageName, mage.getName());
     }
 
     @Test
     public void getMageByNameWithScrolls() {
 
-            Mage mage = mageService.getMageByName("Enigma");
-            List<MagicScroll> scrolls = mage.getMagicScrollList();
+        Mage mage = mageService.getMageByName(correctMageName);
+        List<MagicScroll> scrolls = mage.getMagicScrollList();
+        Assert.assertEquals(new Long(scrolls.size()), amoutScrollsOfMageId1);
 
-            for(MagicScroll scroll:scrolls) {
-                Assert.assertEquals(scroll.getMage_id(), mage.getMage_id());
-            }
-
-
+        for(MagicScroll scroll:scrolls) {
+            Assert.assertEquals(scroll.getMage_id(), mage.getMage_id());
+         }
     }
 
+    @Test
+    public void addAndGetMageByName() {
+
+        Mage mage = getNewMage();
+        Long id = mageService.addMage(mage);
+        mage.setMage_id(id);
+        Assert.assertNotNull(id);
+        Assert.assertEquals(mage, mageService.getMageByName(mage.getName()));
+    }
     //Test getAllMages
     @Test
     public void getAllMages() {
 
         List<Mage> mages =  mageService.getAllMages();
-        Assert.assertEquals(mages.size(), amountMages);
+        Assert.assertEquals(new Long(mages.size()), amountMage);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = NoItemsFoundException.class)
     public void getEmptyAllMages() {
 
         List<Mage> mages =  mageService.getAllMages();
         for(Mage mage:mages) {
             mageService.removeMageById(mage.getMage_id());
         }
-        mageService.getAllMages();//Expect NotFoundException
+        mageService.getAllMages();
     }
 
     //Test addMage
@@ -150,58 +138,28 @@ public class MageServiceImplTest {
         Assert.assertEquals(mage, mageService.getMageById(id));
     }
 
-    @Test(expected = BadInsertException.class)
-    public void addNotNullIdMage() {
-
-        Mage mage = getNewMage();
-        mage.setMage_id(5L);
-        Long id = mageService.addMage(mage);
-
-    }
-
-    @Test(expected = BadInsertException.class)
-    public void addNullMageMage() {
-
-        Mage mage = getNewMage();
-        mage.setName(null);
-        Long id = mageService.addMage(mage);
-
-    }
-
     //Test removeMage
     @Test
-    public void removeTest() {
+    public void removeMage() {
 
-        int oldsize = mageService.getAllMages().size();
-        mageService.removeMageById(correctId1);
-        int newsize = mageService.getAllMages().size();
-        Assert.assertEquals(newsize + 1, oldsize);
+        Long oldsize = mageService.amountMages();
+        mageService.removeMageById(correctMageId1);
+        Long newsize = mageService.amountMages();
+        Assert.assertEquals(++newsize, oldsize);
 
     }
 
-    @Test(expected = BadRemoveException.class)
-    public void removeMageByIncorrectId() {
-
-        mageService.removeMageById(incorrectId);
-    }
-
-    @Test(expected = BadRemoveException.class)
-    public void removeMageByNullId() {
-
-        mageService.removeMageById(null);
-    }
-
-    @Test(expected = NotFoundException.class)
+    @Test(expected = NoItemFoundException.class)
     public void removeScrollsOfMage() {
 
-        int beforeSize = magicScrollService.getMagicScrollsByMageId(correctId1).size();
+        int beforeSize = magicScrollService.getMagicScrollsByMageId(correctMageId1).size();
 
-        Mage mage = mageService.getMageById(correctId1);
+        Mage mage = mageService.getMageById(correctMageId1);
         int beforeSizeCheck = mage.getMagicScrollList().size();
         Assert.assertEquals(beforeSize, beforeSizeCheck);
-        mageService.removeMageById(correctId1);
+        mageService.removeMageById(correctMageId1);
 
-        int afterSize = magicScrollService.getMagicScrollsByMageId(correctId1).size();
+        int afterSize = magicScrollService.getMagicScrollsByMageId(correctMageId1).size();
     }
 
     //Test getLimitMages
@@ -213,10 +171,15 @@ public class MageServiceImplTest {
 
         List<Mage> mages =  mageService.getLimitMages(page, per_page);
         Assert.assertTrue(mages.size()<=per_page);
+        for(Mage mage:mages) {
+
+            Long mageId = mage.getMage_id();
+            Assert.assertTrue(mageId>=page*per_page & mageId<=page*per_page+per_page-1);
+        }
 
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test(expected = NoItemsFoundException.class)
     public void getEmptyLimitMages() {
 
         Long page = 99L;
@@ -225,5 +188,20 @@ public class MageServiceImplTest {
         List<Mage> mages =  mageService.getLimitMages(page, per_page);
 
     }
+    //Test for amountMages
+    @Test
+    public void amountMages() {
+        Assert.assertEquals(amountMage, mageService.amountMages());
+    }
 
+    //Tests for updateMage
+    @Test
+    public void updateMage() {
+
+        Mage mage = mageService.getMageById(correctMageId1);
+        mage.setExp(300L);
+        mage.setName("Yoda");
+        mageService.updateMage(mage);
+        Assert.assertEquals(mage, mageService.getMageById(mage.getMage_id()));
+    }
 }

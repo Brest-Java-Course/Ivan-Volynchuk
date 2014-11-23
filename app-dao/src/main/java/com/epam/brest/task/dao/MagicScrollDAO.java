@@ -2,6 +2,7 @@ package com.epam.brest.task.dao;
 
 import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
+import org.joda.time.LocalDate;
 
 import java.util.List;
 
@@ -15,6 +16,12 @@ public interface MagicScrollDAO {
     public List<MagicScroll> getAllMagicScrolls();
 
     public List<MagicScroll> getLimitScrolls(Long amt, Long n_from);
+
+    public List<MagicScroll> getAllMagicScrollsAfterDate(LocalDate afterDate);
+
+    public List<MagicScroll> getAllMagicScrollsBeforeDate(LocalDate beforeDate);
+
+    public List<MagicScroll> getAllMagicScrollsBetweenDates(LocalDate afterDate, LocalDate beforeDate);
 
     public Long amountScrolls();
 
@@ -40,10 +47,4 @@ public interface MagicScrollDAO {
 
     public Long amountScrollsWithoutMage();
 
-
-    /*
-    public Long getScrollAmountByMageId(Long id);
-
-    public Long getAverageManacostByMageId(Long id);
-    */
 }

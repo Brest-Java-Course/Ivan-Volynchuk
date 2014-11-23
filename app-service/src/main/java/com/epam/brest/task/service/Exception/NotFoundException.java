@@ -5,7 +5,5 @@ package com.epam.brest.task.service.Exception;
  */
 public class NotFoundException extends AcademyException {
 
-    public NotFoundException(String message, String place, Object object) {
-        super(message, place, object);
-    }
+    public NotFoundException(String message, String place) {super(message, place);}
 }

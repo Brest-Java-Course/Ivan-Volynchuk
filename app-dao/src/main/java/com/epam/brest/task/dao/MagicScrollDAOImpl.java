@@ -1,6 +1,5 @@
 package com.epam.brest.task.dao;
 
-import com.epam.brest.task.dao.tools.CheckNullTool;
 import com.epam.brest.task.domain.MagicScroll;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +29,15 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
     private static final String DATE = "creation_date";
     private static final String MANA = "mana_cost";
     private static final String MAGE_ID= "mage_id";
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_scrolls_between_dates_path}')).inputStream)}")
+    private String SELECT_SCROLLS_BETWEEN_DATES;
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_scrolls_before_date_path}')).inputStream)}")
+    private String SELECT_SCROLLS_BEFORE_DATE;
+
+    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_scrolls_after_date_path}')).inputStream)}")
+    private String SELECT_SCROLLS_AFTER_DATE;
 
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${get_amount_scrolls_without_mage_path}')).inputStream)}")
     private String GET_AMOUNT_SCROLLS_WITHOUT_MAGE;
@@ -52,11 +59,6 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
 
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_scrolls_without_mage_path}')).inputStream)}")
     private String SELECT_SCROLLS_WITHOUT_MAGE;
-
-    /*
-    @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${scroll_amount_by_mage_id_path}')).inputStream)}")
-    private String SCROLL_AMOUNT_BY_MAGE_ID;
-    */
 
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${clear_mage_id_path}')).inputStream)}")
     private String CLEAR_MAGE_ID;
@@ -126,6 +128,37 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         args.put("n_from", n_from);
         args.put("amt", amt);
         return namedJdbcTemplate.query(SELECT_LIMIT_SCROLLS, args, new ScrollMapper());
+    }
+
+    @Override
+    public List<MagicScroll> getAllMagicScrollsAfterDate(LocalDate afterDate) {
+
+        LOGGER.debug("MagicScrollDAOImpl:getAllMagicScrollsAfterDate({})", afterDate);
+
+        Map<String, Object> args = new HashMap(1);
+        args.put(DATE, afterDate.toString());
+        return namedJdbcTemplate.query(SELECT_SCROLLS_AFTER_DATE, args, new ScrollMapper());
+    }
+
+    @Override
+    public List<MagicScroll> getAllMagicScrollsBeforeDate(LocalDate beforeDate) {
+
+        LOGGER.debug("MagicScrollDAOImpl:getAllMagicScrollsBeforeDate({})", beforeDate);
+
+        Map<String, Object> args = new HashMap(1);
+        args.put(DATE, beforeDate.toString());
+        return namedJdbcTemplate.query(SELECT_SCROLLS_BEFORE_DATE, args, new ScrollMapper());
+    }
+
+    @Override
+    public List<MagicScroll> getAllMagicScrollsBetweenDates(LocalDate afterDate, LocalDate beforeDate) {
+
+        LOGGER.debug("MagicScrollDAOImpl:getAllMagicScrollsBetweenDates({})", afterDate+" - "+beforeDate);
+
+        Map<String, Object> args = new HashMap(1);
+        args.put("afterDate", afterDate.toString());
+        args.put("beforeDate", beforeDate.toString());
+        return namedJdbcTemplate.query(SELECT_SCROLLS_BETWEEN_DATES, args, new ScrollMapper());
     }
 
     @Override
@@ -253,27 +286,6 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         return namedJdbcTemplate.queryForLong(GET_AMOUNT_SCROLLS_WITHOUT_MAGE, new HashMap(0));
     }
 
-    /*
-    @Override
-    public Long getScrollAmountByMageId(Long id) {
-
-
-        LOGGER.debug("MagicScrollDAOImpl:getScrollAmountByMageId({})", id);
-
-        Map<String, Object> args = new HashMap(1);
-        args.put(MAGE_ID,id);
-        Long amount = namedJdbcTemplate.queryForLong(SCROLL_AMOUNT_BY_MAGE_ID,args);
-
-        LOGGER.debug("Amount is {}", amount);
-        return amount;
-    }
-
-    @Override
-    public Long getAverageManacostByMageId(Long id) {
-
-        throw new NotImplementedException();
-    }
-    */
     public class ScrollMapper implements RowMapper<MagicScroll> {
 
         @Override
@@ -284,7 +296,10 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
             scroll.setDescription(resultSet.getString(DESCRIPTION));
             scroll.setDurability(resultSet.getLong(DURABILITY));
             scroll.setMana_cost(resultSet.getLong(MANA));
-            scroll.setMage_id(CheckNullTool.getLong(resultSet,MAGE_ID));
+
+            Long nValue = resultSet.getLong(MAGE_ID);
+            scroll.setMage_id(resultSet.wasNull() ? null:nValue);
+
             scroll.setCreation_date(new LocalDate(resultSet.getDate(DATE)));
             return scroll;
         }
