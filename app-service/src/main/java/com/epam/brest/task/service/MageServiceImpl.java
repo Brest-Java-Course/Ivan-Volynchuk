@@ -54,9 +54,6 @@ public class MageServiceImpl implements MageService {
 
             LOGGER.debug(e.getMessage());
             throw new NoItemFoundException(e.getMessage(), "Getting mage by id", id);
-        }catch(NotFoundException e) {
-
-            LOGGER.debug("No scrolls for ({})", mage);
         }
         return mage;
     }
@@ -195,15 +192,19 @@ public class MageServiceImpl implements MageService {
             Assert.notNull(mage.getExp(), NOT_NULL_EXP);
             Assert.notNull(mage.getLevel(), NOT_NULL_LEVEL);
 
-            getMageByName(mage.getName());
+            Long id = getMageByName(mage.getName()).getMage_id();
 
-            LOGGER.debug("Mage with such name already exists.");
-            throw new BadUpdateException("Mage with such name already exist.", "Updating mage", mage);
+            if( id != mage.getMage_id()) {
+
+                LOGGER.debug("Mage with such name already exists.");
+                throw new BadUpdateException("Mage with such name already exist.", "Updating mage", mage);
+            }
+            throw new NotFoundException(null, null);
         }catch(IllegalArgumentException e) {
 
             LOGGER.debug(e.getMessage());
             throw new BadUpdateException(e.getMessage(), "Updating mage", mage);
-        }catch(NoItemFoundException e) {
+        }catch(NotFoundException e) {
 
             try {
                 getMageById(mage.getMage_id());

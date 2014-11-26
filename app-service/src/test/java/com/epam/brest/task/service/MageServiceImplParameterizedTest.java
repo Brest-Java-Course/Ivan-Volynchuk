@@ -25,7 +25,7 @@ public class MageServiceImplParameterizedTest {
     private static final Long incorrectId = 99L;
     private static final Long correctId = 0L;
 
-    private static final String existName = "Enigma";
+    private static final String existName = "Paladin";
 
     @Autowired
     private MageService mageService;

@@ -35,6 +35,21 @@ public class MagicScroll {
 
     }
 
+    public MagicScroll(String description, Long durability, LocalDate creation_date, Long mana_cost, Long mage_id) {
+        this.description = description;
+        this.durability = durability;
+        this.creation_date = creation_date;
+        this.mana_cost = mana_cost;
+        this.mage_id = mage_id;
+    }
+
+    public MagicScroll(String description, Long durability, LocalDate creation_date, Long mana_cost) {
+        this.mana_cost = mana_cost;
+        this.creation_date = creation_date;
+        this.durability = durability;
+        this.description = description;
+    }
+
     public MagicScroll(Long scroll_id, String description, Long durability,
                        LocalDate creation_date, Long mana_cost) {
         this.scroll_id = scroll_id;

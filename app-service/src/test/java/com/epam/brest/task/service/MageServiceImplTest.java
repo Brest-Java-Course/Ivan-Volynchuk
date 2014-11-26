@@ -114,6 +114,7 @@ public class MageServiceImplTest {
     public void getAllMages() {
 
         List<Mage> mages =  mageService.getAllMages();
+        System.out.println(mages);
         Assert.assertEquals(new Long(mages.size()), amountMage);
     }
 

@@ -205,7 +205,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
 
         LOGGER.debug("MagicScrollDAOImpl:updateMagicScroll({})", magicScroll);
 
-        Map<String, Object> args = new HashMap(3);
+        Map<String, Object> args = new HashMap(5);
         args.put(SCROLL_ID, magicScroll.getScroll_id());
         args.put(DESCRIPTION, magicScroll.getDescription());
         args.put(DURABILITY, magicScroll.getDurability());

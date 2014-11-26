@@ -235,16 +235,18 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             Assert.notNull(magicScroll.getDurability(), NOT_NULL_DURABILITY);
             Assert.notNull(magicScroll.getMana_cost(), NOT_NULL_MANACOST);
 
-            getMagicScrollByDescription(magicScroll.getDescription());
+            Long id = getMagicScrollByDescription(magicScroll.getDescription()).getScroll_id();
 
-            LOGGER.debug("MagicScroll with such description already exists.");
-            throw new BadUpdateException("MagicScroll with such description already exists.", "Updating scroll", magicScroll);
-
+            if( id != magicScroll.getScroll_id()) {
+                LOGGER.debug("MagicScroll with such description already exists.");
+                throw new BadUpdateException("MagicScroll with such description already exists.", "Updating scroll", magicScroll);
+            }
+            throw new NotFoundException(null, null);
         }catch(IllegalArgumentException e) {
 
             LOGGER.debug(e.getMessage());
             throw new BadUpdateException(e.getMessage(), "Updating scroll", magicScroll);
-        }catch(NoItemFoundException e) {
+        }catch(NotFoundException e) {
 
             try {
                 getMagicScrollById(magicScroll.getScroll_id());
