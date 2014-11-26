@@ -25,12 +25,12 @@ import java.util.Map;
  */
 public class MageDAOImpl implements MageDAO {
 
-    private static final String MAGE_ID="mage_id";
+    private static final String MAGEID="mage_id";
     private static final String NAME = "mage_name";
     private static final String LEVEL = "mage_level";
     private static final String EXP = "mage_exp";
-    private static final String SCROLL_AMOUNT = "scroll_amount";
-    private static final String AVERAGE_MANACOST = "average_manacost";
+    private static final String SCROLLAMOUNT = "scroll_amount";
+    private static final String AVERAGEMANACOST = "average_manacost";
 
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${update_mage_path}')).inputStream)}")
     private String UPDATE_MAGE;
@@ -68,7 +68,7 @@ public class MageDAOImpl implements MageDAO {
         LOGGER.debug("MageDAOImpl:getMageById({})", id);
 
         Map<String, Object> args = new HashMap(1);
-        args.put(MAGE_ID,id);
+        args.put(MAGEID,id);
         return namedJdbcTemplate.queryForObject(SELECT_MAGE_BY_ID,args,new MageMapper());
 
     }
@@ -135,7 +135,7 @@ public class MageDAOImpl implements MageDAO {
         LOGGER.debug("MageDAOImpl:removeMageById({})", id);
 
         Map<String, Object> args = new HashMap(1);
-        args.put(MAGE_ID,id);
+        args.put(MAGEID,id);
         namedJdbcTemplate.update(REMOVE_MAGE_BY_ID,args);
     }
 
@@ -145,7 +145,7 @@ public class MageDAOImpl implements MageDAO {
         LOGGER.debug("MageDAOImpl:updateMage({})", mage);
 
         Map<String, Object> args = new HashMap(4);
-        args.put(MAGE_ID, mage.getMage_id());
+        args.put(MAGEID, mage.getMage_id());
         args.put(NAME, mage.getName());
         args.put(LEVEL, mage.getLevel());
         args.put(EXP, mage.getExp());
@@ -159,12 +159,12 @@ public class MageDAOImpl implements MageDAO {
         @Override
         public Mage mapRow(ResultSet resultSet,int i) throws SQLException {
             Mage mage=new Mage();
-            mage.setMage_id(resultSet.getLong(MAGE_ID));
+            mage.setMage_id(resultSet.getLong(MAGEID));
             mage.setLevel(resultSet.getLong(LEVEL));
             mage.setExp(resultSet.getLong(EXP));
-            mage.setAverage_manacost(resultSet.getLong(AVERAGE_MANACOST));
+            mage.setAverage_manacost(resultSet.getLong(AVERAGEMANACOST));
             mage.setName(resultSet.getString(NAME));
-            mage.setScroll_amount(resultSet.getLong(SCROLL_AMOUNT));
+            mage.setScroll_amount(resultSet.getLong(SCROLLAMOUNT));
             return mage;
         }
     }

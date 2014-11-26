@@ -5,6 +5,7 @@ import com.epam.brest.task.domain.Mage;
 /**
  * Created by fieldistor on 17.11.14.
  */
+//TODO: move to another package
 public class TestMageScrollFactory {
 
     public static Mage getNewMage() {

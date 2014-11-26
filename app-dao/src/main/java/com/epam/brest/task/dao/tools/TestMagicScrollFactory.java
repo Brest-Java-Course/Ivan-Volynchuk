@@ -6,6 +6,7 @@ import org.joda.time.LocalDate;
 /**
  * Created by fieldistor on 17.11.14.
  */
+//TODO: move to another package
 public class TestMagicScrollFactory {
 
     public static MagicScroll getNewScroll() {

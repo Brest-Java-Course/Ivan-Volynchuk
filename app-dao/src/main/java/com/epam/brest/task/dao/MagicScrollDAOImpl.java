@@ -23,12 +23,12 @@ import java.util.Map;
  */
 public class MagicScrollDAOImpl implements MagicScrollDAO {
 
-    private static final String SCROLL_ID="scroll_id";
+    private static final String SCROLLID="scroll_id";
     private static final String DESCRIPTION = "description";
     private static final String DURABILITY = "durability";
     private static final String DATE = "creation_date";
     private static final String MANA = "mana_cost";
-    private static final String MAGE_ID= "mage_id";
+    private static final String MAGEID= "mage_id";
 
     @Value("#{T(org.apache.commons.io.IOUtils).toString((new org.springframework.core.io.ClassPathResource('${select_scrolls_between_dates_path}')).inputStream)}")
     private String SELECT_SCROLLS_BETWEEN_DATES;
@@ -103,7 +103,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         parameterSource.addValue(DURABILITY, magicScroll.getDurability());
         parameterSource.addValue(DATE, magicScroll.getCreation_date().toString());
         parameterSource.addValue(MANA, magicScroll.getMana_cost());
-        parameterSource.addValue(MAGE_ID, magicScroll.getMage_id());
+        parameterSource.addValue(MAGEID, magicScroll.getMage_id());
         namedJdbcTemplate.update(INSERT_SCROLL, parameterSource,holder);
 
         scrollid=holder.getKey().longValue();
@@ -176,7 +176,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         LOGGER.debug("MagicScrollDAOImpl:removeMagicScroll({})", id);
 
         Map<String, Object> args = new HashMap(1);
-        args.put(SCROLL_ID,id);
+        args.put(SCROLLID,id);
         namedJdbcTemplate.update(REMOVE_SCROLL_BY_ID,args);
     }
 
@@ -186,7 +186,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         LOGGER.debug("MagicScrollDAOImpl:getMagicScrollById({})", id);
 
         Map<String, Object> args = new HashMap(1);
-        args.put(SCROLL_ID,id);
+        args.put(SCROLLID,id);
         return namedJdbcTemplate.queryForObject(SELECT_SCROLL_BY_ID,args,new ScrollMapper());
     }
 
@@ -206,12 +206,12 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         LOGGER.debug("MagicScrollDAOImpl:updateMagicScroll({})", magicScroll);
 
         Map<String, Object> args = new HashMap(5);
-        args.put(SCROLL_ID, magicScroll.getScroll_id());
+        args.put(SCROLLID, magicScroll.getScroll_id());
         args.put(DESCRIPTION, magicScroll.getDescription());
         args.put(DURABILITY, magicScroll.getDurability());
         args.put(DATE, magicScroll.getCreation_date().toString());
         args.put(MANA, magicScroll.getMana_cost());
-        args.put(MAGE_ID, magicScroll.getMage_id());
+        args.put(MAGEID, magicScroll.getMage_id());
         namedJdbcTemplate.update(UPDATE_SCROLL, args);
     }
 
@@ -221,7 +221,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         LOGGER.debug("MagicScrollDAOImpl:getMagicScrollsByMageId({})", id);
 
         Map<String, Object> args = new HashMap(1);
-        args.put(MAGE_ID,id);
+        args.put(MAGEID,id);
         return namedJdbcTemplate.query(SELECT_ALL_MAGE_SCROLLS, args,new ScrollMapper());
 
 
@@ -235,7 +235,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         Map<String, Object> args = new HashMap(2);
         args.put("n_from", n_from);
         args.put("amt", amt);
-        args.put(MAGE_ID, id);
+        args.put(MAGEID, id);
         return namedJdbcTemplate.query(SELECT_LIMIT_MAGE_SCROLLS, args, new ScrollMapper());
     }
 
@@ -245,7 +245,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         LOGGER.debug("MagicScrollDAOImpl:amountScrollsByMageId({})",id);
 
         Map<String, Object> args = new HashMap(1);
-        args.put(MAGE_ID,id);
+        args.put(MAGEID,id);
         return namedJdbcTemplate.queryForLong(GET_AMOUNT_SCROLLS_BY_MAGE_ID, args);
     }
 
@@ -255,7 +255,7 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         LOGGER.debug("MagicScrollDAOImpl:clearScrollsByMagicId({})", id);
 
         Map<String, Object> args = new HashMap(1);
-        args.put(MAGE_ID,id);
+        args.put(MAGEID,id);
         namedJdbcTemplate.update(CLEAR_MAGE_ID, args);
     }
 
@@ -292,12 +292,12 @@ public class MagicScrollDAOImpl implements MagicScrollDAO {
         public MagicScroll mapRow(ResultSet resultSet,int i) throws SQLException {
 
             MagicScroll scroll=new MagicScroll();
-            scroll.setScroll_id(resultSet.getLong(SCROLL_ID));
+            scroll.setScroll_id(resultSet.getLong(SCROLLID));
             scroll.setDescription(resultSet.getString(DESCRIPTION));
             scroll.setDurability(resultSet.getLong(DURABILITY));
             scroll.setMana_cost(resultSet.getLong(MANA));
 
-            Long nValue = resultSet.getLong(MAGE_ID);
+            Long nValue = resultSet.getLong(MAGEID);
             scroll.setMage_id(resultSet.wasNull() ? null:nValue);
 
             scroll.setCreation_date(new LocalDate(resultSet.getDate(DATE)));
