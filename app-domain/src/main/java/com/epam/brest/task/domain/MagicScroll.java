@@ -1,9 +1,21 @@
 package com.epam.brest.task.domain;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -17,6 +29,8 @@ public class MagicScroll {
 
     private Long durability;
 
+    @JsonSerialize(using = CustomDateSerializer.class)
+    @JsonDeserialize(using = CustomDateDeserializer.class)
     private LocalDate creation_date;
 
     private Long mana_cost;
@@ -146,4 +160,30 @@ public class MagicScroll {
         result = 31 * result + mana_cost.hashCode();
         return result;
     }
+}
+
+class CustomDateSerializer extends JsonSerializer<LocalDate> {
+
+    private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+
+    @Override
+    public void serialize(LocalDate value, JsonGenerator gen, SerializerProvider arg2)
+            throws IOException, JsonProcessingException {
+
+        gen.writeString(formatter.print(value));
+    }
+}
+class CustomDateDeserializer extends JsonDeserializer<LocalDate> {
+
+    private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+
+    @Override
+    public LocalDate deserialize(JsonParser jsonparser, DeserializationContext deserializationcontext)
+                                throws IOException, JsonProcessingException {
+
+        String date = jsonparser.getText();
+        return formatter.parseLocalDate(date);
+
+    }
+
 }

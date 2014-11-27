@@ -77,9 +77,6 @@ public class MageServiceImpl implements MageService {
 
             LOGGER.debug(e.getMessage());
             throw new NoItemFoundException(e.getMessage(), "Getting mage by name", name);
-        }catch(NotFoundException e) {
-
-            LOGGER.debug("No scrolls for ({})", mage);
         }
         return mage;
     }

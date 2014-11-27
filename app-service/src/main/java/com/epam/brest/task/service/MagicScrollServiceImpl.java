@@ -49,8 +49,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
 
             getMagicScrollByDescription(magicScroll.getDescription());
             LOGGER.debug("Scroll with such description already exist");
-            throw new BadInsertException("Scroll with such description already exist",
-                                                "Adding scroll", magicScroll);
+            throw new BadInsertException("Scroll with such description already exist", "Adding scroll", magicScroll);
         }catch(IllegalArgumentException e) {
 
             LOGGER.debug(e.getMessage());
@@ -107,7 +106,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             Assert.notEmpty(scrolls, NO_SCROLLS_TO_GET);
         }catch(IllegalArgumentException e){
             LOGGER.debug(e.getMessage());
-            throw new NoItemFoundException(e.getMessage(), "Getting all scrolls after Date.", afterDate);
+            throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls after Date.");
         }
         return scrolls;
     }
@@ -124,7 +123,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             Assert.notEmpty(scrolls, NO_SCROLLS_TO_GET);
         }catch(IllegalArgumentException e){
             LOGGER.debug(e.getMessage());
-            throw new NoItemFoundException(e.getMessage(), "Getting all scrolls before Date.", beforeDate);
+            throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls before Date.");
         }
         return scrolls;
     }
@@ -194,7 +193,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             throw new NoItemFoundException("Scroll with such id doesn't exist", "Getting scroll by id", id);
         }catch(IllegalArgumentException e){
 
-            LOGGER.debug(NOT_NULL_ID);
+            LOGGER.debug(e.getMessage());
             throw new NoItemFoundException(e.getMessage(), "Getting scroll by id", id);
         }
         return scroll;
@@ -254,7 +253,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             }catch(NoItemFoundException exception) {
 
                 LOGGER.debug("No MagicScroll with such id.");
-                throw new BadUpdateException(e.getMessage(), "Updating scroll", magicScroll);
+                throw new BadUpdateException("No MagicScroll with such id.", "Updating scroll", magicScroll);
             }
 
         }
