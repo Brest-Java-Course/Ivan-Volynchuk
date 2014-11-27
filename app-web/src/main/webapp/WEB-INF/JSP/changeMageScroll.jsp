@@ -3,17 +3,14 @@
    <%@ page isELIgnored="false"%>
 
     <link href="<c:url value="/resources/css/input.css" />" rel="stylesheet">
-    <script src="<c:url value="/resources/js/validator.js" />"></script>
     <html>
         <body>
             <form action='<spring:url value="/scroll/updateMageScroll" />' method="post">
 
                 <span>Please enter the information of scroll to change: </span><br/><br/>
 
-                <label path="scrollId">
-                    Scroll id:
-                </label>
-                <input type="text" name="scrollId" value=<c:out value="${scroll.scroll_id}"/> readonly/>
+
+                <input type="hidden" name="scrollId" value=<c:out value="${scroll.scroll_id}"/> readonly/>
                 </br>
 
                 <label path="description">
@@ -25,19 +22,19 @@
                 <label path="durability">
                     Durability:
                 </label>
-                <input type="text" name="durability" value=<c:out value="${scroll.durability}"/> />
+                <input type="number" min="0" name="durability" value=<c:out value="${scroll.durability}"/> />
                 </br>
 
                 <label path="creationDate">
                     Creation date:
                 </label>
-                <input type="text" name="creationDate" value=<c:out value="${scroll.creation_date}"/> />
+                <input type="text" id="date" name="creationDate" value=<c:out value="${scroll.creation_date}"/> />
                 </br>
 
                 <label path="manaCost">
                     Mana Cost:
                 </label>
-                <input type="text" name="manaCost" value=<c:out value="${scroll.mana_cost}"/> />
+                <input type="number" min="0"  name="manaCost" value=<c:out value="${scroll.mana_cost}"/> />
                 </br>
 
                 <label path="mageId">
@@ -55,7 +52,11 @@
                 </select>
                 </br>
 
-                <input class="sub" type="submit" value="Send" name="Submit" onClick="return Formdata(this.form)" /> <br/>
+                <input id="sub" class="sub" type="submit" value="Send" name="Submit"/> <br/>
             </form>
         </body>
     </html>
+    <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+    <script src="<c:url value="/resources/js/tools/dateValidator.js" />"></script>
+    <script src="<c:url value="/resources/js/tools/inputScrollValidator.js" />"></script>
+

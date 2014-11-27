@@ -17,16 +17,17 @@
                 <input type="number" name="durability" min="0" placeholder="Durability"/>
                 </br>
 
-                <input type="text" name="creationDate" placeholder="Creation date" />
+                <input id="date" type="text" name="creationDate" placeholder="Creation date" />
                 </br>
 
                 <input type="number" name="manaCost" min="0" placeholder="Mana cost"/>
                 </br>
 
-                 <input class="sub" type="submit" value="Send" name="Submit" onClick="return Formdata(this.form)" /> <br/>
+                 <input id="sub" class="sub" type="submit" value="Send" name="Submit" /> <br/>
             </form>
         </body>
     </html>
-
-    <script src="<c:url value="/resources/js/tools/addScrollValidator.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
     <script src="<c:url value="/resources/js/tools/dateValidator.js" />"></script>
+    <script src="<c:url value="/resources/js/tools/inputScrollValidator.js" />"></script>
+

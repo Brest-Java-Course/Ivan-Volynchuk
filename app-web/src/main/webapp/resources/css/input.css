@@ -17,6 +17,10 @@ input{
     color: #adadad;
     font-size: 18px;
 }
+.warn{
+    border: 1px solid red;
+    background: #FFCECE;
+}
 
 .sub{
     border: none;

@@ -18,9 +18,9 @@
                 <input type="number" name="experience" placeholder="Experience" min="0" />
                 </br>
 
-                <input class="sub" type="submit" value="Send" name="Submit" onClick="return Formdata(this.form)" /> <br/>
+                <input id="sub" class="sub" type="submit" value="Send" name="Submit" onClick="return Formdata(this.form)" /> <br/>
             </form>
         </body>
     </html>
-    <script src="<c:url value="/resources/js/tools/validator.js" />"></script>
-    <script src="<c:url value="/resources/js/tools/addMageValidator.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+    <script src="<c:url value="/resources/js/tools/inputMageNullValidator.js" />"></script>
