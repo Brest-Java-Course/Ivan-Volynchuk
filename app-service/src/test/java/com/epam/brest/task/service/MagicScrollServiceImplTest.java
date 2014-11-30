@@ -34,6 +34,8 @@ public class MagicScrollServiceImplTest {
     private final static Long correctMageId = 0L;
     private final static Long amountScrollsOfMage1 = 5L;
 
+    private final static Long correctMageIdWithoutScrolls = 5L;
+
     private final static Long amountScrollsWithoutMage = 5L;
 
     private final static String correctScrollDescription = "Frostball";
@@ -169,6 +171,15 @@ public class MagicScrollServiceImplTest {
         Assert.assertEquals(scroll, magicScrollService.getMagicScrollById(scroll.getScroll_id()));
     }
 
+
+    @Test(expected = BadUpdateException.class)
+    public void updateIncorrectScroll() {
+
+        MagicScroll scroll = getNewScroll();
+        magicScrollService.updateMagicScroll(scroll);
+    }
+
+
     //Test for getMagicScrollsByMageId
     @Test
     public void getMagicScrollsByMageId() {
@@ -180,11 +191,11 @@ public class MagicScrollServiceImplTest {
         }
     }
 
-    @Test(expected = BadUpdateException.class)
-    public void updateIncorrectScroll() {
+    @Test(expected = NoItemFoundException.class)
+    public void getEmptyMagicScrollsByMageId() {
 
-        MagicScroll scroll = getNewScroll();
-        magicScrollService.updateMagicScroll(scroll);
+        List<MagicScroll> scrolls = magicScrollService.getMagicScrollsByMageId(correctMageIdWithoutScrolls);
+
     }
 
     //Test for addScroll

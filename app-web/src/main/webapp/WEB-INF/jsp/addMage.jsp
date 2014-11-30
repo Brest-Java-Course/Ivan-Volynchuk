@@ -7,18 +7,20 @@
         <body>
             <form action='<spring:url value="/mage/add" />' method="post">
 
-                <span>Please enter the information of mage: </span><br/><br/>
+                <span>
+                    <spring:message code="mage.add.desc" />
+                </span><br/><br/>
 
-                <input type="text" name="name" placeholder="Name" />
+                <input type="text" name="name" placeholder="<spring:message code="mage.name" />" />
                 </br>
 
-                <input type="number" name="level" placeholder="Level" min="0" />
+                <input type="number" name="level" placeholder="<spring:message code="mage.lvl" />" min="0" />
                 </br>
 
-                <input type="number" name="experience" placeholder="Experience" min="0" />
+                <input type="number" name="experience" placeholder="<spring:message code="mage.exp" />" min="0" />
                 </br>
 
-                <input id="sub" class="sub" type="submit" value="Send" name="Submit" onClick="return Formdata(this.form)" /> <br/>
+                <input id="sub" class="sub" type="submit" value="<spring:message code="mage.add.link" />" name="Submit" onClick="return Formdata(this.form)" /> <br/>
             </form>
         </body>
     </html>

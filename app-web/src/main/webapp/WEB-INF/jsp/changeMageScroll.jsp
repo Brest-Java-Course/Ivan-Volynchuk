@@ -7,38 +7,40 @@
         <body>
             <form action='<spring:url value="/scroll/updateMageScroll" />' method="post">
 
-                <span>Please enter the information of scroll to change: </span><br/><br/>
+                <span>
+                    <spring:message code="mage.update.desc" />
+                </span><br/><br/>
 
 
                 <input type="hidden" name="scrollId" value=<c:out value="${scroll.scroll_id}"/> readonly/>
                 </br>
 
                 <label path="description">
-                    Description:
+                    <spring:message code="scroll.desc" />:
                 </label>
                 <input type="text" name="description" value=<c:out value="${scroll.description}"/> />
                 </br>
 
                 <label path="durability">
-                    Durability:
+                    <spring:message code="scroll.dur" />:
                 </label>
                 <input type="number" min="0" name="durability" value=<c:out value="${scroll.durability}"/> />
                 </br>
 
                 <label path="creationDate">
-                    Creation date:
+                    <spring:message code="scroll.date" />:
                 </label>
                 <input type="text" id="date" name="creationDate" value=<c:out value="${scroll.creation_date}"/> />
                 </br>
 
                 <label path="manaCost">
-                    Mana Cost:
+                    <spring:message code="scroll.mana" />:
                 </label>
                 <input type="number" min="0"  name="manaCost" value=<c:out value="${scroll.mana_cost}"/> />
                 </br>
 
                 <label path="mageId">
-                    Mage owner:
+                    <spring:message code="scroll.mage" />:
                 </label>
 
                 <select name="mageId">
@@ -52,7 +54,7 @@
                 </select>
                 </br>
 
-                <input id="sub" class="sub" type="submit" value="Send" name="Submit"/> <br/>
+                <input id="sub" class="sub" type="submit" value="<spring:message code="mage.update.link" />" name="Submit"/> <br/>
             </form>
         </body>
     </html>

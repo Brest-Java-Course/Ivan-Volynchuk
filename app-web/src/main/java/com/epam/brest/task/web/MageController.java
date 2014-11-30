@@ -15,6 +15,7 @@ import java.util.List;
  * Created by fieldistor on 24.11.14.
  */
 @Controller
+@RequestMapping("/mage")
 public class MageController {
 
     @Autowired
@@ -26,49 +27,57 @@ public class MageController {
         return new ModelAndView("index", "mages", mageService.getAllMages());
     }
 
-    @RequestMapping(value={"/mage/add"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/search/name"}, method = RequestMethod.GET)
+    public ModelAndView searchMageByName(@RequestParam("name") String name) {
+
+        ModelAndView mav = new ModelAndView("redirect:/mage/showMageScrolls");
+        mav.addObject("id", mageService.getMageByName(name).getMage_id());
+        return mav;
+    }
+
+    @RequestMapping(value={"/add"}, method = RequestMethod.GET)
      public ModelAndView showAddFormMage() {
 
         return new ModelAndView("addMage");
     }
 
-    @RequestMapping(value={"/mage/add"}, method = RequestMethod.POST)
+    @RequestMapping(value={"/add"}, method = RequestMethod.POST)
     public String addMage(@RequestParam("name") String name,
                                 @RequestParam("level") Long level,
                                 @RequestParam("experience") Long exp)  {
 
         mageService.addMage(new Mage(name, level, exp));
-        return "redirect:/";
+        return "redirect:/mage/";
     }
 
-    @RequestMapping(value={"/mage/delete"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/delete"}, method = RequestMethod.GET)
     public String deleteMage(@RequestParam("id") Long id)  {
 
         mageService.removeMageById(id);
-        return "redirect:/";
+        return "redirect:/mage/";
     }
 
-    @RequestMapping(value={"/mage/showMageScrolls"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/showMageScrolls"}, method = RequestMethod.GET)
     public ModelAndView showScrollsOfMage(@RequestParam("id") Long id)  {
 
         return new ModelAndView("mageScrolls", "mage", mageService.getMageById(id));
     }
 
 
-    @RequestMapping(value={"/mage/update"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/update"}, method = RequestMethod.GET)
     public ModelAndView showChangeFormMage(@RequestParam("id") Long id) {
 
         return new ModelAndView("changeMage", "mage", mageService.getMageById(id));
     }
 
-    @RequestMapping(value={"/mage/update"}, method = RequestMethod.POST)
+    @RequestMapping(value={"/update"}, method = RequestMethod.POST)
     public String updateMage(@RequestParam("id") Long id,
                           @RequestParam("name") String name,
                           @RequestParam("level") Long level,
                           @RequestParam("exp") Long exp)  {
 
         mageService.updateMage(new Mage(id, name, level, exp));
-        return "redirect:/";
+        return "redirect:/mage/";
     }
 
 

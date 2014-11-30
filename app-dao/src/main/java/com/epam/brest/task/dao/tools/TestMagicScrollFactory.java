@@ -22,31 +22,33 @@ public class TestMagicScrollFactory {
 
     private final static Long DEFAULT_MANACOST = 0L;
 
+    private final static LocalDate DEFAULT_DATE = new LocalDate(2014,11,30);
+
     public static MagicScroll getNewScroll() {
 
-        return new MagicScroll(null, DESCRIPTION1, DEFAULT_DURABILITY, new LocalDate(), DEFAULT_MANACOST, null);
+        return new MagicScroll(null, DESCRIPTION1, DEFAULT_DURABILITY, DEFAULT_DATE, DEFAULT_MANACOST, null);
     }
 
     public static MagicScroll getNewScroll(String description) {
 
-        return new MagicScroll(null, description, DEFAULT_DURABILITY, new LocalDate(), DEFAULT_MANACOST, null);
+        return new MagicScroll(null, description, DEFAULT_DURABILITY, DEFAULT_DATE, DEFAULT_MANACOST, null);
     }
 
     public static MagicScroll getExistScroll(Long id) {
 
-        return new MagicScroll(id, DESCRIPTION1, DEFAULT_DURABILITY, new LocalDate(), DEFAULT_MANACOST, null);
+        return new MagicScroll(id, DESCRIPTION1, DEFAULT_DURABILITY, DEFAULT_DATE, DEFAULT_MANACOST, null);
 
     }
 
     public static MagicScroll getExistScroll(Long id, String description) {
 
-        return new MagicScroll(id, description, DEFAULT_DURABILITY, new LocalDate(), DEFAULT_MANACOST, null);
+        return new MagicScroll(id, description, DEFAULT_DURABILITY, DEFAULT_DATE, DEFAULT_MANACOST, null);
 
     }
 
     public static MagicScroll getExistScrollWithoutDescription(Long id) {
 
-        return new MagicScroll(id, null, DEFAULT_DURABILITY, new LocalDate(), DEFAULT_MANACOST, null);
+        return new MagicScroll(id, null, DEFAULT_DURABILITY, DEFAULT_DATE, DEFAULT_MANACOST, null);
     }
 
     public static MagicScroll getExistScrollWithoutDate(Long id) {
@@ -56,17 +58,17 @@ public class TestMagicScrollFactory {
 
     public static MagicScroll getExistScrollWithoutManaCost(Long id) {
 
-        return new MagicScroll(id, DESCRIPTION1, DEFAULT_DURABILITY, new LocalDate(), null, null);
+        return new MagicScroll(id, DESCRIPTION1, DEFAULT_DURABILITY, DEFAULT_DATE, null, null);
     }
 
     public static MagicScroll getExistScrollWithoutDurability(Long id) {
 
-        return new MagicScroll(id, DESCRIPTION1, null, new LocalDate(), DEFAULT_MANACOST, null);
+        return new MagicScroll(id, DESCRIPTION1, null, DEFAULT_DATE, DEFAULT_MANACOST, null);
     }
 
     public static MagicScroll getNewScrollWithoutDescription() {
 
-        return new MagicScroll(null, null, DEFAULT_DURABILITY, new LocalDate(), DEFAULT_MANACOST, null);
+        return new MagicScroll(null, null, DEFAULT_DURABILITY, DEFAULT_DATE, DEFAULT_MANACOST, null);
     }
 
     public static MagicScroll getNewScrollWithoutDate() {
@@ -76,12 +78,12 @@ public class TestMagicScrollFactory {
 
     public static MagicScroll getNewScrollWithoutManaCost() {
 
-        return new MagicScroll(null, DESCRIPTION1, DEFAULT_DURABILITY, new LocalDate(), null, null);
+        return new MagicScroll(null, DESCRIPTION1, DEFAULT_DURABILITY, DEFAULT_DATE, null, null);
     }
 
     public static MagicScroll getNewScrollWithoutDurability() {
 
-        return new MagicScroll(null, DESCRIPTION1, null, new LocalDate(), DEFAULT_MANACOST, null);
+        return new MagicScroll(null, DESCRIPTION1, null, DEFAULT_DATE, DEFAULT_MANACOST, null);
     }
 
     public static List<MagicScroll> getAllExistScrolls() {

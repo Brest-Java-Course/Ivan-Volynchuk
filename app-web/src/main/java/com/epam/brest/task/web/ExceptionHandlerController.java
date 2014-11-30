@@ -1,0 +1,45 @@
+package com.epam.brest.task.web;
+
+import com.epam.brest.task.service.Exception.AcademyException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+
+/**
+ * Created by fieldistor on 30.11.14.
+ */
+@ControllerAdvice
+public class ExceptionHandlerController {
+
+    private static final Logger LOGGER = LogManager.getLogger();
+
+    public static final String DEFAULT_ERROR_VIEW = "error/error";
+
+    @ExceptionHandler(value = {Exception.class, RuntimeException.class})
+    public ModelAndView defaultErrorHandler(HttpServletRequest request, Exception e) {
+
+        LOGGER.error("Critical error:"+e.fillInStackTrace());
+
+        ModelAndView mav = new ModelAndView(DEFAULT_ERROR_VIEW);
+        mav.addObject("datetime", new Date());
+        mav.addObject("exception", e);
+        mav.addObject("url", request.getRequestURL());
+        return mav;
+    }
+
+    @ExceptionHandler(value = {AcademyException.class})
+    public ModelAndView BadInputDataErrorHandler(HttpServletRequest request, AcademyException e) {
+        //TODO:change to catch/try in controller
+        LOGGER.error(e.fillInStackTrace());
+
+        ModelAndView mav = new ModelAndView(DEFAULT_ERROR_VIEW);
+        mav.addObject("exception", e.getMessage());
+        return mav;
+    }
+}

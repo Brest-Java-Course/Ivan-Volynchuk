@@ -10,24 +10,27 @@
     </head>
     <body>
         <div class="wrap">
-            <menu>
-                <ul>
-                    <li><a href="/">Mages</a></li>
-                    <li><a href="/scroll/allScrolls">Scrolls</a></li>
-                </ul>
-            </menu>
 
-            <h2>List of mages:</h2>
+            <jsp:include page="menu.jsp" />
+
+            <h2><spring:message code="mage.header" /></h2>
             <div class="cont">
+                <form action='<spring:url value="/mage/search/name" />' method="get">
+                    <div class="filter">
+                        <input type="text" name="name" id="name" placeholder="<spring:message code="mage.search.placeHolder" />" />
+                        <input type="submit" value="<spring:message code="mage.search.button" />" />
+                    </div>
+                <form>
+
                 <div class="content">
                     <table>
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Level</th>
-                            <th>Experience</th>
-                            <th>Scroll amount</th>
-                            <th>Average manacost of scrolls</th>
+                            <th><spring:message code="mage.id" /></th>
+                            <th><spring:message code="mage.name" /></th>
+                            <th><spring:message code="mage.lvl" /></th>
+                            <th><spring:message code="mage.exp" /></th>
+                            <th><spring:message code="mage.amt" /></th>
+                            <th><spring:message code="mage.avg" /></th>
                         </tr>
 
                         <c:forEach items="${mages}" var="mage">
@@ -45,7 +48,9 @@
                         </c:forEach>
                     </table>
                     <div class="wrapp">
-                    <a href='<spring:url value="/mage/add" />'>Add mage</a>
+                        <a href='<spring:url value="/mage/add" />'>
+                            <spring:message code="mage.add.link" />
+                        </a>
                     </div>
                 </div>
                 <hr>

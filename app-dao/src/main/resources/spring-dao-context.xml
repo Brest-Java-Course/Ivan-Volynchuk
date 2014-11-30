@@ -4,13 +4,13 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
                 <value>classpath:properties/database.properties</value>
                 <value>classpath:properties/scroll_sql_path.properties</value>
                 <value>classpath:properties/mage_sql_path.properties</value>
-
             </list>
         </property>
         <property name="ignoreUnresolvablePlaceholders" value="true"/>

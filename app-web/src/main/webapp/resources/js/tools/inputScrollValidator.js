@@ -19,6 +19,7 @@ $(document).ready(function() {
         });
         if(isDate($('#date').val())==false) {
             $('#date').attr('class', 'warn');
+            isValid = false;
         }else {
             $('#date').attr('class', '');
         }

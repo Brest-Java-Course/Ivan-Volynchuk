@@ -43,6 +43,7 @@ public class MageServiceImplTest {
 
     private final static Long correctMageId1 = 0L;
     private final static Long incorrectMageId = 99L;
+    private final static Long coorectMageIdWithoutScrolls = 5L;
 
     private final static String correctMageName = "Enigma";
     private final static String incorrectMageName = "Void";
@@ -71,14 +72,30 @@ public class MageServiceImplTest {
     @Test
     public void getMageByIdWithScrolls() {
 
-            Mage mage = mageService.getMageById(correctMageId1);
-            List<MagicScroll> scrolls = mage.getMagicScrollList();
-            Assert.assertEquals(new Long(scrolls.size()), amoutScrollsOfMageId1);
-            for(MagicScroll scroll:scrolls) {
-                Assert.assertEquals(scroll.getMage_id(), mage.getMage_id());
-            }
+        Mage mage = mageService.getMageById(correctMageId1);
+        List<MagicScroll> scrolls = mage.getMagicScrollList();
+        Assert.assertEquals(new Long(scrolls.size()), amoutScrollsOfMageId1);
+        for(MagicScroll scroll:scrolls) {
+
+            Assert.assertEquals(scroll.getMage_id(), mage.getMage_id());
+        }
     }
 
+    @Test
+    public void getMageByIdAndCkeckAmtandAvg() {
+
+        Long manacostSum = 0L;
+        Mage mage = mageService.getMageById(correctMageId1);
+
+        List<MagicScroll> scrolls = mage.getMagicScrollList();
+        for(MagicScroll scroll:scrolls) {
+
+            manacostSum+=scroll.getMana_cost();
+        }
+        Assert.assertEquals(new Long(manacostSum/scrolls.size()), mage.getAverage_manacost());
+        Assert.assertEquals(new Long(scrolls.size()), mage.getScroll_amount());
+
+    }
     //Tests for getMageByName
     @Test
     public void getMageByName() {
@@ -109,6 +126,22 @@ public class MageServiceImplTest {
         Assert.assertNotNull(id);
         Assert.assertEquals(mage, mageService.getMageByName(mage.getName()));
     }
+
+    @Test
+    public void getMageByNameAndCkeckAmtandAvg() {
+
+        Long manacostSum = 0L;
+        Mage mage = mageService.getMageByName(correctMageName);
+
+        List<MagicScroll> scrolls = mage.getMagicScrollList();
+        for(MagicScroll scroll:scrolls) {
+
+            manacostSum+=scroll.getMana_cost();
+        }
+        Assert.assertEquals(new Long(manacostSum/scrolls.size()), mage.getAverage_manacost());
+        Assert.assertEquals(new Long(scrolls.size()), mage.getScroll_amount());
+
+    }
     //Test getAllMages
     @Test
     public void getAllMages() {
@@ -126,6 +159,25 @@ public class MageServiceImplTest {
             mageService.removeMageById(mage.getMage_id());
         }
         mageService.getAllMages();
+    }
+    @Test
+    public void getAllMageAndCkeckAmtandAvg() {
+
+        List<Mage> mages = mageService.getAllMages();
+        for(Mage mage:mages) {
+
+            Long manacostSum = 0L;
+            List<MagicScroll> scrolls = mageService.getMageById(mage.getMage_id()).getMagicScrollList();
+
+            for(MagicScroll scroll:scrolls) {
+
+                manacostSum+=scroll.getMana_cost();
+            }
+            Assert.assertEquals(new Long(manacostSum/(scrolls.size()==0?1:scrolls.size())), mage.getAverage_manacost());
+            Assert.assertEquals(new Long(scrolls.size()), mage.getScroll_amount());
+
+        }
+
     }
 
     //Test addMage

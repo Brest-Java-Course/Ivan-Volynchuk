@@ -9,34 +9,41 @@
     </head>
     <body>
         <div class="wrap">
-            <menu>
-                <ul>
-                    <li><a href="/">Mages</a></li>
-                    <li><a href="/scroll/allScrolls">Scrolls</a></li>
-                </ul>
-            </menu>
-            <h2>List of scrolls:</h2>
+            <jsp:include page="menu.jsp" />
+            <h2>
+                <spring:message code="scroll.header" />
+            </h2>
             <div class="cont">
                 <div class="filter">
-                    <input type="text" id="date1" placeholder="From" />
-                    <input type="text" id="date2" placeholder="To" />
-                    <input type="button" id="filter" value="Filter"/>
-                    Types of filtration:
+                    <input type="text" id="date1" placeholder="<spring:message code="scroll.filter.from" />" />
+                    <input type="text" id="date2" placeholder="<spring:message code="scroll.filter.to" />" />
+                    <input type="button" id="filter" value="<spring:message code="scroll.filter.button" />"/>
+
+                    <spring:message code="scroll.filter.header" />
+
                     <select name="1" id="1">
-                        <option value="0">No filter</option>
-                        <option value="1">After date</option>
-                        <option value="2">Before date</option>
-                        <option value="3">Between dates</option>
+                        <option value="0">
+                            <spring:message code="scroll.filter.type.none" />
+                        </option>
+                        <option value="1">
+                            <spring:message code="scroll.filter.type.after" />
+                        </option>
+                        <option value="2">
+                            <spring:message code="scroll.filter.type.before" />
+                        </option>
+                        <option value="3">
+                            <spring:message code="scroll.filter.type.between" />
+                        </option>
                     </select>
                 </div>
                 <div class="content">
                     <table>
                         <tr>
-                            <th>Id</th>
-                            <th>Description</th>
-                            <th>Durability</th>
-                            <th>Creation date</th>
-                            <th>Mana cost</th>
+                            <th><spring:message code="scroll.id" /></th>
+                            <th><spring:message code="scroll.desc" /></th>
+                            <th><spring:message code="scroll.dur" /></th>
+                            <th><spring:message code="scroll.date" /></th>
+                            <th><spring:message code="scroll.mana" /></th>
                         </tr>
 
                         <c:forEach items="${scrolls}" var="scroll">
@@ -52,7 +59,10 @@
                         </c:forEach>
                     </table>
                     <div class="wrapp">
-                        <td class="add"><a href='<spring:url value="/scroll/add"></spring:url>'>Add scroll</a>
+                        <td class="add">
+                        <a href='<spring:url value="/scroll/add"></spring:url>'>
+                            <spring:message code="scroll.add.link" />
+                        </a>
                     </div>
                 </div>
                 <hr>

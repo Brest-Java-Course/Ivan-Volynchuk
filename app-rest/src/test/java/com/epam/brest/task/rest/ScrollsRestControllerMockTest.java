@@ -45,17 +45,17 @@ public class ScrollsRestControllerMockTest {
     private String RIGHT_SCROLL_DESCIPTION1 = "Invisibility";
     private Long RIGHT_SCROLL_ID1 = 0L;
     private String JSON_RIGHT_SCROLL_ID1 = "{\"scroll_id\":0,\"description\":\"Invisibility\",\"durability\":100," +
-            "\"creation_date\":\"2014-11-29\",\"mana_cost\":0,\"mage_id\":null}";
+            "\"creation_date\":\"2014-11-30\",\"mana_cost\":0,\"mage_id\":null}";
 
     private String RIGHT_SCROLL_DESCIPTION2 = "Blink";
     private Long RIGHT_SCROLL_ID2 = 1L;
     private String JSON_RIGHT_SCROLL_ID2 = "{\"scroll_id\":1,\"description\":\"Blink\",\"durability\":100," +
-            "\"creation_date\":\"2014-11-29\",\"mana_cost\":0,\"mage_id\":null}";
+            "\"creation_date\":\"2014-11-30\",\"mana_cost\":0,\"mage_id\":null}";
 
     private String RIGHT_SCROLL_DESCIPTION3 = "Helicopter";
     private Long RIGHT_SCROLL_ID3 = 2L;
     private String JSON_RIGHT_SCROLL_ID3 = "{\"scroll_id\":2,\"description\":\"Helicopter\",\"durability\":100," +
-            "\"creation_date\":\"2014-11-29\",\"mana_cost\":0,\"mage_id\":null}";
+            "\"creation_date\":\"2014-11-30\",\"mana_cost\":0,\"mage_id\":null}";
 
 
 

@@ -8,25 +8,26 @@
         <body>
             <form action='<spring:url value="/scroll/addToMage" />' method="post">
 
-                <span>Adding scroll to mage: </span><br/><br/><br/><br/>
-                <span>Please enter the information of scroll: </span><br/>
+                <span>
+                    <spring:message code="scroll.add.desc" />
+                </span><br/><br/>
 
                 <input type="hidden" name="id"  value="${mageId}"/>
                 </br>
 
-                <input type="text" name="description" placeholder="Description" />
+                <input type="text" name="description" placeholder="<spring:message code="scroll.desc" />" />
                 </br>
 
-                <input type="number" name="durability" min="0" placeholder="Durability"/>
+                <input type="number" name="durability" min="0" placeholder="<spring:message code="scroll.dur" />"/>
                 </br>
 
-                <input id="date" type="text" name="creationDate" placeholder="Creation date" />
+                <input id="date" type="text" name="creationDate" placeholder="<spring:message code="scroll.date" />" />
                 </br>
 
-                <input type="number" name="manaCost" min="0" placeholder="Mana cost"/>
+                <input type="number" name="manaCost" min="0" placeholder="<spring:message code="scroll.mana" />"/>
                 </br>
 
-                 <input id="sub" class="sub" type="submit" value="Send" name="Submit" /> <br/>
+                <input id="sub" class="sub" type="submit" value="<spring:message code="scroll.add.link" />" name="Submit" /> <br/>
             </form>
         </body>
     </html>
