@@ -1,11 +1,9 @@
 package com.epam.brest.task.service;
 
-import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
 import com.epam.brest.task.service.Exception.BadInsertException;
 import com.epam.brest.task.service.Exception.BadRemoveException;
 import com.epam.brest.task.service.Exception.NoItemFoundException;
-import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;

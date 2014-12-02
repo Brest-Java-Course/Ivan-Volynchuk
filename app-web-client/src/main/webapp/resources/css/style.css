@@ -1,0 +1,184 @@
+/*  begin setup */
+body{
+    margin: 0;
+    padding: 0;
+}
+
+hr{
+    border: none;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+ul{
+    list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+a{
+    text-decoration: none;
+}
+
+/*wrapper*/
+.wrap{
+	margin: 0 auto;
+    margin-top: 20px;
+	width: 1200px;
+}
+
+/*menu*/
+ul{
+text-align: center;
+font-size: 0px;
+}
+li{
+display: inline-block;
+height: 30px;
+width: 90px;
+text-align: center;
+line-height: 30px;
+margin-bottom: 20px;
+}
+
+li a{
+	display: block;
+	height: 30px;
+	width: 90px;
+	color: #9b9b9b;
+	font-size: 20px;
+	border-bottom: 2px solid #00bcb5;
+	transition: all 0.1s ease-out;
+}
+
+li a.onMenu{
+    border-bottom: 2px solid #ce0037;
+}
+
+li a:hover{
+	border-bottom: 5px solid #00bcb5;
+}
+
+/*filter*/
+.filter{
+margin-bottom: 10px;
+float: right;
+}
+.filter input[type="text"],select{
+    height: 20px;
+    margin-left: 40px;
+    border: 1px solid #d4d4d4;
+    color: #818181;
+}
+
+/*content*/
+
+.cont{
+    margin-top: 20px;
+    float: right;
+}
+
+/*table*/
+table{
+    margin: 0 auto;
+    border-collapse:collapse;
+}
+
+tr:nth-child(2n){
+    background: #ededed;
+}
+
+th{
+    border-bottom: 2px solid #00bcb5;
+    padding: 10px 50px;
+    color: #808080;
+}
+
+td{
+    border-bottom: 1px solid #ccc;
+    color: #adadad;
+    text-align: center;
+}
+
+.add{
+    border-bottom: 1px solid #5bb54a;
+    padding-right: 10px;
+}
+
+.del{
+    border-bottom: 1px solid #d66652;
+    padding-right: 10px;
+}
+
+.upd{
+    border-bottom: 1px solid #000000;
+    padding-right: 10px;
+}
+
+
+.add a{
+    text-decoration: none;
+    padding: 2px 5px;
+    color: #5bb54a;
+}
+
+.del a{
+    text-decoration: none;
+    padding: 2px 5px;
+    color: #d66652;
+}
+
+.upd a{
+    text-decoration: none;
+    padding: 2px 5px;
+    color: #000000;
+}
+
+.wrapp{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.wrapp a{
+    padding: 2px;
+    text-decoration: none;
+    border-bottom: 1px solid #d66652;
+    color: #d66652;
+    margin-right: 25px;
+    transition: border .2s ease-in-out;
+}
+
+.wrapp span{
+    color: #00bcb5;
+}
+
+.wrapp a:last-child{
+    border-bottom: 1px solid #5bb54a;
+    color: #5bb54a;
+    margin-left: 25px;
+}
+
+.wrapp a:hover{
+     border-bottom: 5px solid #d66652;
+}
+
+.wrapp a:last-child:hover{
+     border-bottom: 5px solid #5bb54a;
+}
+
+/*pages*/
+
+.str{
+    clear:both;
+}
+.str a{
+    color: #bcbcbc;
+}
+.str select{
+    float: right;
+    margin-right: 0;
+    color: #818181;
+}
+.str .on{
+    font-weight: bold;
+    color: #00ada0;
+}

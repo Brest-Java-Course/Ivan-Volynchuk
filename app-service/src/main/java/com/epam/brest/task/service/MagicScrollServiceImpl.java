@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.util.List;
@@ -33,6 +35,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
     private MagicScrollDAO magicScrollDAO;
 
     @Override
+    @Transactional(propagation= Propagation.REQUIRED)
     public Long addMagicScroll(MagicScroll magicScroll) {
 
         LOGGER.debug("addMagicScroll({})", magicScroll);
@@ -156,6 +159,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
     }
 
     @Override
+    @Transactional(propagation=Propagation.REQUIRED)
     public void removeMagicScroll(Long id) {
 
         LOGGER.debug("removeMagicScroll({})", id);
@@ -222,6 +226,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
     }
 
     @Override
+    @Transactional(propagation=Propagation.REQUIRED)
     public void updateMagicScroll(MagicScroll magicScroll) {
 
         LOGGER.debug("updateMagicScroll({})", magicScroll);

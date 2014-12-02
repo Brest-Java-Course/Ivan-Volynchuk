@@ -11,7 +11,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContextManager;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 import static com.epam.brest.task.dao.tools.TestMageScrollFactory.*;
 

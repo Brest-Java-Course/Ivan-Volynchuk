@@ -4,7 +4,6 @@ import com.epam.brest.task.domain.MagicScroll;
 import com.epam.brest.task.service.Exception.*;
 import com.epam.brest.task.service.MagicScrollService;
 import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -134,6 +133,18 @@ public class ScrollRestController {
             magicScrollService.removeMagicScroll(id);
             return new ResponseEntity("", HttpStatus.OK);
         }catch(BadRemoveException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/mage/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<MagicScroll>> getScrollsByMageId(@PathVariable Long id) {
+
+        try {
+            List<MagicScroll> scrolls = magicScrollService.getMagicScrollsByMageId(id);
+            return new ResponseEntity(scrolls, HttpStatus.OK);
+        }catch(NoItemFoundException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }

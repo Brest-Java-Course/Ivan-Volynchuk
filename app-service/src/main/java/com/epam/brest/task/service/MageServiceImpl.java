@@ -3,7 +3,6 @@ package com.epam.brest.task.service;
 import com.epam.brest.task.dao.MageDAO;
 import com.epam.brest.task.dao.MagicScrollDAO;
 import com.epam.brest.task.domain.Mage;
-import com.epam.brest.task.domain.MagicScroll;
 import com.epam.brest.task.service.Exception.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -125,6 +124,7 @@ public class MageServiceImpl implements MageService {
     }
 
     @Override
+    @Transactional(propagation=Propagation.REQUIRED)
     public Long addMage(Mage mage) {
 
         LOGGER.debug("addMage({})", mage);
@@ -178,6 +178,7 @@ public class MageServiceImpl implements MageService {
     }
 
     @Override
+    @Transactional(propagation=Propagation.REQUIRED)
     public void updateMage(Mage mage) {
 
         LOGGER.debug("updateMage({})", mage);

@@ -1,6 +1,5 @@
 package com.epam.brest.task.service;
 
-import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
 import com.epam.brest.task.service.Exception.*;
 import junit.framework.Assert;

@@ -1,7 +1,6 @@
 package com.epam.brest.task.rest;
 
 import com.epam.brest.task.domain.Mage;
-import com.epam.brest.task.rest.MageRestController;
 import com.epam.brest.task.service.Exception.*;
 import com.epam.brest.task.service.MageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,16 +14,11 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import javax.annotation.Resource;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import static com.epam.brest.task.dao.tools.TestMageScrollFactory.getAllExistMages;
 import static com.epam.brest.task.dao.tools.TestMageScrollFactory.getExistMage;
-import static com.epam.brest.task.dao.tools.TestMageScrollFactory.getNewMage;
 import static org.easymock.EasyMock.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

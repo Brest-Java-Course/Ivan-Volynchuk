@@ -3,8 +3,6 @@ package com.epam.brest.task.rest;
 import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.service.Exception.*;
 import com.epam.brest.task.service.MageService;
-import org.joda.time.LocalDate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
