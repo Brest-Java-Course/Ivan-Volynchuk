@@ -11,6 +11,8 @@
     <body>
         <div class="wrap">
             <jsp:include page="menu.jsp" />
+            <jsp:include page="error.jsp" />
+            <br/>
             <h2>
                 <spring:message code="scroll.header" />
             </h2>
@@ -55,7 +57,7 @@
                                 <td><c:out value="${scroll.creation_date}"/></td>
                                 <td><c:out value="${scroll.mana_cost}"/></td>
                                 <td class="add"><a href='<spring:url value="/scroll/update">  <spring:param name="id" value="${scroll.scroll_id}"/>   </spring:url>'>&#9998</a></td>
-                                <td class="del"><a href='<spring:url value="/scroll/delete2"> <spring:param name="scrollId" value="${scroll.scroll_id}"/>   </spring:url>'>x</a></td>
+                                <td class="del"><a href='<spring:url value="/scroll/delete"> <spring:param name="scrollId" value="${scroll.scroll_id}"/>   </spring:url>'>x</a></td>
                             </tr>
                         </c:forEach>
                     </table>

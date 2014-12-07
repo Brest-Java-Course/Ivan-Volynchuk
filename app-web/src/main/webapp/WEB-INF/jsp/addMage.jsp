@@ -7,6 +7,9 @@
         <body>
             <form action='<spring:url value="/mage/add" />' method="post">
 
+                <jsp:include page="error.jsp" />
+                <br/>
+
                 <span>
                     <spring:message code="mage.add.desc" />
                 </span><br/><br/>

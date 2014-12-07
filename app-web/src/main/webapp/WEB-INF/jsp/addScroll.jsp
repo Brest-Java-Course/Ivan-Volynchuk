@@ -7,7 +7,8 @@
     <html>
         <body>
             <form action='<spring:url value="/scroll/add" />' method="post">
-
+                <jsp:include page="error.jsp" />
+                <br/>
                 <span>
                     <spring:message code="scroll.add.desc" />
                 </span><br/><br/>

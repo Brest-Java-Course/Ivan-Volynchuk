@@ -4,7 +4,7 @@
 
 <div id="error_div" class="error_div">
 
-    <c:if test="${message}">
+    <c:if test="${!empty message}">
         <c:out value="${message}"/>
     </c:if>
 
