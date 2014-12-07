@@ -31,14 +31,4 @@ public class ExceptionHandlerController {
         mav.addObject("url", request.getRequestURL());
         return mav;
     }
-    /*
-    @ExceptionHandler(value = {AcademyException.class})
-    public ModelAndView BadInputDataErrorHandler(HttpServletRequest request, AcademyException e) {
-        //TODO:change to catch/try in controller
-        LOGGER.error(e.fillInStackTrace());
-
-        ModelAndView mav = new ModelAndView(DEFAULT_ERROR_VIEW);
-        mav.addObject("exception", e.getMessage());
-        return mav;
-    }*/
 }

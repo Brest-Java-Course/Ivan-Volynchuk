@@ -11,20 +11,24 @@
     <packaging>war</packaging>
 
     <dependencies>
+
         <dependency>
             <groupId>com.epam.brest.task</groupId>
             <artifactId>app-rest</artifactId>
         </dependency>
 
+        <!--Jetty -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlets</artifactId>
         </dependency>
 
+        <!--JSTL -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+
     </dependencies>
 
 

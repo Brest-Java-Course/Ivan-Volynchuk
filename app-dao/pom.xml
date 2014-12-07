@@ -24,6 +24,7 @@
             <groupId>com.epam.brest.task</groupId>
             <artifactId>app-domain</artifactId>
         </dependency>
+
         <!-- Tests: JUNIT -->
         <dependency>
             <groupId>junit</groupId>
