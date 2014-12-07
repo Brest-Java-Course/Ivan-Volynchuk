@@ -12,7 +12,8 @@ import org.springframework.test.context.TestContextManager;
 
 import java.util.Arrays;
 
-import static com.epam.brest.task.dao.tools.TestMageScrollFactory.*;
+import static com.epam.brest.task.tools.TestMageScrollFactory.*;
+
 
 /**
  * Created by fieldistor on 24.11.14.

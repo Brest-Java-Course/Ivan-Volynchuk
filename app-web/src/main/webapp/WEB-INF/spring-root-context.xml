@@ -18,7 +18,14 @@
 
     <context:annotation-config />
 
-    <import resource="classpath:spring-service-context.xml"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driverClassName}" />
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+    </bean>
 
     <jdbc:initialize-database data-source="dataSource">
         <jdbc:script location="WEB-INF/sql/create-mage-table.sql"/>
@@ -27,22 +34,29 @@
         <jdbc:script location="WEB-INF/sql/test-data-scroll.sql"/>
     </jdbc:initialize-database>
 
-    <bean id="messageSource"
-          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames">
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
             <list>
-                <value>classpath:menu</value>
-                <value>classpath:mage</value>
-                <value>classpath:scroll</value>
+                <value>classpath:properties/database.properties</value>
+                <value>classpath:properties/scroll_sql_path.properties</value>
+                <value>classpath:properties/mage_sql_path.properties</value>
             </list>
         </property>
-        <property name="defaultEncoding" value="UTF-8" />
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    </bean>
+
+    <bean id="magicScrollDAO" class="com.epam.brest.task.dao.MagicScrollDAOImpl"/>
+    <bean id="mageDAO" class="com.epam.brest.task.dao.MageDAOImpl"/>
+
+    <bean id="magicScrollService" class="com.epam.brest.task.service.MagicScrollServiceImpl"/>
+    <bean id="mageService" class="com.epam.brest.task.service.MageServiceImpl"/>
+
+    <bean id="namedJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg name="dataSource" ref="dataSource"></constructor-arg>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-
-    <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

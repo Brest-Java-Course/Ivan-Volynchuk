@@ -7,7 +7,8 @@
     <html>
         <body>
             <form action='<spring:url value="/scroll/updateMageScroll" />' method="post">
-
+                <jsp:include page="error.jsp" />
+                <br/>
                 <span>
                     <spring:message code="mage.update.desc" />
                 </span><br/><br/>

@@ -14,8 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getExistScroll;
-import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getNewScroll;
+import static com.epam.brest.task.tools.TestMagicScrollFactory.*;
 
 /**
  * Created by fieldistor on 16.11.14.

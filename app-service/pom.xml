@@ -24,6 +24,12 @@
             <artifactId>junit</artifactId>
         </dependency>
 
+        <!-- Test tools -->
+        <dependency>
+            <groupId>com.epam.brest.task</groupId>
+            <artifactId>app-test-tools</artifactId>
+        </dependency>
+
         <!--Spring Framework-->
         <dependency>
             <groupId>org.springframework</groupId>

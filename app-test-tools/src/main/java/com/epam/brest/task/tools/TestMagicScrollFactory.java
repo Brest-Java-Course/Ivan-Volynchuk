@@ -1,4 +1,4 @@
-package com.epam.brest.task.dao.tools;
+package com.epam.brest.task.tools;
 
 import com.epam.brest.task.domain.MagicScroll;
 import org.joda.time.LocalDate;
@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Created by fieldistor on 17.11.14.
  */
-//TODO: move to another package
 public class TestMagicScrollFactory {
 
     private final static String DESCRIPTION1 = "Invisibility";

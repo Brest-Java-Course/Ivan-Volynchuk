@@ -2,7 +2,9 @@ body{
     font-size: 20px;
 }
 
-
+.error_div{
+	background-color: #EB2F2F;
+}
 /*Form*/
 form{
     margin: 30px auto;

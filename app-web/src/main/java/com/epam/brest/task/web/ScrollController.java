@@ -25,13 +25,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/scroll")
 public class ScrollController {
 
-    private static final Logger LOGGER = LogManager.getLogger(MageController.class);
-
     @Autowired
     private MagicScrollService magicScrollService;
 
     @Autowired
     MageService mageService;
+
+    private static final Logger LOGGER = LogManager.getLogger(MageController.class);
+
 
     @RequestMapping(value={"/filter/after"}, method = RequestMethod.GET)
     public ModelAndView filterAfterDate(RedirectAttributes redirectAttributes, @RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate date) {

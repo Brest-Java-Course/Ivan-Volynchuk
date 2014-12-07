@@ -12,7 +12,8 @@
     </head>
     <body>
         <div class="wrap">
-
+            <jsp:include page="error.jsp" />
+            <br/>
             <jsp:include page="menu.jsp" />
 
             <h2><spring:message code="mage.header" /></h2>

@@ -18,8 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.annotation.Resource;
 
-import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getAllExistScrolls;
-import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getExistScroll;
+import static com.epam.brest.task.tools.TestMagicScrollFactory.*;
 import static org.easymock.EasyMock.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;

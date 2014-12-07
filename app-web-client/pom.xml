@@ -84,6 +84,7 @@
             <artifactId>easymock</artifactId>
         </dependency>
 
+        <!-- Log4J  -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
@@ -92,6 +93,16 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-jcl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-web</artifactId>
         </dependency>
 
     </dependencies>
@@ -118,11 +129,25 @@
 
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
-                <artifactId>maven-jetty-plugin</artifactId>
-                <version>6.1.26</version>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.16.v20140903</version>
                 <configuration>
-                    <contextPath>/</contextPath>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                    <stopKey>stop</stopKey>
+                    <stopPort>9999</stopPort>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <systemProperties>
+                        <systemProperty>
+                            <name>org.apache.commons.logging.LogFactory</name>
+                            <value>org.apache.logging.log4j.jcl.LogFactoryImpl</value>
+                        </systemProperty>
+                        <systemProperty>
+                            <name>slf4j</name>
+                            <value>false</value>
+                        </systemProperty>
+                    </systemProperties>
                 </configuration>
             </plugin>
         </plugins>

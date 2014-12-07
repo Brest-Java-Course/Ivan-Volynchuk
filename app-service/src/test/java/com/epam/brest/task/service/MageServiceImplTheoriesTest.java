@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContextManager;
 
-import static com.epam.brest.task.dao.tools.TestMageScrollFactory.*;
+import static com.epam.brest.task.tools.TestMageScrollFactory.*;
 
 /**
  * Created by fieldistor on 23.11.14.

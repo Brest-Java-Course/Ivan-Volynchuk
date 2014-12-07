@@ -39,8 +39,6 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
         List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
         converters.add(new MappingJackson2HttpMessageConverter());
         restTemplate.setMessageConverters(converters);
-
-        restTemplate.setErrorHandler(new CustomResponseErrorHandler());
     }
 
     @Override

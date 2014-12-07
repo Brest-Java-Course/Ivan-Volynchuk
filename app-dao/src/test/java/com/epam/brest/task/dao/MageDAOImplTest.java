@@ -2,7 +2,6 @@ package com.epam.brest.task.dao;
 
 import com.epam.brest.task.domain.Mage;
 import junit.framework.Assert;
-import org.joda.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.task.dao.tools.TestMageScrollFactory.getNewMage;
+import static com.epam.brest.task.tools.TestMageScrollFactory.getNewMage;
+
 
 /**
  * Created by fieldistor on 16.11.14.

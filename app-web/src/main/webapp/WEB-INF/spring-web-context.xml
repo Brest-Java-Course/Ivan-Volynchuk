@@ -11,11 +11,13 @@
          http://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context.xsd
-         http://www.springframework.org/schema/jdbc
-         http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
-         http://www.springframework.org/schema/tx
          http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+
+
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="com.epam.brest.task.web"/>
+    <context:component-scan base-package="com.epam.brest.task.rest"/>
 
     <mvc:resources mapping="/resources/**" location="/resources/" />
 
@@ -28,9 +30,18 @@
         </property>
     </bean>
 
-    <mvc:annotation-driven/>
-    <context:component-scan base-package="com.epam.brest.task.web"/>
-    <context:component-scan base-package="com.epam.brest.task.rest"/>
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:menu</value>
+                <value>classpath:mage</value>
+                <value>classpath:scroll</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="UTF-8" />
+    </bean>
+
 
 
 

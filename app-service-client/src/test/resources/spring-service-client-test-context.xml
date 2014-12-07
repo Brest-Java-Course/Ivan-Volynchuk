@@ -17,8 +17,14 @@
          http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
-    <import resource="classpath:spring-service-client-context.xml"/>
-
     <context:annotation-config />
+
+    <bean id="mageServiceClient" class="com.epam.brest.task.clientservice.MageServiceClientImpl">
+        <constructor-arg type="java.lang.String" value="http://localhost:8080/app-web-1.0-SNAPSHOT/rest/mage/"/>
+    </bean>
+
+    <bean id="magicScrollServiceClient" class="com.epam.brest.task.clientservice.MagicScrollServiceClientImpl">
+        <constructor-arg type="java.lang.String" value="http://localhost:8080/app-web-1.0-SNAPSHOT/rest/scroll/"/>
+    </bean>
 
 </beans>

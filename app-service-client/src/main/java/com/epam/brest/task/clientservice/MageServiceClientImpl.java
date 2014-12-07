@@ -37,9 +37,6 @@ public class MageServiceClientImpl implements MageServiceClient {
         List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
         converters.add(new MappingJackson2HttpMessageConverter());
         restTemplate.setMessageConverters(converters);
-
-        restTemplate.setErrorHandler(new CustomResponseErrorHandler());
-
     }
     @Override
     public Mage getMageById(Long id) {

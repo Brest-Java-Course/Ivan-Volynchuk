@@ -11,9 +11,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
 import java.util.List;
-import static com.epam.brest.task.dao.tools.TestMagicScrollFactory.getNewScroll;
+
+import static com.epam.brest.task.tools.TestMagicScrollFactory.getNewScroll;
 
 /**
  * Created by fieldistor on 15.11.14.

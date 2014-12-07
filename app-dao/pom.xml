@@ -25,6 +25,12 @@
             <artifactId>app-domain</artifactId>
         </dependency>
 
+        <!-- Test tools -->
+        <dependency>
+            <groupId>com.epam.brest.task</groupId>
+            <artifactId>app-test-tools</artifactId>
+        </dependency>
+
         <!-- Tests: JUNIT -->
         <dependency>
             <groupId>junit</groupId>

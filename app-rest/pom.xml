@@ -50,6 +50,12 @@
             <artifactId>junit</artifactId>
         </dependency>
 
+        <!-- Test tools -->
+        <dependency>
+            <groupId>com.epam.brest.task</groupId>
+            <artifactId>app-test-tools</artifactId>
+        </dependency>
+
         <!-- Tests: Easy Mock -->
         <dependency>
             <groupId>org.easymock</groupId>

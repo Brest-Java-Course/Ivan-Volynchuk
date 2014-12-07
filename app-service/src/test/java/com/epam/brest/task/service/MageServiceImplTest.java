@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.epam.brest.task.dao.tools.TestMageScrollFactory.*;
+import static com.epam.brest.task.tools.TestMageScrollFactory.*;
 
 /**
  * Created by fieldistor on 17.11.14.

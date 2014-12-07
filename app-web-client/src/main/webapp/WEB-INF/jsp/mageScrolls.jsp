@@ -12,6 +12,8 @@
     <body>
         <div class="wrap">
             <jsp:include page="menu.jsp" />
+            <jsp:include page="error.jsp" />
+            <br/>
             <h2>
                 <spring:message code="scroll.header" />
                 <c:out value="${mage.name}"/>
@@ -56,8 +58,8 @@
                                 <td><c:out value="${scroll.durability}"/></td>
                                 <td><c:out value="${scroll.creation_date}"/></td>
                                 <td><c:out value="${scroll.mana_cost}"/></td>
-                                <td class="add"><a href='<spring:url value="/scroll/updateMageScroll" >  <spring:param name="id" value="${scroll.scroll_id}"/>   </spring:url>'>&#9998</a></td>
-                                <td class="del"><a href='<spring:url value="/scroll/delete1" >  <spring:param name="mageId" value="${mage.mage_id}"/> <spring:param name="scrollId" value="${scroll.scroll_id}"/>   </spring:url>'>x</a></td>
+                                <td class="add"><a href='<spring:url value="/scroll/updateMageScroll" >  <spring:param name="id" value="${scroll.scroll_id}"/>  <spring:param name="mageId" value="${mage.mage_id}"/>  </spring:url>'>&#9998</a></td>
+                                <td class="del"><a href='<spring:url value="/scroll/deleteMageScroll" >  <spring:param name="mageId" value="${mage.mage_id}"/> <spring:param name="scrollId" value="${scroll.scroll_id}"/>   </spring:url>'>x</a></td>
                             </tr>
                         </c:forEach>
                      </table>
