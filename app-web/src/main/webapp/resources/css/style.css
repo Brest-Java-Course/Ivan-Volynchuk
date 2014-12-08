@@ -8,6 +8,13 @@ body{
 	background-color: #EB2F2F;
 }
 
+h2{
+    color: #c7c7c7;
+    text-align: center;
+
+}
+
+
 hr{
     border: none;
     border-bottom: 1px solid #d9d9d9;
@@ -28,6 +35,20 @@ a{
 	margin: 0 auto;
     margin-top: 20px;
 	width: 1200px;
+}
+
+/*back*/
+.back{
+    position: absolute;
+    border-bottom: 2px solid #00bcb5;
+    color: #a0a0a0;
+    font-size: 30px;
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+}
+.back:hover{
+    border-bottom: 5px solid #00bcb5;
+    color: #a7a7a7;
 }
 
 /*menu*/
@@ -64,12 +85,38 @@ li a:hover{
 
 /*filter*/
 .filter{
-margin-bottom: 10px;
-float: right;
+    text-align: right;
+    margin-bottom: 10px;
+    color: #939393;
+    float: right;
 }
-.filter input[type="text"],select{
+
+.fil{
+    float: right;
+}
+
+.filter form{
+margin-right: 270px;
+}
+
+.filter input[type="text"]{
     height: 20px;
     margin-left: 40px;
+    border: 1px solid #d4d4d4;
+    color: #818181;
+    box-sizing: border-box;
+}
+
+.filter input[type="submit"]{
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #d4d4d4;
+    color: #818181;
+    box-sizing: border-box;
+}
+
+.filter select{
+    height: 20px;
     border: 1px solid #d4d4d4;
     color: #818181;
 }
@@ -78,11 +125,12 @@ float: right;
 
 .cont{
     margin-top: 20px;
-    float: right;
+    //float: right;
 }
 
 /*table*/
 table{
+    width: 1200px;
     margin: 0 auto;
     border-collapse:collapse;
 }

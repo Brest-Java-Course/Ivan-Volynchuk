@@ -14,6 +14,12 @@
         <!-- Domain -->
         <dependency>
             <groupId>com.epam.brest.task</groupId>
+            <artifactId>app-test-tools</artifactId>
+        </dependency>
+
+        <!-- Tools -->
+        <dependency>
+            <groupId>com.epam.brest.task</groupId>
             <artifactId>app-domain</artifactId>
         </dependency>
 
@@ -57,6 +63,14 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+        </dependency>
+
+        <!-- Tests: Easy Mock -->
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>3.2</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

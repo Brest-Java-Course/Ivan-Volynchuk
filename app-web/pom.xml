@@ -55,6 +55,7 @@
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                     </archive>
+                    <warName>MageAcademy</warName>
                 </configuration>
             </plugin>
 

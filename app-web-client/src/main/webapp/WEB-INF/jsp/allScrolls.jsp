@@ -18,26 +18,29 @@
             </h2>
             <div class="cont">
                 <div class="filter">
-                    <input type="text" id="date1" placeholder="<spring:message code="scroll.filter.from" />" />
-                    <input type="text" id="date2" placeholder="<spring:message code="scroll.filter.to" />" />
-                    <input type="button" id="filter" value="<spring:message code="scroll.filter.button" />"/>
+                    <div class="fil">
+                        <spring:message code="scroll.filter.header" />
+                        <select name="1" id="1">
+                            <option value="0">
+                                <spring:message code="scroll.filter.type.none" />
+                            </option>
+                            <option value="1">
+                                <spring:message code="scroll.filter.type.after" />
+                            </option>
+                            <option value="2">
+                                <spring:message code="scroll.filter.type.before" />
+                            </option>
+                            <option value="3">
+                                <spring:message code="scroll.filter.type.between" />
+                            </option>
+                        </select>
+                    </div>
+                    <form action='<spring:url value="/scroll/filter" />' method="post">
+                        <input type="text" name="afterDate" id="date1" placeholder="<spring:message code="scroll.filter.from" />" />
+                        <input type="text" name="beforeDate" id="date2" placeholder="<spring:message code="scroll.filter.to" />" />
+                        <input type="submit" id="filter" value="<spring:message code="scroll.filter.button" />"/>
+                    </form>
 
-                    <spring:message code="scroll.filter.header" />
-
-                    <select name="1" id="1">
-                        <option value="0">
-                            <spring:message code="scroll.filter.type.none" />
-                        </option>
-                        <option value="1">
-                            <spring:message code="scroll.filter.type.after" />
-                        </option>
-                        <option value="2">
-                            <spring:message code="scroll.filter.type.before" />
-                        </option>
-                        <option value="3">
-                            <spring:message code="scroll.filter.type.between" />
-                        </option>
-                    </select>
                 </div>
                 <div class="content">
                     <table>

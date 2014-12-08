@@ -219,8 +219,8 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             throw new NoItemFoundException("Scroll with such description doesn't exist", "Getting scroll by description", description);
         }catch(IllegalArgumentException e){
 
-            LOGGER.debug(NOT_NULL_DESCRIPTION);
-            throw new NoItemFoundException(NOT_NULL_DESCRIPTION, "Getting scroll by description", description);
+            LOGGER.debug(e.getMessage());
+            throw new NoItemFoundException(e.getMessage(), "Getting scroll by description", description);
         }
         return scroll;
     }
@@ -257,8 +257,8 @@ public class MagicScrollServiceImpl implements MagicScrollService {
                 magicScrollDAO.updateMagicScroll(magicScroll);
             }catch(NoItemFoundException exception) {
 
-                LOGGER.debug("No MagicScroll with such id.");
-                throw new BadUpdateException("No MagicScroll with such id.", "Updating scroll", magicScroll);
+                LOGGER.debug(exception.getMessage());
+                throw new BadUpdateException(exception.getMessage(), "Updating scroll", magicScroll);
             }
 
         }
@@ -295,8 +295,8 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             scrolls = magicScrollDAO.getLimitMagicScrollsByMageId(id, per_page, n_from);
             Assert.notEmpty(scrolls);
         }catch(IllegalArgumentException e){
-            LOGGER.debug(NO_MAGE_SCROLLS);
-            throw new NoItemsFoundException(NO_MAGE_SCROLLS, "Getting limited scrolls by mage id.");
+            LOGGER.debug(e.getMessage());
+            throw new NoItemsFoundException(e.getMessage(), "Getting limited scrolls by mage id.");
         }
         return scrolls;
     }
@@ -337,8 +337,8 @@ public class MagicScrollServiceImpl implements MagicScrollService {
             scrolls = magicScrollDAO.getLimitMagicScrollsWithoutMage(per_page, n_from);
             Assert.notEmpty(scrolls);
         }catch(IllegalArgumentException e){
-            LOGGER.debug(NO_SCROLLS_TO_GET);
-            throw new NoItemsFoundException(NO_SCROLLS_TO_GET, "Getting limited scrolls without mage.");
+            LOGGER.debug(e.getMessage());
+            throw new NoItemsFoundException(e.getMessage(), "Getting limited scrolls without mage.");
         }
         return scrolls;
     }

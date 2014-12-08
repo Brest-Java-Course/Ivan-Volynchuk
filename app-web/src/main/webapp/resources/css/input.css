@@ -2,6 +2,14 @@ body{
     font-size: 20px;
 }
 
+span{
+    color: #818181;
+}
+
+label{
+    color: #6f6f6f;
+}
+
 .error_div{
 	background-color: #EB2F2F;
 }
@@ -19,6 +27,12 @@ input{
     color: #adadad;
     font-size: 18px;
 }
+
+.for{
+    float: right;
+    margin-right: 120px;
+}
+
 .warn{
     border: 1px solid red;
     background: #FFCECE;
@@ -29,6 +43,7 @@ input{
     margin-bottom: 10px;
     border-bottom: 1px solid #5bb54a;
     background: none;
+    margin-top: 10px;
     color: #000;
     color: #5bb54a;
     transition: border .2s ease-in-out;

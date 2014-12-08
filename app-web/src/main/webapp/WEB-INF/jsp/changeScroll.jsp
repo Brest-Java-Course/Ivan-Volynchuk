@@ -17,30 +17,39 @@
                 <input type="hidden" name="scrollId" value=<c:out value="${scroll.scroll_id}"/> readonly/>
                 </br>
 
-                <label path="description">
-                    <spring:message code="scroll.desc" />:
-                </label>
-                <input type="text" name="description" value=<c:out value="${scroll.description}"/> />
+                <div class="for">
+                    <label path="description">
+                        <spring:message code="scroll.desc" />:
+                    </label>
+                    <input type="text" name="description" value=<c:out value="${scroll.description}"/> />
+                </div>
                 </br>
 
-                <label path="durability">
-                    <spring:message code="scroll.dur" />:
-                </label>
-                <input type="number" min="0" name="durability" value=<c:out value="${scroll.durability}"/> />
+                <div class="for">
+                    <label path="durability">
+                        <spring:message code="scroll.dur" />:
+                    </label>
+                    <input type="number" min="0" name="durability" value=<c:out value="${scroll.durability}"/> />
+                </div>
                 </br>
 
-                <label path="creationDate">
-                    <spring:message code="scroll.date" />:
-                </label>
-                <input id="date" type="text" name="creationDate" value=<c:out value="${scroll.creation_date}"/> />
+                <div class="for">
+                    <label path="creationDate">
+                        <spring:message code="scroll.date" />:
+                    </label>
+                    <input id="date" type="text" name="creationDate" value=<c:out value="${scroll.creation_date}"/> />
+                </div>
                 </br>
 
-                <label path="manaCost">
-                    <spring:message code="scroll.mana" />:
-                </label>
-                <input type="number"  min="0" name="manaCost" value=<c:out value="${scroll.mana_cost}"/> />
+                <div class="for">
+                    <label path="manaCost">
+                        <spring:message code="scroll.mana" />:
+                    </label>
+                    <input type="number"  min="0" name="manaCost" value=<c:out value="${scroll.mana_cost}"/> />
+                </div>
                 </br>
 
+                <div class="for">
                 <label path="mageId">
                     <spring:message code="scroll.mage" />:
                 </label>
@@ -54,6 +63,7 @@
                         </option>
                     </c:forEach>
                 </select>
+                </div>
                 </br>
 
                 <input id="sub" class="sub" type="submit" value="<spring:message code="scroll.update.link" />" name="Submit" onClick="return Formdata(this.form)" /> <br/>

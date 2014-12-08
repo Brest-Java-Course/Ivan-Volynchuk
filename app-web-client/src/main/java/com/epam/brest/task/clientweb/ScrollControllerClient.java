@@ -32,8 +32,8 @@ public class ScrollControllerClient {
     private static final Logger LOGGER = LogManager.getLogger(ScrollControllerClient.class);
 
 
-    @RequestMapping(value={"/filter/after"}, method = RequestMethod.GET)
-    public ModelAndView filterAfterDate(RedirectAttributes redirectAttributes, @RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate date) {
+    @RequestMapping(value={"/filter"}, method = RequestMethod.POST, params={"afterDate","beforeDate="})
+    public ModelAndView filterAfterDate(RedirectAttributes redirectAttributes, @RequestParam("afterDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate date) {
 
         try {
             ModelAndView mav = new ModelAndView("allScrolls");
@@ -46,8 +46,8 @@ public class ScrollControllerClient {
         }
     }
 
-    @RequestMapping(value={"/filter/before"}, method = RequestMethod.GET)
-    public ModelAndView filterBeforeDate(RedirectAttributes redirectAttributes, @RequestParam("date") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate date) {
+    @RequestMapping(value={"/filter"}, method = RequestMethod.POST, params={"beforeDate","afterDate="})
+    public ModelAndView filterBeforeDate(RedirectAttributes redirectAttributes, @RequestParam("beforeDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate date) {
 
         try {
             return new ModelAndView("allScrolls", "scrolls", magicScrollService.getAllMagicScrollsBeforeDate(date));
@@ -58,10 +58,10 @@ public class ScrollControllerClient {
         }
     }
 
-    @RequestMapping(value={"/filter/between"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/filter"}, method = RequestMethod.POST, params={"afterDate!=","beforeDate!="})
     public ModelAndView filterBetweenDates(RedirectAttributes redirectAttributes,
-                                           @RequestParam("date1") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate afterDate,
-                                           @RequestParam("date2") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate beforeDate) {
+                                           @RequestParam("afterDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate afterDate,
+                                           @RequestParam("beforeDate") @DateTimeFormat(pattern="yyyy-MM-dd") LocalDate beforeDate) {
 
         try {
             return new ModelAndView("allScrolls", "scrolls", magicScrollService.getAllMagicScrollsBetweenDates(afterDate, beforeDate));

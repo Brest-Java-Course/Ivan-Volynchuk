@@ -119,6 +119,7 @@
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
                     </archive>
+                    <warName>MageAcademyClient</warName>
                 </configuration>
             </plugin>
 

@@ -170,7 +170,7 @@ public class MageServiceImpl implements MageService {
             throw new BadRemoveException(e.getMessage(), "Removing mage.", id);
         }catch(NoItemFoundException e){
 
-            LOGGER.debug("No mage with such id ({})", id);
+            LOGGER.debug(e.getMessage(), id);
             throw new BadRemoveException(e.getMessage(), "Removing mage", id);
         }
 
@@ -209,8 +209,8 @@ public class MageServiceImpl implements MageService {
                 mageDAO.updateMage(mage);
             }catch(NoItemFoundException exception) {
 
-                LOGGER.debug("No Mage with such id.");
-                throw new BadUpdateException("No user with such id", "Updating mage", mage);
+                LOGGER.debug(exception.getMessage());
+                throw new BadUpdateException(exception.getMessage(), "Updating mage", mage);
             }
         }
     }

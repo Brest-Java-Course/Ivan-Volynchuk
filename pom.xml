@@ -63,38 +63,38 @@
             <dependency>
                 <groupId>com.epam.brest.task</groupId>
                 <artifactId>app-test-tools</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
                 <groupId>com.epam.brest.task</groupId>
                 <artifactId>app-domain</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.epam.brest.task</groupId>
                 <artifactId>app-dao</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.epam.brest.task</groupId>
                 <artifactId>app-service</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.epam.brest.task</groupId>
                 <artifactId>app-service-client</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.epam.brest.task</groupId>
                 <artifactId>app-rest</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!--Spring Framework-->

@@ -11,7 +11,6 @@ function clearFilter() {
     $('#filter').hide();
 }
 
-var destination;
 var value;
 $('select').on('change', function (e) {
     value = $("option:selected", this).val();
@@ -23,16 +22,13 @@ $('select').on('change', function (e) {
     }else if(value==1) {
          $('#date1').show();
          $('#filter').show();
-         destination="/app-web-1.0-SNAPSHOT/scroll/filter/after?";
     }else if(value==2) {
-         $('#date1').show();
+         $('#date2').show();
          $('#filter').show();
-         destination="/app-web-1.0-SNAPSHOT/scroll/filter/before?";
     }else if(value==3) {
          $('#date1').show();
          $('#date2').show();
          $('#filter').show();
-         destination="/app-web-1.0-SNAPSHOT/scroll/filter/between?";
     }
 
 });
@@ -45,24 +41,30 @@ $( "#filter" ).click(function() {
             var date1 = new Date($("#date1").val());
             var date2 = new Date($("#date2").val());
             if(date2>date1) {
-
-                destination+="date1="+$("#date1").val();
-                destination+="&date2="+$("#date2").val();
-                window.location.href = destination;
+                return true;
             }else {
                 alert("Invalid time period.");
+                return false;
             }
 
         }else {
             alert("Invalid date format.")
+            return false;
         }
-    }else {
-        if(isDate($("#date1").val())) {
-            destination+="date="+$("#date1").val();
-            window.location.href = destination;
+    }else if(value==2) {
+        if(isDate($("#date2").val())) {
+            return true;
         }else {
-            alert("Invalid date format.")
+            alert("Invalid before date format.");
+            return false;
         }
+    }else if(value==1) {
+         if(isDate($("#date1").val())) {
+            return true;
+         }else {
+            alert("Invalid after date format.");
+            return false;
+         }
     }
 
 });
