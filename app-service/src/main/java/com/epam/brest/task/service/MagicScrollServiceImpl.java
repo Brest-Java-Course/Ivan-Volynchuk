@@ -134,7 +134,7 @@ public class MagicScrollServiceImpl implements MagicScrollService {
     @Override
     public List<MagicScroll> getAllMagicScrollsBetweenDates(LocalDate afterDate, LocalDate beforeDate) {
 
-        LOGGER.debug("getAllMagicScrollsBeforeDate()");
+        LOGGER.debug("getAllMagicScrollsBeforeDate({}-{})",afterDate,beforeDate);
 
         List<MagicScroll> scrolls = null;
         try{

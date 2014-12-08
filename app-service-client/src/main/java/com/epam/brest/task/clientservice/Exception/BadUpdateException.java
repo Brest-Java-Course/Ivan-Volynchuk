@@ -3,7 +3,7 @@ package com.epam.brest.task.clientservice.Exception;
 /**
  * Created by fieldistor on 17.11.14.
  */
-public class BadUpdateException extends AcademyException {
+public class BadUpdateException extends BadDataException {
 
     private Object object;
 

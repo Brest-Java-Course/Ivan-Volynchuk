@@ -23,16 +23,16 @@ $('select').on('change', function (e) {
     }else if(value==1) {
          $('#date1').show();
          $('#filter').show();
-         destination="/scroll/filter/after?";
+         destination="/app-web-1.0-SNAPSHOT/scroll/filter/after?";
     }else if(value==2) {
          $('#date1').show();
          $('#filter').show();
-         destination="/scroll/filter/before?";
+         destination="/app-web-1.0-SNAPSHOT/scroll/filter/before?";
     }else if(value==3) {
          $('#date1').show();
          $('#date2').show();
          $('#filter').show();
-         destination="/scroll/filter/between?";
+         destination="/app-web-1.0-SNAPSHOT/scroll/filter/between?";
     }
 
 });

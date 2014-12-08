@@ -5,12 +5,12 @@
 <menu>
     <ul>
         <li>
-            <a href="${pageContext.request.contextPath}/mage/">
+            <a href='<spring:url value="/mage/"/>'>
                 <spring:message code="menu.mage" />
             </a>
         </li>
         <li>
-            <a href="${pageContext.request.contextPath}/scroll/allScrolls">
+            <a href='<spring:url value="/scroll/allScrolls"/>'>
                 <spring:message code="menu.scroll" />
             </a>
         </li>

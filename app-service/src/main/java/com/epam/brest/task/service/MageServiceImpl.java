@@ -159,8 +159,8 @@ public class MageServiceImpl implements MageService {
         LOGGER.debug("removeMageById({})", id);
 
         try {
-
             Assert.notNull(id, NOT_NULL_ID);
+
             getMageById(id);
             mageDAO.removeMageById(id);
             magicScrollDAO.clearScrollsByMagicId(id);

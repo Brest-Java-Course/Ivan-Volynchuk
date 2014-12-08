@@ -28,7 +28,4 @@ public interface MagicScrollServiceClient {
 
     public void updateMagicScroll(MagicScroll magicScroll);
 
-    public List<MagicScroll> getMagicScrollsByMageId(Long id);
-
-
 }
