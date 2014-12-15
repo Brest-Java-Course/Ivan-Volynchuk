@@ -4,6 +4,7 @@
     <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
     <link href="<c:url value="/resources/css/input.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
 
     <html>
         <body>
@@ -23,7 +24,7 @@
                 <input type="number" name="durability" min="0" placeholder="<spring:message code="scroll.dur" />"/>
                 </br>
 
-                <input id="date" type="text" name="creationDate" placeholder="<spring:message code="scroll.date" />" />
+                <input id="datepicker" type="text" name="creationDate" placeholder="<spring:message code="scroll.date" />" />
                 </br>
 
                 <input type="number" name="manaCost" min="0" placeholder="<spring:message code="scroll.mana" />"/>
@@ -35,5 +36,6 @@
     </html>
 
     <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-ui.js" />"></script>
     <script src="<c:url value="/resources/js/tools/dateValidator.js" />"></script>
     <script src="<c:url value="/resources/js/tools/inputScrollValidator.js" />"></script>

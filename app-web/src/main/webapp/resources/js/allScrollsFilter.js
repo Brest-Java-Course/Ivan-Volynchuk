@@ -1,3 +1,22 @@
+$(document).ready(function () {
+    $('#date1').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        yearRange: '500:2500'
+    });
+});
+$(document).ready(function () {
+    $('#date2').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        yearRange: '500:2500'
+    });
+});
+
 $( document ).ready(function() {
    clearFilter();
 });

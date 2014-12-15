@@ -8,6 +8,7 @@
         <meta charset="UTF-8">
         <title>Document</title>
         <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+        <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
     </head>
     <body>
         <div class="wrap">
@@ -76,5 +77,6 @@
     </body>
 </html>
 <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+<script src="<c:url value="/resources/js/jquery-ui.js" />"></script>
 <script src="<c:url value="/resources/js/mageScrollFilter.js" />"></script>
 <script src="<c:url value="/resources/js/tools/dateValidator.js" />"></script>

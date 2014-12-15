@@ -17,11 +17,11 @@ $(document).ready(function() {
                 $(this).attr('class', '');
             }
         });
-        if(isDate($('#date').val())==false) {
-            $('#date').attr('class', 'warn');
+        if(isDate($('#datepicker').val())==false) {
+            $('#datepicker').attr('class', 'warn');
             isValid = false;
         }else {
-            $('#date').attr('class', '');
+            $('#datepicker').attr('class', '');
         }
         if (isValid == false)
             e.preventDefault();

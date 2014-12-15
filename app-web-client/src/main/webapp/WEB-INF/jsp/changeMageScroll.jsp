@@ -4,6 +4,7 @@
    <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
     <link href="<c:url value="/resources/css/input.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/jquery-ui.css" />" rel="stylesheet">
     <html>
         <body>
             <form action='<spring:url value="/scroll/updateMageScroll" />' method="post">
@@ -37,7 +38,7 @@
                     <label path="creationDate">
                         <spring:message code="scroll.date" />:
                     </label>
-                    <input type="text" id="date" name="creationDate" value=<c:out value="${scroll.creation_date}"/> />
+                    <input type="text" id="datepicker" name="creationDate" value=<c:out value="${scroll.creation_date}"/> />
                 </div>
                 </br>
 
@@ -71,6 +72,7 @@
         </body>
     </html>
     <script src="<c:url value="/resources/js/jquery-1.11.1.js" />"></script>
+    <script src="<c:url value="/resources/js/jquery-ui.js" />"></script>
     <script src="<c:url value="/resources/js/tools/dateValidator.js" />"></script>
     <script src="<c:url value="/resources/js/tools/inputScrollValidator.js" />"></script>
 

@@ -1,10 +1,20 @@
+$(document).ready(function () {
+    $('#datepicker').datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        yearRange: '500:2500'
+    });
+});
+
 function isDate(txtDate)
 {
     var currVal = txtDate;
     if(currVal == '')
         return false;
 
-    var rxDatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/; //regex statement
+    var rxDatePattern = /^(\d{4})(-)(\d{1,2})(-)(\d{1,2})$/; //regex statement (yyyy-mm-dd) only ( can be changed)
     var dtArray = currVal.match(rxDatePattern); // is format right?
 
     if (dtArray == null)

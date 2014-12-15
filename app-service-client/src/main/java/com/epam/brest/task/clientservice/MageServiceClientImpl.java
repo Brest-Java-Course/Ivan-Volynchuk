@@ -4,18 +4,10 @@ import com.epam.brest.task.clientservice.Exception.*;
 import com.epam.brest.task.domain.Mage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.client.DefaultResponseErrorHandler;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,14 +27,11 @@ public class MageServiceClientImpl implements MageServiceClient {
 
     private String host;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     public MageServiceClientImpl(String host) {
         this.host = host;
-        List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
-        converters.add(new MappingJackson2HttpMessageConverter());
-        restTemplate.setMessageConverters(converters);
-        restTemplate.setErrorHandler(new RestResponseErrorHandler());
     }
 
     @Override
@@ -55,10 +44,10 @@ public class MageServiceClientImpl implements MageServiceClient {
             Assert.notNull(id, NOT_NULL_ID);
 
             mage = restTemplate.getForObject(host + id, Mage.class);
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemFoundException(e.getMessage(), "Getting mage by id", id);
-        }catch(NotFoundException e) {
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage(), id);
             throw new NoItemFoundException(e.getMessage(), "Getting mage by id", id);
         }
@@ -70,15 +59,15 @@ public class MageServiceClientImpl implements MageServiceClient {
 
         LOGGER.debug("getMageByName({})", name);
 
-        Mage mage=null;
-        try{
+        Mage mage = null;
+        try {
             Assert.notNull(name, NOT_NULL_NAME);
 
             mage = restTemplate.getForObject(host + "name/" + name, Mage.class);
-        }catch(NotFoundException e){
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage(), name);
             throw new NoItemFoundException(e.getMessage(), "Getting mage by name", name);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemFoundException(e.getMessage(), "Getting mage by name", name);
         }
@@ -93,7 +82,7 @@ public class MageServiceClientImpl implements MageServiceClient {
         try {
             Mage[] mages = restTemplate.getForObject(host, Mage[].class);
             return Arrays.asList(mages);
-        }catch(NotFoundException e) {
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemsFoundException(e.getMessage(), "Getting all mages.");
         }
@@ -113,10 +102,10 @@ public class MageServiceClientImpl implements MageServiceClient {
 
             Long id = restTemplate.postForObject(host, mage, Long.class);
             return id;
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new BadInsertException(e.getMessage(), "Adding mage", mage);
-        }catch(BadDataException e) {
+        } catch (BadDataException e) {
             LOGGER.debug(e.getMessage());
             throw new BadInsertException(e.getMessage(), "Adding mage", mage);
         }
@@ -131,10 +120,10 @@ public class MageServiceClientImpl implements MageServiceClient {
             Assert.notNull(id, NOT_NULL_ID);
 
             restTemplate.delete(host + id);
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new BadRemoveException(e.getMessage(), "Removing mage.", id);
-        }catch(BadDataException e) {
+        } catch (BadDataException e) {
             LOGGER.debug(e.getMessage(), id);
             throw new BadRemoveException(e.getMessage(), "Removing mage", id);
         }
@@ -153,10 +142,10 @@ public class MageServiceClientImpl implements MageServiceClient {
             Assert.notNull(mage.getLevel(), NOT_NULL_LEVEL);
 
             restTemplate.put(host, mage);
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new BadUpdateException(e.getMessage(), "Updating mage", mage);
-        }catch(BadDataException e) {
+        } catch (BadDataException e) {
             LOGGER.debug(e.getMessage(), mage);
             throw new BadUpdateException(e.getMessage(), "Removing mage", mage);
         }

@@ -1,18 +1,14 @@
 package com.epam.brest.task.clientservice;
 
 import com.epam.brest.task.clientservice.Exception.*;
-import com.epam.brest.task.domain.Mage;
 import com.epam.brest.task.domain.MagicScroll;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.joda.time.LocalDate;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,26 +21,21 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
     private static final String NOT_NULL_DESCRIPTION = "Description should be specified.";
     private static final String NOT_NULL_SCROLL = "Scroll should be specified.";
     private static final String NO_SCROLLS_TO_GET = "No scrolls to get.";
-    private static final String NOT_NULL_DATE = "Date should be specified." ;
+    private static final String NOT_NULL_DATE = "Date should be specified.";
     private static final String NOT_NULL_DURABILITY = "Durability should be specified.";
     private static final String NO_MAGE_SCROLLS = "Scrolls with such mage's id doesn't exist";
-    private static final String NULL_ID = "Id should not be specified." ;
+    private static final String NULL_ID = "Id should not be specified.";
     private static final String NOT_NULL_MANACOST = "Mana cost should be specified.";
 
     private static final Logger LOGGER = LogManager.getLogger(MagicScrollServiceClientImpl.class);
 
     private String host;
 
-    private RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    private RestTemplate restTemplate;
 
     public MagicScrollServiceClientImpl(String host) {
-
         this.host = host;
-        List<HttpMessageConverter<?>> converters = new ArrayList<HttpMessageConverter<?>>();
-        converters.add(new MappingJackson2HttpMessageConverter());
-        restTemplate.setMessageConverters(converters);
-        restTemplate.setErrorHandler(new RestResponseErrorHandler());
-
     }
 
     @Override
@@ -62,11 +53,11 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
 
             Long id = restTemplate.postForObject(host, magicScroll, Long.class);
             return id;
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
 
             LOGGER.debug(e.getMessage());
             throw new BadInsertException(e.getMessage(), "Adding scroll", magicScroll);
-        }catch(BadDataException e) {
+        } catch (BadDataException e) {
 
             LOGGER.debug(e.getMessage());
             throw new BadInsertException(e.getMessage(), "Adding scroll", magicScroll);
@@ -81,7 +72,7 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
         try {
             MagicScroll[] scrolls = restTemplate.getForObject(host, MagicScroll[].class);
             return Arrays.asList(scrolls);
-        }catch(NotFoundException e){
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls.");
         }
@@ -97,10 +88,10 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
 
             MagicScroll[] scrolls = restTemplate.getForObject(host + "filter/after/" + afterDate, MagicScroll[].class);
             return Arrays.asList(scrolls);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls after Date.");
-        }catch(NotFoundException e){
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls after Date.");
         }
@@ -116,10 +107,10 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
 
             MagicScroll[] scrolls = restTemplate.getForObject(host + "filter/before/" + beforeDate, MagicScroll[].class);
             return Arrays.asList(scrolls);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls before Date.");
-        }catch(NotFoundException e){
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls before Date.");
         }
@@ -134,12 +125,12 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
             Assert.notNull(beforeDate, NOT_NULL_DATE);
             Assert.notNull(afterDate, NOT_NULL_DATE);
 
-            MagicScroll[] scrolls = restTemplate.getForObject(host + "filter/between/" + afterDate +'/' + beforeDate, MagicScroll[].class);
+            MagicScroll[] scrolls = restTemplate.getForObject(host + "filter/between/" + afterDate + '/' + beforeDate, MagicScroll[].class);
             return Arrays.asList(scrolls);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls between dates.");
-        }catch(NotFoundException e){
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemsFoundException(e.getMessage(), "Getting all scrolls between dates.");
         }
@@ -154,10 +145,10 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
             Assert.notNull(id, NOT_NULL_ID);
 
             restTemplate.delete(host + id);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(NOT_NULL_ID);
             throw new BadRemoveException(e.getMessage(), "Removing scroll.", id);
-        }catch(BadDataException e){
+        } catch (BadDataException e) {
             LOGGER.debug(e.getMessage(), id);
             throw new BadRemoveException(e.getMessage(), "Removing scroll", id);
         }
@@ -169,14 +160,14 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
         LOGGER.debug("getMagicScrollById({})", id);
 
         try {
-            Assert.notNull(id,NOT_NULL_ID);
+            Assert.notNull(id, NOT_NULL_ID);
 
             MagicScroll scroll = restTemplate.getForObject(host + id, MagicScroll.class);
             return scroll;
-        }catch(NotFoundException e){
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage(), id);
             throw new NoItemFoundException(e.getMessage(), "Getting scroll by id", id);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemFoundException(e.getMessage(), "Getting scroll by id", id);
         }
@@ -192,10 +183,10 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
 
             MagicScroll scroll = restTemplate.getForObject(host + "description/" + description, MagicScroll.class);
             return scroll;
-        }catch(NotFoundException e){
+        } catch (NotFoundException e) {
             LOGGER.debug(e.getMessage(), description);
             throw new NoItemFoundException(e.getMessage(), "Getting scroll by description", description);
-        }catch(IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new NoItemFoundException(e.getMessage(), "Getting scroll by description", description);
         }
@@ -215,10 +206,10 @@ public class MagicScrollServiceClientImpl implements MagicScrollServiceClient {
             Assert.notNull(magicScroll.getMana_cost(), NOT_NULL_MANACOST);
 
             restTemplate.put(host, magicScroll);
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             LOGGER.debug(e.getMessage());
             throw new BadUpdateException(e.getMessage(), "Updating scroll", magicScroll);
-        }catch(BadDataException e) {
+        } catch (BadDataException e) {
             LOGGER.debug(e.getMessage());
             throw new BadUpdateException(e.getMessage(), "Updating scroll", magicScroll);
         }
